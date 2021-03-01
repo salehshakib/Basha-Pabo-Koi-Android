@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.bashapabokoi">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/homescreen"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/homescreen"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BashaPaboKoi">
+
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="sensorPortrait"/>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBqQWQmhVknktG58BFC4w8pFenyn_xtD60" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <activity android:name=".SplashActivity"
+            android:screenOrientation="sensorPortrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MapActivity"
+            android:screenOrientation="sensorPortrait"/>
+
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".abbehSaleh.SetupProfileActivity" />
+        <activity
+            android:name=".abbehSaleh.OTPActivity"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name=".abbehSaleh.PhoneNumberVerificationActivity"
+            android:windowSoftInputMode="stateVisible">
+        </activity>
+    </application>
+
+</manifest>

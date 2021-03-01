@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_pro"
+            android:icon="@drawable/profile"
+            android:title="@string/profile" />
+
+    </group>
+
+
+    <item android:title="@string/switchable">
+
+        <menu>
+
+            <item
+                android:id="@+id/nav_lan"
+                android:icon="@drawable/lang"
+                android:title="@string/language" />
+
+            <item
+                android:id="@+id/nav_mode"
+                android:icon="@drawable/light"
+                android:title="@string/dark_mode" />
+
+        </menu>
+
+    </item>
+
+
+    <item android:title="@string/create">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/nav_ad"
+                    android:icon="@drawable/ad"
+                    android:title="@string/create_an_ad" />
+
+            </group>
+
+        </menu>
+
+    </item>
+
+
+    <item android:title="@string/preference">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/nav_faq"
+                    android:icon="@drawable/faq"
+                    android:title="@string/faq" />
+
+                <item
+                    android:id="@+id/nav_about"
+                    android:icon="@drawable/about_us"
+                    android:title="@string/about_us" />
+
+                <item
+                    android:id="@+id/nav_rate"
+                    android:icon="@drawable/rate"
+                    android:title="@string/rate_us" />
+
+            </group>
+
+        </menu>
+
+    </item>
+
+    <item android:title="@string/exit">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/nav_out"
+                    android:icon="@drawable/logout"
+                    android:title="@string/log_out" />
+
+            </group>
+
+        </menu>
+
+    </item>
+
+</menu>

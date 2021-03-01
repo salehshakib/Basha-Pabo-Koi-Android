@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "22375217795",
+    "project_id": "basha-pabo-koi-f2327",
+    "storage_bucket": "basha-pabo-koi-f2327.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:22375217795:android:6dd92675a981aeb5e479b6",
+        "android_client_info": {
+          "package_name": "com.example.bashapabokoi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "22375217795-apvedroh5dmgm813rpbr2nv9svg2jqos.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQfbL9gWMsNMJAhcAjv6aO9tbpvOslSX0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "22375217795-apvedroh5dmgm813rpbr2nv9svg2jqos.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
