@@ -90,13 +90,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private static class LoginAdapter extends FragmentPagerAdapter {
 
-        private Context context;
         int totalTabs;
 
         public LoginAdapter(@NonNull FragmentManager fm, Context context, int totalTabs) {
 
             super(fm);
-            this.context = context;
             this.totalTabs = totalTabs;
         }
 
@@ -107,12 +105,10 @@ public class LoginActivity extends AppCompatActivity {
             switch (position){
 
                 case 0:
-                    LoginTabFragment tab1 = new LoginTabFragment();
-                    return tab1;
+                    return new LoginTabFragment();
 
                 case 1:
-                    SignupTabFragment tab2 = new SignupTabFragment();
-                    return tab2;
+                    return new SignupTabFragment();
             }
 
             return null;

@@ -4,24 +4,18 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bashapabokoi.MapActivity;
 import com.example.bashapabokoi.Models.User;
 import com.example.bashapabokoi.databinding.ActivitySetupProfileBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 
 public class SetupProfileActivity extends AppCompatActivity {
@@ -34,9 +28,6 @@ public class SetupProfileActivity extends AppCompatActivity {
     Uri selectedImage;
 
     ProgressDialog dialog;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,117 +44,83 @@ public class SetupProfileActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         auth = FirebaseAuth.getInstance();
 
-        binding.imageView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.proPic.setOnClickListener(v -> {
 
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
 
-                startActivityForResult(intent,45);
-            }
+            startActivityForResult(intent,45);
         });
 
-        binding.continueBtn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String name = binding.nameBox.getText().toString();
+        binding.continueBtn3.setOnClickListener(v -> {
+            String name = binding.profileNameText.getText().toString();
 
-                if(name.isEmpty()) {
-                    binding.nameBox.setError("Please type a name");
+            if(name.isEmpty()) {
+                binding.profileNameText.setError("Please type a name");
 
-                    return;
-                }
+                return;
+            }
 
-                dialog.show();
+            dialog.show();
 
-                if(selectedImage != null){
-                    StorageReference reference = storage.getReference().child("profiles").child(auth.getUid());
-                    reference.putFile(selectedImage).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                           if(task.isSuccessful()){
-                               reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                   @Override
-                                   public void onSuccess(Uri uri) {
-                                       String imageUrl = uri.toString();
-                                       String uid = auth.getUid();
-                                       String phone = auth.getCurrentUser().getPhoneNumber();
-                                       //String name = binding.nameBox.getText().toString();
+            if(selectedImage != null){
+                StorageReference reference = storage.getReference().child("profiles").child(auth.getUid());
+                reference.putFile(selectedImage).addOnCompleteListener(task -> {
+                   if(task.isSuccessful()){
+                       reference.getDownloadUrl().addOnSuccessListener(uri -> {
+                           String imageUrl = uri.toString();
+                           String uid = auth.getUid();
+                           String phone = auth.getCurrentUser().getPhoneNumber();
 
+                           User user = new User(uid, name, phone,imageUrl);
 
-                                       User user = new User(uid, name, phone,imageUrl);
+                           database.getReference().child("Users").child(uid).setValue(user).addOnSuccessListener(aVoid -> {
 
-                                       database.getReference()
-                                               .child("Users")
-                                               .child(uid)
-                                               .setValue(user)
-                                               .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                   @Override
-                                                   public void onSuccess(Void aVoid) {
-                                                       dialog.dismiss();
+                               dialog.dismiss();
 
-                                                       Toast.makeText(com.example.bashapabokoi.abbehSaleh.SetupProfileActivity.this,"ok", Toast.LENGTH_SHORT).show();
-                                                       Intent intent = new Intent(com.example.bashapabokoi.abbehSaleh.SetupProfileActivity.this, MapActivity.class);
-                                                       startActivity(intent);
+                               Toast.makeText(SetupProfileActivity.this,"ok", Toast.LENGTH_SHORT).show();
+                               Intent intent = new Intent(SetupProfileActivity.this, MapActivity.class);
+                               startActivity(intent);
 
-                                                       finish();
+                               finish();
 
-                                                   }
-                                               });
+                           });
 
-                                   }
-                               });
+                       });
 
-                           }
-                        }
-                    });
-                } else {
-                    String uid = auth.getUid();
-                    String phone = auth.getCurrentUser().getPhoneNumber();
+                   }
+                });
+            } else {
+                String uid = auth.getUid();
+                String phone = auth.getCurrentUser().getPhoneNumber();
 
 
 
-                    User user = new User(uid, name, phone, "No Image");
+                User user = new User(uid, name, phone, "No Image");
 
-                    database.getReference()
-                            .child("Users")
-                            .child(uid)
-                            .setValue(user)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    dialog.dismiss();
+                database.getReference().child("Users").child(uid).setValue(user).addOnSuccessListener(aVoid -> {
 
-                                    Toast.makeText(com.example.bashapabokoi.abbehSaleh.SetupProfileActivity.this,"ok", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(com.example.bashapabokoi.abbehSaleh.SetupProfileActivity.this, MapActivity.class);
-                                    startActivity(intent);
+                    dialog.dismiss();
 
-                                    finish();
+                    Toast.makeText(SetupProfileActivity.this,"ok", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(SetupProfileActivity.this, MapActivity.class);
+                    startActivity(intent);
 
-                                }
-                            });
+                    finish();
 
-                }
-
+                });
             }
         });
 
     }
 
-
-
-
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-
         if(data != null){
             if(data.getData() != null) {
-                binding.imageView2.setImageURI(data.getData());
+                binding.proPic.setImageURI(data.getData());
                 selectedImage = data.getData();
             }
         }

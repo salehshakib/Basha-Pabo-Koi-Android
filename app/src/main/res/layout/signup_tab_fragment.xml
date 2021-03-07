@@ -6,80 +6,26 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/pro_name"
+        android:id="@+id/phone_no_sign_up"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_bg"
-        android:hint="@string/enter_your_profile_name"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias=".5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".2"
-        app:layout_constraintWidth_percent=".8" />
-
-    <EditText
-        android:id="@+id/phone_no_up"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:background="@drawable/edit_text_bg"
         android:hint="@string/phone_number"
-        android:inputType="number"
-        android:paddingLeft="20dp"
+        android:inputType="text"
+        android:paddingStart="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:textCursorDrawable="@drawable/cursor_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pro_name"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.411"
         app:layout_constraintWidth_percent=".8"
-        tools:ignore="TextFields" />
-
-    <EditText
-        android:id="@+id/pass_up"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/edit_text_bg"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias=".5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phone_no_up"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintWidth_percent=".8" />
-
-    <EditText
-        android:id="@+id/con_pass"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/edit_text_bg"
-        android:hint="@string/confirm_password"
-        android:inputType="textPassword"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pass_up"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintWidth_percent=".8" />
+        tools:ignore="RtlSymmetry,TextFields" />
 
     <Button
-        android:id="@+id/but_nxt_up"
+        android:id="@+id/but_sign_next"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_bg"
@@ -91,7 +37,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/con_pass"
+        app:layout_constraintTop_toBottomOf="@id/phone_no_sign_up"
+        app:layout_constraintVertical_bias="0.256"
         app:layout_constraintWidth_percent=".8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

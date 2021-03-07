@@ -9,7 +9,7 @@
     android:gravity="center">
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/pro_pic"
+        android:id="@+id/pro_pic_header"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:scaleType="centerCrop"
@@ -17,6 +17,7 @@
         app:riv_oval="true" />
 
     <TextView
+        android:id="@+id/profile_name_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_thin"

@@ -99,6 +99,13 @@ public class ChatActivity extends AppCompatActivity {
                 database.getReference().child("Chats").child(senderRoom).updateChildren(lastMsgObj);
                 database.getReference().child("Chats").child(receiverRoom).updateChildren(lastMsgObj);
 
+                database.getReference()
+                        .child("Chat_time")
+                        .child(senderRoom)
+                        .setValue(date.getTime())
+                        .addOnSuccessListener(aVoid -> {
+
+                        });
 
                 database.getReference().child("Chats")
                         .child(senderRoom)

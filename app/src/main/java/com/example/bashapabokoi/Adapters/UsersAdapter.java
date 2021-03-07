@@ -79,14 +79,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
                 .placeholder(R.drawable.me)
                 .into(holder.binding.profile);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ChatActivity.class);
-                intent.putExtra("name", user.getName());
-                intent.putExtra("uid", user.getUid());
-                context.startActivity(intent);
-            }
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ChatActivity.class);
+            intent.putExtra("name", user.getName());
+            intent.putExtra("uid", user.getUid());
+            context.startActivity(intent);
         });
 
 

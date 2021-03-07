@@ -96,6 +96,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/ic_magnify"
+                android:textCursorDrawable="@drawable/cursor_color"
                 android:background="@null"
                 android:hint="@string/search_by_location"
                 android:imeOptions="actionDone"

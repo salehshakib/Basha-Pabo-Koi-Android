@@ -7,29 +7,31 @@
     android:layout_height="match_parent"
     tools:context=".abbehSaleh.SetupProfileActivity">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:layout_marginTop="30dp"
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/pro_pic"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="190dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/me"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/me" />
+        app:riv_oval="true" />
 
     <TextView
-        android:id="@+id/phoneLebel"
+        android:id="@+id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Profile Info"
-        android:textColor="#000000"
+        android:layout_marginTop="24dp"
+        android:text="@string/profile_name_and_picture"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/imageView2"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintEnd_toEndOf="@+id/pro_pic"
+        app:layout_constraintStart_toStartOf="@+id/pro_pic"
+        app:layout_constraintTop_toBottomOf="@+id/pro_pic" />
 
     <TextView
         android:id="@+id/textView2"
@@ -37,10 +39,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="khoma de ..!!"
-        app:layout_constraintEnd_toEndOf="@+id/phoneLebel"
-        app:layout_constraintStart_toStartOf="@+id/phoneLebel"
-        app:layout_constraintTop_toBottomOf="@+id/phoneLebel" />
+        android:text="@string/tap_on_the_image_to_update_your_profile_picture"
+        app:layout_constraintEnd_toEndOf="@+id/info"
+        app:layout_constraintStart_toStartOf="@+id/info"
+        app:layout_constraintTop_toBottomOf="@+id/info" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -60,25 +62,30 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/nameBox"
+                android:id="@+id/profile_name_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text_bg"
-                android:ems="10"
-                android:hint="Name De Chudir Vai"
-                android:inputType="textPersonName"
-                android:padding="14dp"
-                android:phoneNumber="true" />
+                android:hint="@string/enter_your_profile_name_here"
+                android:inputType="text"
+                android:paddingStart="20dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textCursorDrawable="@drawable/cursor_color"
+                tools:ignore="RtlSymmetry,TextFields" />
 
             <Button
                 android:id="@+id/continueBtn3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="#FFFFFF"
-                android:text="Shoi"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg"
+                android:text="@string/continue_sign_up"
                 app:cornerRadius="0dp" />
+
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

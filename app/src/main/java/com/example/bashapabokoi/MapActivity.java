@@ -38,6 +38,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.example.bashapabokoi.Models.User;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -46,7 +48,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
@@ -66,6 +68,12 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -119,6 +127,25 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.nav_view);
+        View header =  navigationView.getHeaderView(0);
+        TextView headerProfileName = (TextView)header.findViewById(R.id.profile_name_header);
+        RoundedImageView headerProPic = (RoundedImageView)header.findViewById(R.id.pro_pic_header);
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                headerProfileName.setText(snapshot.child("name").getValue().toString());
+
+                User u = snapshot.getValue(User.class);
+                Glide.with(getApplicationContext()).load(u.getProfileImage()).placeholder(R.drawable.me).into(headerProPic);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         drawerLayout.addDrawerListener(drawerListener);
 
@@ -386,6 +413,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
+    @SuppressLint("ShowToast")
     private void getDeviceLocation() {
 
         FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -396,22 +424,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                 Task location = fusedLocationProviderClient.getLastLocation();
 
-                location.addOnCompleteListener(new OnCompleteListener() {
-                    @Override
-                    public void onComplete(@NonNull Task task) {
+                location.addOnCompleteListener(task -> {
 
-                        if (task.isSuccessful()) {
+                    if (task.isSuccessful()) {
 
-                            Location currentLocation = (Location) task.getResult();
+                        Location currentLocation = (Location) task.getResult();
 
-                            if(isDeviceLocationOn() && currentLocation != null){
+                        if(isDeviceLocationOn() && currentLocation != null){
 
-                                moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), defaultZoom, "My Location");
-                            }
-                        } else {
-
-                            Toast.makeText(MapActivity.this, "Unable to get current location", Toast.LENGTH_SHORT);
+                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), defaultZoom, "My Location");
                         }
+                    } else {
+
+                        Toast.makeText(MapActivity.this, "Unable to get current location", Toast.LENGTH_SHORT);
                     }
                 });
             }
@@ -545,9 +570,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         if (requestCode == locationPermissionRequestCode) {
             if (grantResults.length > 0) {
 
-                for (int i = 0; i < grantResults.length; i++) {
+                for (int grantResult : grantResults) {
 
-                    if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                    if (grantResult != PackageManager.PERMISSION_GRANTED) {
 
                         mLocationPermissionGranted = false;
                         return;
@@ -582,8 +607,29 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         return false;
     }
 
+
+    //TODO need to add menu items
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch(item.getItemId()){
+
+            case R.id.nav_out:
+
+                FirebaseAuth.getInstance().signOut();
+                Intent intentLogOut = new Intent(MapActivity.this, LoginActivity.class);
+                startActivity(intentLogOut);
+                break;
+
+            case R.id.nav_ad:
+
+                Intent intentAd = new Intent(MapActivity.this, AdCreateActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                Log.d("NAV MENU", "VALUE: " + navigationView.getMenu().getItem(3));
+                startActivity(intentAd);
+                break;
+        }
 
         return true;
     }
