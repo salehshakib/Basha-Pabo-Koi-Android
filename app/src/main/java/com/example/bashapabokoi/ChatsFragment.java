@@ -1,6 +1,7 @@
 package com.example.bashapabokoi;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +70,8 @@ public class ChatsFragment extends Fragment {
                 });
 
 
+
+
         database.getReference()
                 .child("Chat_time")
                 .orderByValue()
@@ -77,8 +80,11 @@ public class ChatsFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         keys.clear();
                         for(DataSnapshot ds : snapshot.getChildren()){
-                            String s = ds.getKey().replaceAll(senderUid, "");
-                            keys.add(s);
+                            if(ds.getKey().substring(0, 28).equals(senderUid)) {
+                                String s = ds.getKey().replaceAll(senderUid, "");
+                                keys.add(s);
+                                Log.d("aaa", s);
+                            }
 
                         }
                         Collections.reverse(keys);

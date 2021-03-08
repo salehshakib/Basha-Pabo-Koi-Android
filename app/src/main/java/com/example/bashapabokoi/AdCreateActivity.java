@@ -12,20 +12,28 @@ import android.graphics.Bitmap;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.icu.util.TimeZone;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
+import com.example.bashapabokoi.Models.CreateAd;
 import com.example.bashapabokoi.Models.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +41,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -44,6 +55,10 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
     DrawerLayout drawerLayout;
     NavigationView navigationView;
 
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+
     LottieAnimationView liftBox, generatorBox, parkingBox, securityBox, gasBox, wifiBox, termBox;
     boolean isLiftChecked = false, isGeneratorChecked = false, isParkingChecked = false, isSecurityChecked = false, isGasChecked = false, isWifiChecked = false, isTermChecked = false;
 
@@ -52,6 +67,9 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
     TextView vacantText;
 
     ImageView openCamera;
+
+    Button createButton;
+    EditText titleTextBox, addressTextBox, currentBillTextBox, waterBillTextBox, gasBillTextBox, otherChargeTextBox, descriptionTextBox, rentTextBox;
 
     Calendar calendar;
 
@@ -88,6 +106,24 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
         setSpinnerList();
 
+        titleTextBox = findViewById(R.id.ad_title);
+        addressTextBox = findViewById(R.id.address);
+        currentBillTextBox = findViewById(R.id.current_bill);
+        waterBillTextBox = findViewById(R.id.water_bill);
+        gasBillTextBox = findViewById(R.id.gas_bill);
+        otherChargeTextBox = findViewById(R.id.service_charge);
+        descriptionTextBox = findViewById(R.id.description);
+        rentTextBox = findViewById(R.id.ad_rent);
+
+
+
+
+
+
+
+
+
+
         openCamera = findViewById(R.id.photos);
 
         openCamera.setOnClickListener(v -> {
@@ -95,6 +131,70 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
             Intent intent = new Intent();
             intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivity(intent);
+        });
+
+        createButton = findViewById(R.id.but_ad_done);
+
+        createButton.setOnClickListener(v -> {
+
+            //TODO database handa
+            String title = titleTextBox.getText().toString();
+            String address = addressTextBox.getText().toString();
+            String currentBill = currentBillTextBox.getText().toString();
+            String waterBill = waterBillTextBox.getText().toString();
+            String gasBill = gasBillTextBox.getText().toString();
+            String otherCharge = otherChargeTextBox.getText().toString();
+            String description = descriptionTextBox.getText().toString();
+            String rent = rentTextBox.getText().toString();
+
+
+
+            String vacFrom = vacantText.getText().toString();
+            String thana = thanaSpinner.getSelectedItem().toString();
+            String washroom = washSpinner.getSelectedItem().toString();
+            String bedroom = bedSpinner.getSelectedItem().toString();
+            String religion = religionSpinner.getSelectedItem().toString();
+            String flatType = flatTypeSpinner.getSelectedItem().toString();
+            String veranda = verandaSpinner.getSelectedItem().toString();
+            String floor = floorSpinner.getSelectedItem().toString();
+            String genre = genreSpinner.getSelectedItem().toString();
+
+            String randomKey = database.getReference().push().getKey();
+
+
+
+
+            /*StorageReference reference = storage.getReference().child("Ads").child(auth.getUid());
+            reference.putFile(ehan e uri/bitmap img).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+
+
+                        }
+                    });
+
+                }
+            });*/
+
+
+
+            CreateAd newAd = new CreateAd(title, address, thana, vacFrom, flatType, washroom, veranda, bedroom, floor, religion, genre, currentBill, waterBill, gasBill, otherCharge, Boolean.toString(isLiftChecked), Boolean.toString(isGeneratorChecked), Boolean.toString(isParkingChecked), Boolean.toString(isSecurityChecked), Boolean.toString(isGasChecked), Boolean.toString(isWifiChecked), description, rent, "no_image","no_image","no_image","no_image","no_image");
+
+            database.getReference().child("Create_ad").child(auth.getUid()).child(randomKey).setValue(newAd)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(AdCreateActivity.this,"ok", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+
+
+
+
         });
 
         drawerLayout = findViewById(R.id.drawer_ad);
