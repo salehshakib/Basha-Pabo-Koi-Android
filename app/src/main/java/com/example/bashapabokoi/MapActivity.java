@@ -413,7 +413,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
-    @SuppressLint("ShowToast")
     private void getDeviceLocation() {
 
         FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -436,7 +435,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         }
                     } else {
 
-                        Toast.makeText(MapActivity.this, "Unable to get current location", Toast.LENGTH_SHORT);
+                        Toast.makeText(MapActivity.this, "Unable to get current location", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

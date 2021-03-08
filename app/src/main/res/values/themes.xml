@@ -26,4 +26,8 @@
         <item name="colorAccent">@color/orange_base</item>
     </style>
     
+    <style name="RoundedSquare">
+        <item name="cornerSize">10%</item>
+    </style>
+    
 </resources>
