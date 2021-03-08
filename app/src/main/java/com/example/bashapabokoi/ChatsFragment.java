@@ -116,7 +116,7 @@ public class ChatsFragment extends Fragment {
 
 
                                 if(user.getUid().equals(i)) {
-
+                                //if(!user.getUid().equals(FirebaseAuth.getInstance().getUid())){
                                     users.add(user);
                                 }
                             }
