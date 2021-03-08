@@ -3,17 +3,26 @@ package com.example.bashapabokoi;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.icu.util.TimeZone;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
@@ -31,6 +40,8 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.bashapabokoi.Models.CreateAd;
 import com.example.bashapabokoi.Models.User;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -46,11 +57,21 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class AdCreateActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, DatePickerDialog.OnDateSetListener, View.OnClickListener {
+
+    private int REQUEST_CAMERA;
+    private int SELECT_FILE;
+
+    File imageFile;
+    Uri outputImageUri;
+    String currentImagePath = null;
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -66,7 +87,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
     Spinner thanaSpinner, washSpinner, bedSpinner, religionSpinner, flatTypeSpinner, verandaSpinner, floorSpinner, genreSpinner;
     TextView vacantText;
 
-    ImageView openCamera;
+    ImageView img1, img2, img3, img4, img5;
 
     Button createButton;
     EditText titleTextBox, addressTextBox, currentBillTextBox, waterBillTextBox, gasBillTextBox, otherChargeTextBox, descriptionTextBox, rentTextBox;
@@ -117,49 +138,120 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
 
 
+        img1 = findViewById(R.id.image_1);
+        img2 = findViewById(R.id.image_2);
+        img3 = findViewById(R.id.image_3);
+        img4 = findViewById(R.id.image_4);
+        img5 = findViewById(R.id.image_5);
 
+        img1.setOnClickListener(v -> {
 
+            REQUEST_CAMERA = 1;
+            SELECT_FILE = 6;
+            selectImage();
+        });
 
+        img2.setOnClickListener(v -> {
 
+            REQUEST_CAMERA = 2;
+            SELECT_FILE = 7;
+            selectImage();
+        });
 
+        img3.setOnClickListener(v -> {
 
+            REQUEST_CAMERA = 3;
+            SELECT_FILE = 8;
+            selectImage();
+        });
 
-        openCamera = findViewById(R.id.image_1);
+        img4.setOnClickListener(v -> {
 
-        openCamera.setOnClickListener(v -> {
+            REQUEST_CAMERA = 4;
+            SELECT_FILE = 9;
+            selectImage();
+        });
 
-            Intent intent = new Intent();
-            intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivity(intent);
+        img5.setOnClickListener(v -> {
+
+            REQUEST_CAMERA = 5;
+            SELECT_FILE = 10;
+            selectImage();
         });
 
         createButton = findViewById(R.id.but_ad_done);
 
         createButton.setOnClickListener(v -> {
 
-            //TODO database handa
-            String title = titleTextBox.getText().toString();
-            String address = addressTextBox.getText().toString();
-            String currentBill = currentBillTextBox.getText().toString();
-            String waterBill = waterBillTextBox.getText().toString();
-            String gasBill = gasBillTextBox.getText().toString();
-            String otherCharge = otherChargeTextBox.getText().toString();
-            String description = descriptionTextBox.getText().toString();
-            String rent = rentTextBox.getText().toString();
+
+            if (isTermChecked) {
+
+                //TODO database handa
+                String title = titleTextBox.getText().toString();
+                String address = addressTextBox.getText().toString();
+                String currentBill = currentBillTextBox.getText().toString();
+                String waterBill = waterBillTextBox.getText().toString();
+                String gasBill = gasBillTextBox.getText().toString();
+                String otherCharge = otherChargeTextBox.getText().toString();
+                String description = descriptionTextBox.getText().toString();
+                String rent = rentTextBox.getText().toString();
 
 
 
-            String vacFrom = vacantText.getText().toString();
-            String thana = thanaSpinner.getSelectedItem().toString();
-            String washroom = washSpinner.getSelectedItem().toString();
-            String bedroom = bedSpinner.getSelectedItem().toString();
-            String religion = religionSpinner.getSelectedItem().toString();
-            String flatType = flatTypeSpinner.getSelectedItem().toString();
-            String veranda = verandaSpinner.getSelectedItem().toString();
-            String floor = floorSpinner.getSelectedItem().toString();
-            String genre = genreSpinner.getSelectedItem().toString();
+                String vacFrom = vacantText.getText().toString();
+                String thana = thanaSpinner.getSelectedItem().toString();
+                String washroom = washSpinner.getSelectedItem().toString();
+                String bedroom = bedSpinner.getSelectedItem().toString();
+                String religion = religionSpinner.getSelectedItem().toString();
+                String flatType = flatTypeSpinner.getSelectedItem().toString();
+                String veranda = verandaSpinner.getSelectedItem().toString();
+                String floor = floorSpinner.getSelectedItem().toString();
+                String genre = genreSpinner.getSelectedItem().toString();
 
-            String randomKey = database.getReference().push().getKey();
+                String randomKey = database.getReference().push().getKey();
+
+                CreateAd newAd = new CreateAd(title, address, thana, vacFrom, flatType, washroom, veranda, bedroom, floor, religion, genre, currentBill, waterBill, gasBill, otherCharge, Boolean.toString(isLiftChecked), Boolean.toString(isGeneratorChecked), Boolean.toString(isParkingChecked), Boolean.toString(isSecurityChecked), Boolean.toString(isGasChecked), Boolean.toString(isWifiChecked), description, rent, "no_image","no_image","no_image","no_image","no_image");
+
+                database.getReference().child("Create_ad").child(auth.getUid()).child(randomKey).setValue(newAd)
+                        .addOnSuccessListener(aVoid -> Toast.makeText(AdCreateActivity.this,"ok", Toast.LENGTH_SHORT).show());
+
+                AlertDialog.Builder markerPlacementDialog = new AlertDialog.Builder(this);
+                markerPlacementDialog.setTitle("Are you at your place?");
+                markerPlacementDialog.setMessage("We need to add a marker in the map so that renters can find your place easily. We recommend you to be at your place for precise marking.");
+
+                markerPlacementDialog.setPositiveButton("Yes", (dialog, which) -> {
+
+                    FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getApplicationContext());
+
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+                        return;
+                    }
+
+                    Task location = fusedLocationProviderClient.getLastLocation();
+
+                    location.addOnCompleteListener(task -> {
+
+                        if (task.isSuccessful()) {
+
+                            Location currentLocation = (Location) task.getResult();
+
+                        }
+                    });
+                });
+
+                markerPlacementDialog.setNegativeButton("No", (dialog, which) -> {
+
+
+
+                });
+
+                markerPlacementDialog.show();
+
+            } else{
+
+                Toast.makeText(this, "Please accept our terms and agreements", Toast.LENGTH_LONG).show();
+            }
 
 
 
@@ -178,22 +270,6 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
                 }
             });*/
-
-
-
-            CreateAd newAd = new CreateAd(title, address, thana, vacFrom, flatType, washroom, veranda, bedroom, floor, religion, genre, currentBill, waterBill, gasBill, otherCharge, Boolean.toString(isLiftChecked), Boolean.toString(isGeneratorChecked), Boolean.toString(isParkingChecked), Boolean.toString(isSecurityChecked), Boolean.toString(isGasChecked), Boolean.toString(isWifiChecked), description, rent, "no_image","no_image","no_image","no_image","no_image");
-
-            database.getReference().child("Create_ad").child(auth.getUid()).child(randomKey).setValue(newAd)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(AdCreateActivity.this,"ok", Toast.LENGTH_SHORT).show();
-
-                        }
-                    });
-
-
-
 
         });
 
@@ -458,11 +534,143 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
         dialog.show();
     }
 
+    @SuppressLint({"IntentReset", "QueryPermissionsNeeded"})
+    private void selectImage(){
+
+        final CharSequence[] items = {"Camera", "Gallery", "Cancel"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(AdCreateActivity.this);
+        builder.setTitle("Add Image");
+        builder.setItems(items, (dialog, which) -> {
+
+            if(items[which].equals("Camera")){
+
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                if(intent.resolveActivity(getPackageManager()) != null){
+
+                    imageFile = null;
+
+                    try {
+                        imageFile = getImageFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    if(imageFile != null){
+
+                        outputImageUri = FileProvider.getUriForFile(this, "com.example.android.fileProvider", imageFile);
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputImageUri);
+                        startActivityForResult(intent, REQUEST_CAMERA);
+                    }
+                }
+
+            } else if(items[which].equals("Gallery")){
+
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
+
+            } else if (items[which].equals("Cancel")) {
+
+                dialog.dismiss();
+            }
+        }).show();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Bitmap image = (Bitmap) data.getExtras().get("data");
-        openCamera.setImageBitmap(image);
+        if(resultCode == Activity.RESULT_OK){
+
+            if(requestCode == REQUEST_CAMERA){
+
+                if(REQUEST_CAMERA == 1){
+
+                    Bitmap image = BitmapFactory.decodeFile(currentImagePath);
+                    img1.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    img1.setImageBitmap(image);
+
+                } else if(REQUEST_CAMERA == 2){
+
+                    Bitmap image = BitmapFactory.decodeFile(currentImagePath);
+                    img2.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    img2.setImageBitmap(image);
+
+                } else if(REQUEST_CAMERA == 3){
+
+                    Bitmap image = BitmapFactory.decodeFile(currentImagePath);
+                    img3.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    img3.setImageBitmap(image);
+
+                } else if(REQUEST_CAMERA == 4){
+
+                    Bitmap image = BitmapFactory.decodeFile(currentImagePath);
+                    img4.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    img4.setImageBitmap(image);
+
+                } else if(REQUEST_CAMERA == 5){
+
+                    Bitmap image = BitmapFactory.decodeFile(currentImagePath);
+                    img5.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    img5.setImageBitmap(image);
+
+                }
+
+
+            } else if(requestCode == SELECT_FILE){
+
+                if(SELECT_FILE == 6){
+
+                    assert data != null;
+                    Uri selectedImageUri = data.getData();
+                    img1.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    img1.setImageURI(selectedImageUri);
+
+                } else if(SELECT_FILE == 7){
+
+                    assert data != null;
+                    Uri selectedImageUri = data.getData();
+                    img2.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    img2.setImageURI(selectedImageUri);
+
+                } else if(SELECT_FILE == 8){
+
+                    assert data != null;
+                    Uri selectedImageUri = data.getData();
+                    img3.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    img3.setImageURI(selectedImageUri);
+
+                } else if(SELECT_FILE == 9){
+
+                    assert data != null;
+                    Uri selectedImageUri = data.getData();
+                    img4.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    img4.setImageURI(selectedImageUri);
+
+                } else if(SELECT_FILE == 10){
+
+                    assert data != null;
+                    Uri selectedImageUri = data.getData();
+                    img5.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    img5.setImageURI(selectedImageUri);
+                }
+
+            }
+
+        }
+
+    }
+
+    private File getImageFile()throws IOException{
+
+        @SuppressLint("SimpleDateFormat")
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+        File imageFile = File.createTempFile(timeStamp,".jpg", storageDir);
+        currentImagePath = imageFile.getAbsolutePath();
+        return imageFile;
     }
 }
