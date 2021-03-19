@@ -258,7 +258,7 @@
 
                             <androidx.cardview.widget.CardView
                                 android:id="@+id/profile_address"
-                                android:layout_width="380dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="200dp"
                                 android:layout_margin="20dp"
                                 app:cardCornerRadius="10dp">
@@ -337,7 +337,7 @@
                             android:layout_marginBottom="20dp">
 
                             <androidx.cardview.widget.CardView
-                                android:layout_width="380dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="75dp"
                                 android:layout_margin="20dp"
                                 app:cardBackgroundColor="@color/orange_base"
