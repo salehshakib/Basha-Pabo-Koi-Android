@@ -15,6 +15,7 @@ import com.example.bashapabokoi.R;
 import com.example.bashapabokoi.databinding.ActivityOTPBinding;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -88,21 +89,44 @@ public class OTPActivity extends AppCompatActivity {
             PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, otp);
             auth.signInWithCredential(credential).addOnCompleteListener(task -> {
                 if(task.isSuccessful()){
-                    Toast.makeText(OTPActivity.this, "Sabash mamur beta Log in Success", Toast.LENGTH_SHORT).show();
-
                     Intent previousIntent = getIntent();
                     String previousActivity = previousIntent.getStringExtra("FROM_ACTIVITY");
+                    FirebaseUser u_s_e_r = task.getResult().getUser();
+                    long creationTimestamp = u_s_e_r.getMetadata().getCreationTimestamp();
+                    long lastSignInTimestamp = u_s_e_r.getMetadata().getLastSignInTimestamp();
 
-                    if(previousActivity.equals("LogInTabFragment")){
+                    if (creationTimestamp == lastSignInTimestamp) {
+                        //do create new user
+                        //todo ehan e signup na sign in oidar kam
+                        if(previousActivity.equals("SignUpTabFragment")){
 
-                        Intent intent = new Intent(OTPActivity.this, MapActivity.class);
-                        startActivity(intent);
+                            Intent intent = new Intent(OTPActivity.this, SetupProfileActivity.class);
+                            startActivity(intent);
+                        }
+                        else{
+                            Toast.makeText(this, "Tui janos tor account nai tar poreo tui kn login korte aisos, vag BSDK", Toast.LENGTH_LONG).show();
 
-                    } else if(previousActivity.equals("SignUpTabFragment")){
+                            auth.getCurrentUser().delete();
 
-                        Intent intent = new Intent(OTPActivity.this, SetupProfileActivity.class);
-                        startActivity(intent);
+                        }
+                    } else {
+                        //user is exists, just do login
+                        if(previousActivity.equals("LogInTabFragment")){
+
+                            Intent intent = new Intent(OTPActivity.this, MapActivity.class);
+                            startActivity(intent);
+
+                        }
+                        else{
+                            Toast.makeText(this, "Tui janos tor account ase tar poreo tui kn signup korte aisos, vag BSDK", Toast.LENGTH_LONG).show();
+
+                            auth.signOut();
+                        }
+
                     }
+
+                    //Toast.makeText(OTPActivity.this, "Sabash mamur beta Log in Success", Toast.LENGTH_SHORT).show();
+
                 }
 
                 else {

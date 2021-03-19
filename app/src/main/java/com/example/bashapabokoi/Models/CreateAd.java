@@ -2,19 +2,23 @@ package com.example.bashapabokoi.Models;
 
 public class CreateAd {
 
-    private String title, address, thana, vacFrom, flatType, washroom, verenda, bedroom, floor, religeon, genre, currentBill, waterBill, gasBill, otherCharges, lift, generator, parking, security, gas, wifi, description, rent, imageUrl1, imageUrl2, imageUr13, imageUrl4, imageUrl5;
+    private String title, address, thana, vacFrom, flatType, washroom, veranda, bedroom, floor, religion, genre, currentBill, waterBill, gasBill, otherCharges, lift, generator, parking, security, gas, wifi, description, rent, imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5;
 
-    public CreateAd(String title, String address, String thana, String vacFrom, String flatType, String washroom, String verenda, String bedroom, String floor, String religeon, String genre, String currentBill, String waterBill, String gasBill, String otherCharges, String lift, String generator, String parking, String security, String gas, String wifi, String description, String rent, String imageUrl1, String imageUrl2, String imageUrl3, String imageUrl4, String imageUrl5) {
+    private String longitude, latitude;
+    private String key;
+
+    public CreateAd(String key, String title, String address, String thana, String vacFrom, String flatType, String washroom, String veranda, String bedroom, String floor, String religion, String genre, String currentBill, String waterBill, String gasBill, String otherCharges, String lift, String generator, String parking, String security, String gas, String wifi, String description, String rent, String imageUrl1, String imageUrl2, String imageUrl3, String imageUrl4, String imageUrl5, String longitude, String latitude) {
+        this.key = key;
         this.title = title;
         this.address = address;
         this.thana = thana;
         this.vacFrom = vacFrom;
         this.flatType = flatType;
         this.washroom = washroom;
-        this.verenda = verenda;
+        this.veranda = veranda;
         this.bedroom = bedroom;
         this.floor = floor;
-        this.religeon = religeon;
+        this.religion = religion;
         this.genre = genre;
         this.currentBill = currentBill;
         this.waterBill = waterBill;
@@ -30,11 +34,42 @@ public class CreateAd {
         this.rent = rent;
         this.imageUrl1 = imageUrl1;
         this.imageUrl2 = imageUrl2;
-        this.imageUr13 = imageUrl3;
+        this.imageUrl3 = imageUrl3;
         this.imageUrl4 = imageUrl4;
         this.imageUrl5 = imageUrl5;
+        this.latitude = latitude;
+        this.longitude = longitude;
+
+
     }
 
+    public CreateAd() {
+
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
 
     public String getTitle() {
         return title;
@@ -84,12 +119,12 @@ public class CreateAd {
         this.washroom = washroom;
     }
 
-    public String getVerenda() {
-        return verenda;
+    public String getVeranda() {
+        return veranda;
     }
 
-    public void setVerenda(String verenda) {
-        this.verenda = verenda;
+    public void setVeranda(String veranda) {
+        this.veranda = veranda;
     }
 
     public String getBedroom() {
@@ -108,12 +143,12 @@ public class CreateAd {
         this.floor = floor;
     }
 
-    public String getReligeon() {
-        return religeon;
+    public String getReligion() {
+        return religion;
     }
 
-    public void setReligeon(String religeon) {
-        this.religeon = religeon;
+    public void setReligion(String religion) {
+        this.religion = religion;
     }
 
     public String getGenre() {
@@ -236,13 +271,11 @@ public class CreateAd {
         this.imageUrl2 = imageUrl2;
     }
 
-    public String getImageUr13() {
-        return imageUr13;
+    public String getImageUrl3() {
+        return imageUrl3;
     }
 
-    public void setImageUr13(String imageUr13) {
-        this.imageUr13 = imageUr13;
-    }
+    public void setImageUrl3(String imageUrl3) { this.imageUrl3 = imageUrl3; }
 
     public String getImageUrl4() {
         return imageUrl4;

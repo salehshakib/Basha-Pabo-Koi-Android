@@ -2,6 +2,7 @@ package com.example.bashapabokoi.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +81,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
                 .into(holder.binding.profile);
 
         holder.itemView.setOnClickListener(v -> {
+
+            //Log.d("wishlist",)
             Intent intent = new Intent(context, ChatActivity.class);
             intent.putExtra("name", user.getName());
             intent.putExtra("uid", user.getUid());

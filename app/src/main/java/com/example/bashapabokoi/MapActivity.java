@@ -39,6 +39,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.bashapabokoi.Models.CreateAd;
 import com.example.bashapabokoi.Models.User;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -113,8 +114,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private TextView netInfo;
 
+
+
+    // TODO saleh shakib
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+
+    ArrayList<String> longitude = new ArrayList<>();
+    ArrayList<String> latitude = new ArrayList<>();
+
+
+    //todo
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
@@ -160,6 +175,33 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             getLocationPermission();
         }
+
+
+
+
+        //todo saleh shakib
+        database.getReference().child("Create_ad").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                longitude.clear();
+                latitude.clear();
+
+                for(DataSnapshot snapshot1 : snapshot.getChildren()){
+                    CreateAd ad = snapshot1.getValue(CreateAd.class);
+                    longitude.add(ad.getLongitude());
+                    latitude.add(ad.getLatitude());
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        //todo
     }
 
     @Override
@@ -632,5 +674,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         return true;
     }
+
+
 }
 
