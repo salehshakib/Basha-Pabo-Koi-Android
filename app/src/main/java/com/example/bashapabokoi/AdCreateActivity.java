@@ -618,7 +618,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                             reference.getDownloadUrl().addOnSuccessListener(uri -> {
                                 // Got the download URL for 'users/me/profile.png'
                                 image_url1 = uri.toString();
-                                //Log.d("aaa", img1);
+                                Log.d("img_1", image_url1);
                             });
 
                         }
@@ -638,7 +638,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                             reference.getDownloadUrl().addOnSuccessListener(uri -> {
                                 // Got the download URL for 'users/me/profile.png'
                                 image_url2 = uri.toString();
-                                //Log.d("aaa", img1);
+                                Log.d("img_2", image_url2);
                             });
 
                         }
@@ -657,6 +657,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                             reference.getDownloadUrl().addOnSuccessListener(uri -> {
                                 // Got the download URL for 'users/me/profile.png'
                                 image_url3 = uri.toString();
+                                Log.d("img_3", image_url3);
 
                             });
 
@@ -676,6 +677,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                             reference.getDownloadUrl().addOnSuccessListener(uri -> {
                                 // Got the download URL for 'users/me/profile.png'
                                 image_url4 = uri.toString();
+                                Log.d("img_4", image_url4);
 
                             });
 
@@ -695,6 +697,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                             reference.getDownloadUrl().addOnSuccessListener(uri -> {
                                 // Got the download URL for 'users/me/profile.png'
                                 image_url5 = uri.toString();
+                                Log.d("img_5", image_url5);
 
                             });
 
@@ -718,6 +721,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                             reference.getDownloadUrl().addOnSuccessListener(uri -> {
                                 // Got the download URL for 'users/me/profile.png'
                                 image_url1 = uri.toString();
+                                Log.d("img_1", image_url1);
 
                             });
 
@@ -740,6 +744,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                             reference.getDownloadUrl().addOnSuccessListener(uri -> {
                                 // Got the download URL for 'users/me/profile.png'
                                 image_url2 = uri.toString();
+                                Log.d("img_2", image_url2);
 
                             });
 
@@ -759,6 +764,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                             reference.getDownloadUrl().addOnSuccessListener(uri -> {
                                 // Got the download URL for 'users/me/profile.png'
                                 image_url3 = uri.toString();
+                                Log.d("img_3", image_url3);
 
                             });
 
@@ -778,6 +784,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                             reference.getDownloadUrl().addOnSuccessListener(uri -> {
                                 // Got the download URL for 'users/me/profile.png'
                                 image_url4 = uri.toString();
+                                Log.d("img_4", image_url4);
 
                             });
 
@@ -797,6 +804,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                             reference.getDownloadUrl().addOnSuccessListener(uri -> {
                                 // Got the download URL for 'users/me/profile.png'
                                 image_url5 = uri.toString();
+                                Log.d("img_5", image_url5);
 
                             });
 

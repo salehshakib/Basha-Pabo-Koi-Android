@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -88,22 +89,52 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                 Glide.with(getApplicationContext()).load(u.getProfileImage()).placeholder(R.drawable.user).into(headerProPic);
                 Glide.with(getApplicationContext()).load(u.getProfileImage()).placeholder(R.drawable.user).into(profilePicture);
 
-                ViewPager2 ownerAd = findViewById(R.id.owner_ad_shower);
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+        FirebaseDatabase.getInstance().getReference().child("All_ad").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                ViewPager2 ownerAd = findViewById(R.id.owner_ad_shower);
                 List<OwnerAdShower> ownerAdShowers = new ArrayList<>();
 
-                OwnerAdShower ad1 = new OwnerAdShower("10000", "Adabor", "Seat", "Male only", "https://t.auntmia.com/nthumbs/2016-03-08/2284861/2284861_12b.jpg", 4.5f);
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    String[] arrOfStr = dataSnapshot.getKey().split("-");
+                    for (String s : arrOfStr){
+                        if(FirebaseAuth.getInstance().getUid().equals(s)){
+                            //Log.d("aaaa",s);
 
-                ownerAdShowers.add(ad1);                                //"https://t.auntmia.com/nthumbs/2016-03-08/2284861/2284861_12b.jpg"
+                            OwnerAdShower ad1 = new OwnerAdShower(dataSnapshot.child("rent").getValue().toString(), dataSnapshot.child("thana").getValue().toString(), dataSnapshot.child("flatType").getValue().toString(), dataSnapshot.child("genre").getValue().toString(), dataSnapshot.child("imageUrl1").getValue().toString(), 4.5f);
 
-                OwnerAdShower ad2 = new OwnerAdShower("78000", "Motijheel", "Flat", "Female only", "https://t.auntmia.com/nthumbs/2015-05-07/2360911/2360911_10b.jpg", 4.9f);
+                            ownerAdShowers.add(ad1);                                //"https://t.auntmia.com/nthumbs/2016-03-08/2284861/2284861_12b.jpg"
 
-                ownerAdShowers.add(ad2);                                //"https://t.auntmia.com/nthumbs/2015-05-07/2360911/2360911_10b.jpg"
+                            /*OwnerAdShower ad2 = new OwnerAdShower("78000", "Motijheel", "Flat", "Female only", "https://t.auntmia.com/nthumbs/2015-05-07/2360911/2360911_10b.jpg", 4.9f);
 
-                OwnerAdShower ad3 = new OwnerAdShower("6000", "Mohammadpur", "Sublet", "Family", "https://t.auntmia.com/nthumbs/2014-01-26/2697314/2697314_19b.jpg", 3.5f);
+                            ownerAdShowers.add(ad2);                                //"https://t.auntmia.com/nthumbs/2015-05-07/2360911/2360911_10b.jpg"
 
-                ownerAdShowers.add(ad3);                                //"https://t.auntmia.com/nthumbs/2014-01-26/2697314/2697314_19b.jpg"
+                            OwnerAdShower ad3 = new OwnerAdShower("6000", "Mohammadpur", "Sublet", "Family", "https://t.auntmia.com/nthumbs/2014-01-26/2697314/2697314_19b.jpg", 3.5f);
 
+                            ownerAdShowers.add(ad3);  */                              //"https://t.auntmia.com/nthumbs/2014-01-26/2697314/2697314_19b.jpg"
+
+
+
+                            break;
+
+                        }
+                        break;
+                    }
+
+
+                }
                 ownerAd.setAdapter(new OwnerAdAdapter(ownerAdShowers));
 
                 ownerAd.setClipToPadding(false);
@@ -120,6 +151,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                 });
 
                 ownerAd.setPageTransformer(compositePageTransformer);
+
             }
 
             @Override
