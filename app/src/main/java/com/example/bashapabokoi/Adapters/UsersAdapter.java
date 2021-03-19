@@ -1,5 +1,6 @@
 package com.example.bashapabokoi.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -58,7 +59,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
                         if(snapshot.exists()) {
                             String lastMsg = snapshot.child("lastMsg").getValue(String.class);
                             long time = snapshot.child("lastMsgTime").getValue(Long.class);
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+                            @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
                             holder.binding.msgTime.setText(dateFormat.format(new Date(time)));
                             holder.binding.lastMsg.setText(lastMsg);
                         } else {
@@ -90,7 +91,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
     public int getItemCount() {
         return users.size();
     }
-
 
 
     public static class UsersViewHolder extends RecyclerView.ViewHolder {

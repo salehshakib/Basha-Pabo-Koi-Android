@@ -2,6 +2,7 @@ package com.example.bashapabokoi.Adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.bashapabokoi.AdDescriptionActivity;
 import com.example.bashapabokoi.Models.CreateAd;
 import com.example.bashapabokoi.R;
 import com.example.bashapabokoi.databinding.RowAdsBinding;
@@ -44,11 +46,94 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.AdsViewHolder>{
             holder.binding.genreListViewText.setText(ad.getGenre());
             holder.binding.flatTypeListViewText.setText(ad.getFlatType());
             holder.binding.religionListViewText.setText(ad.getReligion());
-            holder.binding.vacantFromListViewText.setText(ad.getVacFrom());
+
+            try{
+
+                String[] date = ad.getVacFrom().split("-");
+                String month;
+
+                switch (date[1]) {
+                    case "01":
+
+                        month = "January";
+
+                        break;
+                    case "02":
+
+                        month = "February";
+
+                        break;
+                    case "03":
+
+                        month = "March";
+
+                        break;
+                    case "04":
+
+                        month = "April";
+
+                        break;
+                    case "05":
+
+                        month = "May";
+
+                        break;
+                    case "06":
+
+                        month = "June";
+
+                        break;
+                    case "07":
+
+                        month = "July";
+
+                        break;
+                    case "08":
+
+                        month = "August";
+
+                        break;
+                    case "09":
+
+                        month = "September";
+
+                        break;
+                    case "10":
+
+                        month = "October";
+
+                        break;
+                    case "11":
+
+                        month = "November";
+
+                        break;
+                    case "12":
+
+                        month = "December";
+
+                        break;
+                    default:
+
+                        month = ad.getVacFrom();
+                }
+
+                holder.binding.vacantFromListViewText.setText(month);
+
+            } catch (ArrayIndexOutOfBoundsException e){
+
+                holder.binding.vacantFromListViewText.setText(ad.getVacFrom());
+            }
+
+
 
             Glide.with(context).load(ad.getImageUrl1()).placeholder(R.drawable.user).into(holder.binding.listViewImage);
 
-            //TODO Fetch data here
+            holder.itemView.setOnClickListener(v -> {
+
+                Intent intent = new Intent(context, AdDescriptionActivity.class);
+                context.startActivity(intent);
+            });
         }
 
         @Override

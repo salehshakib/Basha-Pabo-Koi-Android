@@ -1,7 +1,6 @@
 package com.example.bashapabokoi;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.bashapabokoi.Adapters.MessagesAdapters;
 import com.example.bashapabokoi.Models.Message;
 import com.example.bashapabokoi.databinding.ActivityChatBinding;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,7 +45,7 @@ public class ChatActivity extends AppCompatActivity {
         binding.recylerView.setAdapter(adapter);
 
 
-        String name = getIntent().getStringExtra("name");
+        //String name = getIntent().getStringExtra("name");
         String receiverUid = getIntent().getStringExtra("uid");
         String senderUid = FirebaseAuth.getInstance().getUid();
 
@@ -105,25 +103,29 @@ public class ChatActivity extends AppCompatActivity {
 
                     });
 
+            assert randomKey != null;
             database.getReference().child("Chats")
                     .child(senderRoom)
                     .child("messages")
                     .child(randomKey)
-                    .setValue(message).addOnSuccessListener(aVoid -> database.getReference().child("User_friends")
-                            .child(senderUid)
-                            .child("Friends")
-                            .child(senderRoom)
-                            .setValue(receiverUid).addOnSuccessListener(aVoid1 -> database.getReference().child("Chats")
-                                    .child(receiverRoom)
-                                    .child("messages")
-                                    .child(randomKey)
-                                    .setValue(message).addOnSuccessListener(aVoid11 -> database.getReference().child("User_friends")
-                                            .child(receiverUid)
-                                            .child("Friends")
-                                            .child(receiverRoom)
-                                            .setValue(senderUid).addOnSuccessListener(aVoid111 -> {
+                    .setValue(message).addOnSuccessListener(aVoid -> {
+                assert senderUid != null;
+                database.getReference().child("User_friends")
+                        .child(senderUid)
+                        .child("Friends")
+                        .child(senderRoom)
+                        .setValue(receiverUid).addOnSuccessListener(aVoid1 -> database.getReference().child("Chats")
+                                .child(receiverRoom)
+                                .child("messages")
+                                .child(randomKey)
+                                .setValue(message).addOnSuccessListener(aVoid11 -> database.getReference().child("User_friends")
+                                        .child(receiverUid)
+                                        .child("Friends")
+                                        .child(receiverRoom)
+                                        .setValue(senderUid).addOnSuccessListener(aVoid111 -> {
 
-                                            }))));
+                                        })));
+            });
 
         });
 

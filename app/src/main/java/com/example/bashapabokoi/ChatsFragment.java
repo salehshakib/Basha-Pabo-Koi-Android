@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 public class ChatsFragment extends Fragment {
 
@@ -58,7 +59,7 @@ public class ChatsFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         list.clear();
                         for (DataSnapshot snapshot2 : snapshot.getChildren()) {
-                            list.add(snapshot2.getValue().toString());
+                            list.add(Objects.requireNonNull(snapshot2.getValue()).toString());
 
                         }
                     }
@@ -80,7 +81,7 @@ public class ChatsFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         keys.clear();
                         for(DataSnapshot ds : snapshot.getChildren()){
-                            if(ds.getKey().substring(0, 28).equals(senderUid)) {
+                            if(Objects.requireNonNull(ds.getKey()).substring(0, 28).equals(senderUid)) {
                                 String s = ds.getKey().replaceAll(senderUid, "");
                                 keys.add(s);
                                 Log.d("aaa", s);
@@ -115,6 +116,7 @@ public class ChatsFragment extends Fragment {
                                     }*/ //
 
 
+                                assert user != null;
                                 if(user.getUid().equals(i)) {
                                 //if(!user.getUid().equals(FirebaseAuth.getInstance().getUid())){
                                     users.add(user);
