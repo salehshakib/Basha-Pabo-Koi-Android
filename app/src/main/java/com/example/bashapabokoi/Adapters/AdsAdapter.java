@@ -29,16 +29,16 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.AdsViewHolder>{
         @NonNull
         @Override
         public AdsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(context).inflate(R.layout.row_ads, parent, false);
-            return new AdsViewHolder(view);
+
+            return new AdsViewHolder(LayoutInflater.from(context).inflate(R.layout.row_ads, parent, false));
         }
 
         @Override
         public void onBindViewHolder(@NonNull AdsViewHolder holder, int position) {
             CreateAd ad = ads.get(position);
 
-            holder.binding.basicTitle.setText(ad.getGas());
-
+            //holder.binding.basicTitle.setText(ad.getGas());
+            //TODO Fetch data here
         }
 
         @Override
@@ -47,9 +47,7 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.AdsViewHolder>{
         }
 
 
-
-
-        public class AdsViewHolder extends RecyclerView.ViewHolder{
+        public static class AdsViewHolder extends RecyclerView.ViewHolder{
             RowAdsBinding binding;
 
             public AdsViewHolder(@NonNull View itemView) {

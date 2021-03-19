@@ -1,7 +1,6 @@
 package com.example.bashapabokoi.Adapters;
 
 import android.annotation.SuppressLint;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,31 +60,6 @@ public class OwnerAdAdapter extends RecyclerView.Adapter<OwnerAdAdapter.OwnerAdH
             textGenre = itemView.findViewById(R.id.genre_profile);
             textFlatType = itemView.findViewById(R.id.flat_type_profile);
             textStarRating = itemView.findViewById(R.id.profile_ad_rating);
-            TextView takaSign = itemView.findViewById(R.id.textView25);
-            ImageView addressSign = itemView.findViewById(R.id.imageView3);
-            ImageView starRating = itemView.findViewById(R.id.star_rating);
-
-            textRent.setAlpha(0f);
-            textLocation.setAlpha(0f);
-            textGenre.setAlpha(0f);
-            textFlatType.setAlpha(0f);
-            textStarRating.setAlpha(0f);
-            takaSign.setAlpha(0f);
-            addressSign.setAlpha(0f);
-            starRating.setAlpha(0f);
-
-
-            textRent.animate().alpha(1f).setDuration(400).start();
-            takaSign.animate().alpha(1f).setDuration(400).start();
-
-            textStarRating.animate().alpha(1f).setDuration(400).start();
-            starRating.animate().alpha(1f).setDuration(400).start();
-
-            textLocation.animate().alpha(1f).setDuration(500).start();
-            addressSign.animate().alpha(1f).setDuration(500).start();
-
-            textFlatType.animate().alpha(1f).setDuration(600).start();
-            textGenre.animate().alpha(1f).setDuration(600).start();
 
         }
 

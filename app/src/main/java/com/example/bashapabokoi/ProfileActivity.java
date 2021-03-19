@@ -92,38 +92,17 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
                 List<OwnerAdShower> ownerAdShowers = new ArrayList<>();
 
-                OwnerAdShower ad1 = new OwnerAdShower();
+                OwnerAdShower ad1 = new OwnerAdShower("10000", "Adabor", "Seat", "Male only", "https://t.auntmia.com/nthumbs/2016-03-08/2284861/2284861_12b.jpg", 4.5f);
 
-                ad1.imageUri = "https://t.auntmia.com/nthumbs/2016-03-08/2284861/2284861_12b.jpg";        //"https://t.auntmia.com/nthumbs/2016-03-08/2284861/2284861_12b.jpg"
-                ad1.rent = "10000";
-                ad1.location = "Adabor";
-                ad1.flatType = "Seat";
-                ad1.genre = "Male only";
-                ad1.starRating = 4.5f;
+                ownerAdShowers.add(ad1);                                //"https://t.auntmia.com/nthumbs/2016-03-08/2284861/2284861_12b.jpg"
 
-                ownerAdShowers.add(ad1);
+                OwnerAdShower ad2 = new OwnerAdShower("78000", "Motijheel", "Flat", "Female only", "https://t.auntmia.com/nthumbs/2015-05-07/2360911/2360911_10b.jpg", 4.9f);
 
-                OwnerAdShower ad2 = new OwnerAdShower();
+                ownerAdShowers.add(ad2);                                //"https://t.auntmia.com/nthumbs/2015-05-07/2360911/2360911_10b.jpg"
 
-                ad2.imageUri = "https://t.auntmia.com/nthumbs/2015-05-07/2360911/2360911_10b.jpg";     //"https://t.auntmia.com/nthumbs/2015-05-07/2360911/2360911_10b.jpg"
-                ad2.rent = "78000";
-                ad2.location = "Motijheel";
-                ad2.flatType = "Flat";
-                ad2.genre = "Female only";
-                ad2.starRating = 4.9f;
+                OwnerAdShower ad3 = new OwnerAdShower("6000", "Mohammadpur", "Sublet", "Family", "https://t.auntmia.com/nthumbs/2014-01-26/2697314/2697314_19b.jpg", 3.5f);
 
-                ownerAdShowers.add(ad2);
-
-                OwnerAdShower ad3 = new OwnerAdShower();
-
-                ad3.imageUri = "https://t.auntmia.com/nthumbs/2014-01-26/2697314/2697314_19b.jpg";     //"https://t.auntmia.com/nthumbs/2014-01-26/2697314/2697314_19b.jpg"
-                ad3.rent = "6000";
-                ad3.location = "Mohammadpur";
-                ad3.flatType = "Sublet";
-                ad3.genre = "Family";
-                ad3.starRating = 3.5f;
-
-                ownerAdShowers.add(ad3);
+                ownerAdShowers.add(ad3);                                //"https://t.auntmia.com/nthumbs/2014-01-26/2697314/2697314_19b.jpg"
 
                 ownerAd.setAdapter(new OwnerAdAdapter(ownerAdShowers));
 

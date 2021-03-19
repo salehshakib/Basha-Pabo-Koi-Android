@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ListViewFragment extends Fragment {
 
@@ -30,12 +31,8 @@ public class ListViewFragment extends Fragment {
     ArrayList<CreateAd> allAds;
     AdsAdapter adsAdapter;
 
-
-
     @Nullable
     @Override
-
-
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FragmentListadsBinding.inflate(inflater, container, false);
@@ -51,9 +48,9 @@ public class ListViewFragment extends Fragment {
                 for(DataSnapshot ds : snapshot.getChildren()){
 
                     //todo reclyview horrizontal // aumi r akm // ei code alada
-                    String[] arrOfStr = ds.getKey().split("-");
+                    String[] arrOfStr = Objects.requireNonNull(ds.getKey()).split("-");
                     for (String s : arrOfStr){
-                        if(auth.getUid().equals(s)){
+                        if(Objects.equals(auth.getUid(), s)){
                             Log.d("aaaa",s);
                             break;
 
@@ -66,7 +63,6 @@ public class ListViewFragment extends Fragment {
                         CreateAd showAds = ds.getValue(CreateAd.class);
                         allAds.add(showAds);
 
-                        Log.d("aaa",showAds.getGas());
                     }
                 adsAdapter.notifyDataSetChanged();
                 }
@@ -94,10 +90,6 @@ public class ListViewFragment extends Fragment {
             }
         });*/
 
-
-
         return binding.getRoot();
-
-        //return inflater.inflate(R.layout.fragment_listads, container, false);
     }
 }

@@ -42,8 +42,8 @@ public class CustomEditDialog extends Dialog implements View.OnClickListener {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.custom_dialog);
-        yes = (Button) findViewById(R.id.btn_yes);
-        no = (Button) findViewById(R.id.btn_no);
+        yes = findViewById(R.id.btn_yes);
+        no = findViewById(R.id.btn_no);
         titleText = findViewById(R.id.custom_dialog_title);
         editContent = findViewById(R.id.editable_content);
 
