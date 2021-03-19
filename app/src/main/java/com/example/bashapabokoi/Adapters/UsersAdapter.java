@@ -77,7 +77,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
 
         holder.binding.userName.setText(user.getName());
         Glide.with(context).load(user.getProfileImage())
-                .placeholder(R.drawable.me)
+                .placeholder(R.drawable.user)
                 .into(holder.binding.profile);
 
         holder.itemView.setOnClickListener(v -> {
@@ -99,7 +99,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
 
 
 
-    public class UsersViewHolder extends RecyclerView.ViewHolder {
+    public static class UsersViewHolder extends RecyclerView.ViewHolder {
 
         RowConversationBinding binding;
 

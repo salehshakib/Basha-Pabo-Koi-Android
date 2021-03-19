@@ -3,6 +3,7 @@ package com.example.bashapabokoi;
 import android.Manifest;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,6 +12,9 @@ import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -38,6 +42,12 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.airbnb.lottie.Lottie;
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieProperty;
+import com.airbnb.lottie.model.KeyPath;
+import com.airbnb.lottie.value.LottieFrameInfo;
+import com.airbnb.lottie.value.SimpleLottieValueCallback;
 import com.bumptech.glide.Glide;
 import com.example.bashapabokoi.Models.CreateAd;
 import com.example.bashapabokoi.Models.User;
@@ -112,6 +122,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     NavigationView navigationView;
     BottomNavigationView bottomNavigationView;
 
+    public static LottieAnimationView langSwitch, modeSwitch, modeSwitchDark, langSwitchDark;
+    private static boolean isLangSwitchOn = false;
+    private static boolean isModeSwitchOn = false;
+
     private TextView netInfo;
 
 
@@ -126,6 +140,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
     //todo
+
+    public static void setIsModeSwitchOn(boolean isModeSwitchOn) {
+        MapActivity.isModeSwitchOn = isModeSwitchOn;
+    }
+
+    public static void setIsLangSwitchOn(boolean isLangSwitchOn) {
+        MapActivity.isLangSwitchOn = isLangSwitchOn;
+    }
+
+    public static boolean isIsModeSwitchOn() {
+        return isModeSwitchOn;
+    }
+
+    public static boolean isIsLangSwitchOn() {
+        return isLangSwitchOn;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,7 +183,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 headerProfileName.setText(snapshot.child("name").getValue().toString());
 
                 User u = snapshot.getValue(User.class);
-                Glide.with(getApplicationContext()).load(u.getProfileImage()).placeholder(R.drawable.me).into(headerProPic);
+                Glide.with(getApplicationContext()).load(u.getProfileImage()).placeholder(R.drawable.user).into(headerProPic);
             }
 
             @Override
@@ -170,6 +200,53 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(this);
+
+        langSwitch = navigationView.findViewById(R.id.switch_lang);
+        modeSwitch = navigationView.findViewById(R.id.switch_mode);
+        langSwitchDark = navigationView.findViewById(R.id.switch_lang_dark);
+        modeSwitchDark = navigationView.findViewById(R.id.switch_mode_dark);
+
+        langSwitch.setOnClickListener(v -> {
+
+            if(isLangSwitchOn){
+
+                langSwitch.setMinAndMaxProgress(0.5f, 1.0f);
+                langSwitchDark.setMinAndMaxProgress(0.5f, 1.0f);
+                isLangSwitchOn = false;
+
+            } else{
+
+                langSwitch.setMinAndMaxProgress(0.0f, 0.5f);
+                langSwitchDark.setMinAndMaxProgress(0.0f, 0.5f);
+                isLangSwitchOn = true;
+            }
+            langSwitch.playAnimation();
+            langSwitchDark.playAnimation();
+        });
+
+        modeSwitch.setOnClickListener(v -> {
+
+            if(isModeSwitchOn){
+
+                modeSwitch.setMinAndMaxProgress(0.5f, 1.0f);
+                modeSwitchDark.setMinAndMaxProgress(0.5f, 1.0f);
+                isModeSwitchOn = false;
+
+                modeSwitch.animate().alphaBy(1.0f).setDuration(600);
+                langSwitch.animate().alphaBy(1.0f).setDuration(600);
+
+            } else{
+
+                modeSwitch.setMinAndMaxProgress(0.0f, 0.5f);
+                modeSwitchDark.setMinAndMaxProgress(0.0f, 0.5f);
+                isModeSwitchOn = true;
+
+                modeSwitch.animate().alphaBy(-1.0f).setDuration(600);
+                langSwitch.animate().alphaBy(-1.0f).setDuration(600);
+            }
+            modeSwitch.playAnimation();
+            modeSwitchDark.playAnimation();
+        });
 
         if (isServicesOK()) {
 
@@ -208,6 +285,39 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     protected void onResume() {
         super.onResume();
 
+        if(isModeSwitchOn){
+
+            langSwitch.setAlpha(0.0f);
+            modeSwitch.setAlpha(0.0f);
+
+            modeSwitch.setMinAndMaxProgress(0.0f, 0.5f);
+            modeSwitchDark.setMinAndMaxProgress(0.0f, 0.5f);
+
+        } else{
+
+            langSwitch.setAlpha(1.0f);
+            modeSwitch.setAlpha(1.0f);
+
+            modeSwitch.setMinAndMaxProgress(0.5f, 1.0f);
+            modeSwitchDark.setMinAndMaxProgress(0.5f, 1.0f);
+        }
+
+        if(isLangSwitchOn){
+
+            langSwitch.setMinAndMaxProgress(0.0f, 0.5f);
+            langSwitchDark.setMinAndMaxProgress(0.0f, 0.5f);
+
+        } else{
+
+            langSwitch.setMinAndMaxProgress(0.5f, 1.0f);
+            langSwitchDark.setMinAndMaxProgress(0.5f, 1.0f);
+        }
+
+        langSwitch.playAnimation();
+        langSwitchDark.playAnimation();
+        modeSwitch.playAnimation();
+        modeSwitchDark.playAnimation();
+        
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkReceiver, filter);
     }
@@ -229,13 +339,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     ValueAnimator valueAnimator = ValueAnimator.ofArgb(Color.parseColor("#212121"), Color.parseColor("#0BA100"));
                     valueAnimator.setDuration(500);
 
-                    valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator animation) {
+                    valueAnimator.addUpdateListener(animation -> {
 
-                            netInfo.setBackgroundColor((int) valueAnimator.getAnimatedValue());
-                            netInfo.setText(R.string.back_online);
-                        }
+                        netInfo.setBackgroundColor((int) valueAnimator.getAnimatedValue());
+                        netInfo.setText(R.string.back_online);
                     });
                     valueAnimator.start();
 
@@ -311,8 +418,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         @Override
         public void onDrawerClosed(@NonNull View drawerView) {
 
-            Log.d("ItemIndex", "Value " + navItemIndex);
-
             if(navItemIndex == R.id.nav_list_view){
 
                 bottomNavigationView.getMenu().getItem(1).setChecked(true);
@@ -380,14 +485,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-        gps.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-
-                getDeviceLocation();
-            }
-        });
+        gps.setOnClickListener(v -> getDeviceLocation());
     }
 
     private void geoLocate(){
@@ -656,6 +754,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         switch(item.getItemId()){
 
+            case R.id.nav_pro:
+
+                Intent intentProfile = new Intent(MapActivity.this, ProfileActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(intentProfile);
+                break;
+
             case R.id.nav_out:
 
                 FirebaseAuth.getInstance().signOut();
@@ -667,7 +772,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                 Intent intentAd = new Intent(MapActivity.this, AdCreateActivity.class);
                 drawerLayout.closeDrawer(GravityCompat.START);
-                Log.d("NAV MENU", "VALUE: " + navigationView.getMenu().getItem(3));
                 startActivity(intentAd);
                 break;
         }
@@ -677,4 +781,3 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
 }
-

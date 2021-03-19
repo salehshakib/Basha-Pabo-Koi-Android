@@ -18,7 +18,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginTabFragment extends Fragment {
 
-    FirebaseAuth auth;
     LoginTabFragmentBinding binding;
 
     public static boolean isLoggedIn = false;
@@ -29,7 +28,7 @@ public class LoginTabFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
 
-        binding = LoginTabFragmentBinding.inflate((getLayoutInflater()));
+        binding = LoginTabFragmentBinding.inflate(getLayoutInflater());
 
         EditText num = binding.phoneNo;
         Button login = binding.butLogin;
@@ -64,13 +63,7 @@ public class LoginTabFragment extends Fragment {
             binding.keepMeLoggedIn.playAnimation();
         });
 
-        auth = FirebaseAuth.getInstance();
-
         //TODO KEEP ME LOGGED IN
-        if(auth.getCurrentUser() != null) {
-            Intent intent = new Intent(getContext(), MapActivity.class);
-            startActivity(intent);
-        }
 
         num.requestFocus();
 

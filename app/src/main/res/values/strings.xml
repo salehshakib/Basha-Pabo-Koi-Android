@@ -111,4 +111,12 @@
     <string name="profile_name_and_picture">Profile name and picture</string>
     <string name="rent">Rent:</string>
     <string name="add_photos">Add photos:</string>
+    <string name="phone_number_profile">Phone number</string>
+    <string name="number_eg">01XXXXXXXXX</string>
+    <string name="email_eg">name@example.com</string>
+    <string name="rent_eg">10000</string>
+    <string name="your_ads">Your ads:</string>
+    <string name="check_your_wish_list">Check your Wish list</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

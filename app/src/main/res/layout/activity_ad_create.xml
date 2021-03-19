@@ -18,23 +18,37 @@
         app:itemTextColor="@drawable/drawer_item_color"
         app:menu="@menu/main_menu">
 
-        <Switch
-            android:id="@+id/switch_lang"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/switch_lang_dark"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="316dp"
             android:layout_marginStart="220dp"
-            android:layout_marginTop="320dp"
-            android:text=""
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
+            app:lottie_fileName="switch_dark.json"/>
 
-        <Switch
-            android:id="@+id/switch_mode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/switch_lang"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="316dp"
             android:layout_marginStart="220dp"
-            android:layout_marginTop="370dp"
-            android:text=""
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
+            app:lottie_fileName="switch_light.json"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/switch_mode_dark"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="366dp"
+            android:layout_marginStart="220dp"
+            app:lottie_fileName="switch_dark.json"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/switch_mode"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="366dp"
+            android:layout_marginStart="220dp"
+            app:lottie_fileName="switch_light.json"/>
     </com.google.android.material.navigation.NavigationView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -214,8 +228,9 @@
                             android:background="@drawable/edit_text_bg"
                             android:fontFamily="@font/roboto"
                             android:gravity="top|start"
-                            android:inputType="text"
+                            android:inputType="textMultiLine"
                             android:paddingStart="20dp"
+                            android:paddingEnd="20dp"
                             android:paddingTop="10dp"
                             android:paddingBottom="10dp"
                             android:textCursorDrawable="@drawable/cursor_color"
@@ -853,7 +868,8 @@
                             android:background="@drawable/edit_text_bg"
                             android:fontFamily="@font/roboto"
                             android:gravity="top|start"
-                            android:inputType="text"
+                            android:paddingEnd="20dp"
+                            android:inputType="textMultiLine"
                             android:paddingStart="20dp"
                             android:paddingTop="10dp"
                             android:paddingBottom="10dp"

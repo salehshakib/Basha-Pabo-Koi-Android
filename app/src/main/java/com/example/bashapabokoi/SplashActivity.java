@@ -1,5 +1,16 @@
 package com.example.bashapabokoi;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -9,20 +20,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -61,35 +60,48 @@ public class SplashActivity extends AppCompatActivity {
         name.setAnimation(fadeIn2);
         powered.setAnimation(fadeIn2);
 
-        view.animate().translationY(-5000).setDuration(1000).setStartDelay(4000);
-        lottieSplash.animate().translationY(1600).setDuration(1000).setStartDelay(4000);
-        welcome.animate().translationY(2200).setDuration(1000).setStartDelay(4000);
-        to.animate().translationY(2200).setDuration(1000).setStartDelay(4000);
-        name.animate().translationY(2200).setDuration(1000).setStartDelay(4000);
-        powered.animate().translationY(2200).setDuration(1000).setStartDelay(4000);
+        int splashTime = 3500;
+        new Handler().postDelayed(() -> {
 
-        view.animate().alphaBy((float) -0.4).setDuration(1000).setStartDelay(4000);
-        lottieSplash.animate().alphaBy((float) -0.4).setDuration(1000).setStartDelay(4000);
-        welcome.animate().alphaBy((float) -0.4).setDuration(1000).setStartDelay(4000);
-        to.animate().alphaBy((float) -0.4).setDuration(1000).setStartDelay(4000);
-        name.animate().alphaBy((float) -0.4).setDuration(1000).setStartDelay(4000);
-        powered.animate().alphaBy((float) -0.4).setDuration(1000).setStartDelay(4000);
+            sharedPreferences = getSharedPreferences("SharedPref", MODE_PRIVATE);
+            boolean isFirstTime = sharedPreferences.getBoolean("firstTime", true);
 
-        int splashTime = 4000;
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+            if(isFirstTime){
 
-                sharedPreferences = getSharedPreferences("SharedPref", MODE_PRIVATE);
-                boolean isFirstTime = sharedPreferences.getBoolean("firstTime", true);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("firstTime", false);
+                editor.apply();
 
-                if(isFirstTime){
+                view.animate().translationY(-5000).setDuration(1000).setStartDelay(4000);
+                lottieSplash.animate().translationY(1600).setDuration(1000).setStartDelay(4000);
+                welcome.animate().translationY(2200).setDuration(1000).setStartDelay(4000);
+                to.animate().translationY(2200).setDuration(1000).setStartDelay(4000);
+                name.animate().translationY(2200).setDuration(1000).setStartDelay(4000);
+                powered.animate().translationY(2200).setDuration(1000).setStartDelay(4000);
 
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("firstTime", false);
-                    editor.apply();
+                view.animate().alphaBy((float) -0.4).setDuration(1000).setStartDelay(4000);
+                lottieSplash.animate().alphaBy((float) -0.4).setDuration(1000).setStartDelay(4000);
+                welcome.animate().alphaBy((float) -0.4).setDuration(1000).setStartDelay(4000);
+                to.animate().alphaBy((float) -0.4).setDuration(1000).setStartDelay(4000);
+                name.animate().alphaBy((float) -0.4).setDuration(1000).setStartDelay(4000);
+                powered.animate().alphaBy((float) -0.4).setDuration(1000).setStartDelay(4000);
 
-                } else {
+                anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in_splash);
+
+                ViewPager viewPager = findViewById(R.id.pager);
+                ScreenSliderPagerAdepter pagerAdepter = new ScreenSliderPagerAdepter(getSupportFragmentManager());
+                viewPager.setAdapter(pagerAdepter);
+                viewPager.setAnimation(anim);
+
+            } else {
+
+                if(FirebaseAuth.getInstance().getCurrentUser() != null){
+
+                    Intent intent = new Intent(SplashActivity.this, MapActivity.class);
+                    startActivity(intent);
+                    finish();
+
+                } else{
 
                     Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                     startActivity(intent);
@@ -97,14 +109,9 @@ public class SplashActivity extends AppCompatActivity {
                 }
 
             }
+
         }, splashTime);
 
-        anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in_splash);
-
-        ViewPager viewPager = findViewById(R.id.pager);
-        ScreenSliderPagerAdepter pagerAdepter = new ScreenSliderPagerAdepter(getSupportFragmentManager());
-        viewPager.setAdapter(pagerAdepter);
-        viewPager.setAnimation(anim);
     }
 
     private void verifyPermissions(){
@@ -145,16 +152,13 @@ public class SplashActivity extends AppCompatActivity {
             switch (position){
 
                 case 0:
-                    OnBoardingFragment1 tab1 = new OnBoardingFragment1();
-                    return tab1;
+                    return new OnBoardingFragment1();
 
                 case 1:
-                    OnBoardingFragment2 tab2 = new OnBoardingFragment2();
-                    return tab2;
+                    return new OnBoardingFragment2();
 
                 case 2:
-                    OnBoardingFragment3 tab3 = new OnBoardingFragment3();
-                    return tab3;
+                    return new OnBoardingFragment3();
             }
 
             return null;

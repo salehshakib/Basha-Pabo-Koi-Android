@@ -22,6 +22,7 @@
         android:roundIcon="@drawable/homescreen"
         android:supportsRtl="true"
         android:theme="@style/Theme.BashaPaboKoi">
+        <activity android:name=".ProfileActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

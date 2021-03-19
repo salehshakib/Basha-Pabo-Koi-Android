@@ -78,77 +78,53 @@ public class ChatActivity extends AppCompatActivity {
                 });
 
 
-        binding.sendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String messageTxt = binding.messageBox.getText().toString();
+        binding.sendBtn.setOnClickListener(v -> {
+            String messageTxt = binding.messageBox.getText().toString();
 
-                Date date = new Date();
+            Date date = new Date();
 
 
-                Message message = new Message(messageTxt, senderUid, date.getTime());
-                binding.messageBox.setText("");
+            Message message = new Message(messageTxt, senderUid, date.getTime());
+            binding.messageBox.setText("");
 
 
-                String randomKey = database.getReference().push().getKey();
+            String randomKey = database.getReference().push().getKey();
 
-                HashMap<String, Object> lastMsgObj = new HashMap<>();
-                lastMsgObj.put("lastMsg", message.getMessage());
-                lastMsgObj.put("lastMsgTime", date.getTime());
+            HashMap<String, Object> lastMsgObj = new HashMap<>();
+            lastMsgObj.put("lastMsg", message.getMessage());
+            lastMsgObj.put("lastMsgTime", date.getTime());
 
-                database.getReference().child("Chats").child(senderRoom).updateChildren(lastMsgObj);
-                database.getReference().child("Chats").child(receiverRoom).updateChildren(lastMsgObj);
+            database.getReference().child("Chats").child(senderRoom).updateChildren(lastMsgObj);
+            database.getReference().child("Chats").child(receiverRoom).updateChildren(lastMsgObj);
 
-                database.getReference()
-                        .child("Chat_time")
-                        .child(senderRoom)
-                        .setValue(date.getTime())
-                        .addOnSuccessListener(aVoid -> {
+            database.getReference()
+                    .child("Chat_time")
+                    .child(senderRoom)
+                    .setValue(date.getTime())
+                    .addOnSuccessListener(aVoid -> {
 
-                        });
+                    });
 
-                database.getReference().child("Chats")
-                        .child(senderRoom)
-                        .child("messages")
-                        .child(randomKey)
-                        .setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        database.getReference().child("User_friends")
-                                .child(senderUid)
-                                .child("Friends")
-                                .child(senderRoom)
-                                .setValue(receiverUid).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                database.getReference().child("Chats")
-                                        .child(receiverRoom)
-                                        .child("messages")
-                                        .child(randomKey)
-                                        .setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        database.getReference().child("User_friends")
-                                                .child(receiverUid)
-                                                .child("Friends")
-                                                .child(receiverRoom)
-                                                .setValue(senderUid).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
+            database.getReference().child("Chats")
+                    .child(senderRoom)
+                    .child("messages")
+                    .child(randomKey)
+                    .setValue(message).addOnSuccessListener(aVoid -> database.getReference().child("User_friends")
+                            .child(senderUid)
+                            .child("Friends")
+                            .child(senderRoom)
+                            .setValue(receiverUid).addOnSuccessListener(aVoid1 -> database.getReference().child("Chats")
+                                    .child(receiverRoom)
+                                    .child("messages")
+                                    .child(randomKey)
+                                    .setValue(message).addOnSuccessListener(aVoid11 -> database.getReference().child("User_friends")
+                                            .child(receiverUid)
+                                            .child("Friends")
+                                            .child(receiverRoom)
+                                            .setValue(senderUid).addOnSuccessListener(aVoid111 -> {
 
-                                            }
-                                        });
+                                            }))));
 
-                                    }
-                                });
-
-                            }
-                        });
-
-                    }
-                });
-
-            }
         });
 
     }

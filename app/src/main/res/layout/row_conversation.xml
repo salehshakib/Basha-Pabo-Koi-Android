@@ -6,13 +6,15 @@
     android:layout_height="wrap_content"
     android:padding="5dp">
 
-    <ImageView
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/profile"
         android:layout_width="45dp"
         android:layout_height="45dp"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/me"
+        android:src="@drawable/user"
+        app:riv_oval="true"
         android:contentDescription="@string/todo" />
 
     <TextView

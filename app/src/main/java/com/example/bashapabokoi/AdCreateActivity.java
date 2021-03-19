@@ -1,12 +1,5 @@
 package com.example.bashapabokoi;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.FileProvider;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -36,14 +29,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.bashapabokoi.Models.CreateAd;
 import com.example.bashapabokoi.Models.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -54,7 +52,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.ByteArrayOutputStream;
@@ -91,7 +88,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
     ImageView img1, img2, img3, img4, img5;
 
     String longitude, latitude;
-    String imgage_url1 = "no_image", imgage_url2 = "no_image", imgage_url3 = "no_image", imgage_url4 = "no_image", imgage_url5 = "no_image";
+    String image_url1 = "no_image", image_url2 = "no_image", image_url3 = "no_image", image_url4 = "no_image", image_url5 = "no_image";
 
     Button createButton;
     EditText titleTextBox, addressTextBox, currentBillTextBox, waterBillTextBox, gasBillTextBox, otherChargeTextBox, descriptionTextBox, rentTextBox;
@@ -214,11 +211,6 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
                 String randomKey = database.getReference().push().getKey();
 
-                /*CreateAd newAd = new CreateAd(title, address, thana, vacFrom, flatType, washroom, veranda, bedroom, floor, religion, genre, currentBill, waterBill, gasBill, otherCharge, Boolean.toString(isLiftChecked), Boolean.toString(isGeneratorChecked), Boolean.toString(isParkingChecked), Boolean.toString(isSecurityChecked), Boolean.toString(isGasChecked), Boolean.toString(isWifiChecked), description, rent, "no_image","no_image","no_image","no_image","no_image", longitude, latitude);
-
-                database.getReference().child("Create_ad").child(auth.getUid()).child(randomKey).setValue(newAd)
-                        .addOnSuccessListener(aVoid -> Toast.makeText(AdCreateActivity.this,"ok", Toast.LENGTH_SHORT).show());*/
-
                 AlertDialog.Builder markerPlacementDialog = new AlertDialog.Builder(this);
                 markerPlacementDialog.setTitle("Are you at your place?");
                 markerPlacementDialog.setMessage("We need to add a marker in the map so that renters can find your place easily. We recommend you to be at your place for precise marking.");
@@ -244,7 +236,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
                             Log.d("lungi",longitude);
                             Log.d("titti", latitude);
-                            CreateAd newAd = new CreateAd(auth.getUid()+randomKey, title, address, thana, vacFrom, flatType, washroom, veranda, bedroom, floor, religion, genre, currentBill, waterBill, gasBill, otherCharge, Boolean.toString(isLiftChecked), Boolean.toString(isGeneratorChecked), Boolean.toString(isParkingChecked), Boolean.toString(isSecurityChecked), Boolean.toString(isGasChecked), Boolean.toString(isWifiChecked), description, rent, imgage_url1,imgage_url2,imgage_url3,imgage_url4,imgage_url5, longitude, latitude);
+                            CreateAd newAd = new CreateAd(auth.getUid()+randomKey, title, address, thana, vacFrom, flatType, washroom, veranda, bedroom, floor, religion, genre, currentBill, waterBill, gasBill, otherCharge, Boolean.toString(isLiftChecked), Boolean.toString(isGeneratorChecked), Boolean.toString(isParkingChecked), Boolean.toString(isSecurityChecked), Boolean.toString(isGasChecked), Boolean.toString(isWifiChecked), description, rent, image_url1,image_url2,image_url3,image_url4,image_url5, longitude, latitude);
 
                             /*database.getReference().child("Create_ad").child(auth.getUid()).child(randomKey).setValue(newAd)
                                     .addOnSuccessListener(aVoid -> Toast.makeText(AdCreateActivity.this,"ok", Toast.LENGTH_SHORT).show());
@@ -304,7 +296,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                 headerProfileName.setText(snapshot.child("name").getValue().toString());
 
                 User u = snapshot.getValue(User.class);
-                Glide.with(getApplicationContext()).load(u.getProfileImage()).placeholder(R.drawable.me).into(headerProPic);
+                Glide.with(getApplicationContext()).load(u.getProfileImage()).placeholder(R.drawable.user).into(headerProPic);
             }
 
             @Override
@@ -621,21 +613,16 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
                     //getImageUri(image, Bitmap.CompressFormat.JPEG, 100);
                     StorageReference reference = storage.getReference().child("Ad_pictures").child(auth.getUid()).child("Image_1");
-                    reference.putFile(getImageUri(image, Bitmap.CompressFormat.JPEG, 100)).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            if(task.isSuccessful()){
-                                reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    public void onSuccess(Uri uri) {
-                                        // Got the download URL for 'users/me/profile.png'
-                                        imgage_url1 = uri.toString();
-                                        //Log.d("aaa", img1);
-                                    }
-                                });
-
-                            }
+                    reference.putFile(getImageUri(image, Bitmap.CompressFormat.JPEG, 100)).addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            reference.getDownloadUrl().addOnSuccessListener(uri -> {
+                                // Got the download URL for 'users/me/profile.png'
+                                image_url1 = uri.toString();
+                                //Log.d("aaa", img1);
+                            });
 
                         }
+
                     });
 
 
@@ -646,21 +633,16 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                     img2.setImageBitmap(image);
 
                     StorageReference reference = storage.getReference().child("Ad_pictures").child(auth.getUid()).child("Image_2");
-                    reference.putFile(getImageUri(image, Bitmap.CompressFormat.JPEG, 100)).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            if(task.isSuccessful()){
-                                reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    public void onSuccess(Uri uri) {
-                                        // Got the download URL for 'users/me/profile.png'
-                                        imgage_url2 = uri.toString();
-                                        //Log.d("aaa", img1);
-                                    }
-                                });
-
-                            }
+                    reference.putFile(getImageUri(image, Bitmap.CompressFormat.JPEG, 100)).addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            reference.getDownloadUrl().addOnSuccessListener(uri -> {
+                                // Got the download URL for 'users/me/profile.png'
+                                image_url2 = uri.toString();
+                                //Log.d("aaa", img1);
+                            });
 
                         }
+
                     });
 
                 } else if(REQUEST_CAMERA == 3){
@@ -670,21 +652,16 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                     img3.setImageBitmap(image);
 
                     StorageReference reference = storage.getReference().child("Ad_pictures").child(auth.getUid()).child("Image_3");
-                    reference.putFile(getImageUri(image, Bitmap.CompressFormat.JPEG, 100)).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            if(task.isSuccessful()){
-                                reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    public void onSuccess(Uri uri) {
-                                        // Got the download URL for 'users/me/profile.png'
-                                        imgage_url3 = uri.toString();
+                    reference.putFile(getImageUri(image, Bitmap.CompressFormat.JPEG, 100)).addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            reference.getDownloadUrl().addOnSuccessListener(uri -> {
+                                // Got the download URL for 'users/me/profile.png'
+                                image_url3 = uri.toString();
 
-                                    }
-                                });
-
-                            }
+                            });
 
                         }
+
                     });
 
                 } else if(REQUEST_CAMERA == 4){
@@ -694,21 +671,16 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                     img4.setImageBitmap(image);
 
                     StorageReference reference = storage.getReference().child("Ad_pictures").child(auth.getUid()).child("Image_4");
-                    reference.putFile(getImageUri(image, Bitmap.CompressFormat.JPEG, 100)).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            if(task.isSuccessful()){
-                                reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    public void onSuccess(Uri uri) {
-                                        // Got the download URL for 'users/me/profile.png'
-                                        imgage_url4 = uri.toString();
+                    reference.putFile(getImageUri(image, Bitmap.CompressFormat.JPEG, 100)).addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            reference.getDownloadUrl().addOnSuccessListener(uri -> {
+                                // Got the download URL for 'users/me/profile.png'
+                                image_url4 = uri.toString();
 
-                                    }
-                                });
-
-                            }
+                            });
 
                         }
+
                     });
 
                 } else if(REQUEST_CAMERA == 5){
@@ -718,21 +690,16 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                     img5.setImageBitmap(image);
 
                     StorageReference reference = storage.getReference().child("Ad_pictures").child(auth.getUid()).child("Image_5");
-                    reference.putFile(getImageUri(image, Bitmap.CompressFormat.JPEG, 100)).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            if(task.isSuccessful()){
-                                reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    public void onSuccess(Uri uri) {
-                                        // Got the download URL for 'users/me/profile.png'
-                                        imgage_url5 = uri.toString();
+                    reference.putFile(getImageUri(image, Bitmap.CompressFormat.JPEG, 100)).addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            reference.getDownloadUrl().addOnSuccessListener(uri -> {
+                                // Got the download URL for 'users/me/profile.png'
+                                image_url5 = uri.toString();
 
-                                    }
-                                });
-
-                            }
+                            });
 
                         }
+
                     });
 
                 }
@@ -746,21 +713,16 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                     Uri selectedImageUri = data.getData();
                     Log.d("aaa",selectedImageUri.toString());
                     StorageReference reference = storage.getReference().child("Ad_pictures").child(auth.getUid()).child("Image_1");
-                    reference.putFile(selectedImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            if(task.isSuccessful()){
-                                reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    public void onSuccess(Uri uri) {
-                                        // Got the download URL for 'users/me/profile.png'
-                                        imgage_url1 = uri.toString();
+                    reference.putFile(selectedImageUri).addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            reference.getDownloadUrl().addOnSuccessListener(uri -> {
+                                // Got the download URL for 'users/me/profile.png'
+                                image_url1 = uri.toString();
 
-                                    }
-                                });
-
-                            }
+                            });
 
                         }
+
                     });
 
 
@@ -773,21 +735,16 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                     assert data != null;
                     Uri selectedImageUri = data.getData();
                     StorageReference reference = storage.getReference().child("Ad_pictures").child(auth.getUid()).child("Image_2");
-                    reference.putFile(outputImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            if(task.isSuccessful()){
-                                reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    public void onSuccess(Uri uri) {
-                                        // Got the download URL for 'users/me/profile.png'
-                                        imgage_url2 = uri.toString();
+                    reference.putFile(outputImageUri).addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            reference.getDownloadUrl().addOnSuccessListener(uri -> {
+                                // Got the download URL for 'users/me/profile.png'
+                                image_url2 = uri.toString();
 
-                                    }
-                                });
-
-                            }
+                            });
 
                         }
+
                     });
                     img2.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     img2.setImageURI(selectedImageUri);
@@ -797,21 +754,16 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                     assert data != null;
                     Uri selectedImageUri = data.getData();
                     StorageReference reference = storage.getReference().child("Ad_pictures").child(auth.getUid()).child("Image_3");
-                    reference.putFile(outputImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            if(task.isSuccessful()){
-                                reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    public void onSuccess(Uri uri) {
-                                        // Got the download URL for 'users/me/profile.png'
-                                        imgage_url3 = uri.toString();
+                    reference.putFile(outputImageUri).addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            reference.getDownloadUrl().addOnSuccessListener(uri -> {
+                                // Got the download URL for 'users/me/profile.png'
+                                image_url3 = uri.toString();
 
-                                    }
-                                });
-
-                            }
+                            });
 
                         }
+
                     });
                     img3.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     img3.setImageURI(selectedImageUri);
@@ -821,21 +773,16 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                     assert data != null;
                     Uri selectedImageUri = data.getData();
                     StorageReference reference = storage.getReference().child("Ad_pictures").child(auth.getUid()).child("Image_4");
-                    reference.putFile(outputImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            if(task.isSuccessful()){
-                                reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    public void onSuccess(Uri uri) {
-                                        // Got the download URL for 'users/me/profile.png'
-                                        imgage_url4 = uri.toString();
+                    reference.putFile(outputImageUri).addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            reference.getDownloadUrl().addOnSuccessListener(uri -> {
+                                // Got the download URL for 'users/me/profile.png'
+                                image_url4 = uri.toString();
 
-                                    }
-                                });
-
-                            }
+                            });
 
                         }
+
                     });
                     img4.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     img4.setImageURI(selectedImageUri);
@@ -845,21 +792,16 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                     assert data != null;
                     Uri selectedImageUri = data.getData();
                     StorageReference reference = storage.getReference().child("Ad_pictures").child(auth.getUid()).child("Image_5");
-                    reference.putFile(outputImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            if(task.isSuccessful()){
-                                reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    public void onSuccess(Uri uri) {
-                                        // Got the download URL for 'users/me/profile.png'
-                                        imgage_url5 = uri.toString();
+                    reference.putFile(outputImageUri).addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            reference.getDownloadUrl().addOnSuccessListener(uri -> {
+                                // Got the download URL for 'users/me/profile.png'
+                                image_url5 = uri.toString();
 
-                                    }
-                                });
-
-                            }
+                            });
 
                         }
+
                     });
                     img5.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     img5.setImageURI(selectedImageUri);
