@@ -97,6 +97,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
     Calendar calendar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -237,8 +238,9 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                             Location currentLocation = (Location) task.getResult();
                             longitude = Double.toString(currentLocation.getLongitude());
                             latitude = Double.toString(currentLocation.getLatitude());
+                            Date date = new Date();
 
-                            CreateAd newAd = new CreateAd(auth.getUid()+randomKey, title, address, thana, vacFrom, flatType, washroom, veranda, bedroom, floor, religion, genre, currentBill, waterBill, gasBill, otherCharge, Boolean.toString(isLiftChecked), Boolean.toString(isGeneratorChecked), Boolean.toString(isParkingChecked), Boolean.toString(isSecurityChecked), Boolean.toString(isGasChecked), Boolean.toString(isWifiChecked), description, rent, image_url1,image_url2,image_url3,image_url4,image_url5, longitude, latitude);
+                            CreateAd newAd = new CreateAd(date.getTime(), auth.getUid()+randomKey, title, address, thana, vacFrom, flatType, washroom, veranda, bedroom, floor, religion, genre, currentBill, waterBill, gasBill, otherCharge, Boolean.toString(isLiftChecked), Boolean.toString(isGeneratorChecked), Boolean.toString(isParkingChecked), Boolean.toString(isSecurityChecked), Boolean.toString(isGasChecked), Boolean.toString(isWifiChecked), description, rent, image_url1,image_url2,image_url3,image_url4,image_url5, longitude, latitude);
 
                             database.getReference().child("All_ad").child(auth.getUid()+randomKey).setValue(newAd)
                                     .addOnSuccessListener(aVoid -> Toast.makeText(AdCreateActivity.this,"ok", Toast.LENGTH_SHORT).show());

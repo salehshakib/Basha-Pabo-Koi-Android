@@ -6,8 +6,10 @@ public class CreateAd {
 
     private String longitude, latitude;
     private String key;
+    private long timestamp;
 
-    public CreateAd(String key, String title, String address, String thana, String vacFrom, String flatType, String washroom, String veranda, String bedroom, String floor, String religion, String genre, String currentBill, String waterBill, String gasBill, String otherCharges, String lift, String generator, String parking, String security, String gas, String wifi, String description, String rent, String imageUrl1, String imageUrl2, String imageUrl3, String imageUrl4, String imageUrl5, String longitude, String latitude) {
+    public CreateAd(long timestamp, String key, String title, String address, String thana, String vacFrom, String flatType, String washroom, String veranda, String bedroom, String floor, String religion, String genre, String currentBill, String waterBill, String gasBill, String otherCharges, String lift, String generator, String parking, String security, String gas, String wifi, String description, String rent, String imageUrl1, String imageUrl2, String imageUrl3, String imageUrl4, String imageUrl5, String longitude, String latitude) {
+        this.timestamp = timestamp;
         this.key = key;
         this.title = title;
         this.address = address;
@@ -45,6 +47,14 @@ public class CreateAd {
 
     public CreateAd() {
 
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getKey() {
