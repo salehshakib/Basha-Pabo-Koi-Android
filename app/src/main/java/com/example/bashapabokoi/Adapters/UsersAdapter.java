@@ -52,10 +52,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
 
         String senderRoom = senderId + user.getUid();
 
-        FirebaseDatabase.getInstance().getReference()
-                .child("Chats")
-                .child(senderRoom)
-                .addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Chats").child(senderRoom).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()) {
@@ -73,16 +70,13 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
-                });
+        });
 
         holder.binding.userName.setText(user.getName());
-        Glide.with(context).load(user.getProfileImage())
-                .placeholder(R.drawable.user)
-                .into(holder.binding.profile);
+        Glide.with(context).load(user.getProfileImage()).placeholder(R.drawable.user).into(holder.binding.profile);
 
         holder.itemView.setOnClickListener(v -> {
 
-            //Log.d("wishlist",)
             Intent intent = new Intent(context, ChatActivity.class);
             intent.putExtra("name", user.getName());
             intent.putExtra("uid", user.getUid());

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_margin="10dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +36,7 @@
 
 
     <TextView
-        android:id="@+id/textView26"
+        android:id="@+id/ad_title_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -75,37 +75,35 @@
         android:textColor="@color/orange_base"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/textView25"
-        app:layout_constraintTop_toBottomOf="@+id/textView26" />
+        app:layout_constraintTop_toBottomOf="@+id/ad_title_list_view" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/ratingBar_text_list_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/genre_bg"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
+        android:fontFamily="@font/roboto_condensed_bold"
+        android:text="3.5"
+        android:textColor="@color/orange_base"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/rent_list_view"
+        app:layout_constraintEnd_toStartOf="@+id/ratingBar_value_list_view"
+        app:layout_constraintStart_toEndOf="@+id/rent_list_view"
+        app:layout_constraintTop_toTopOf="@+id/rent_list_view"
+        app:layout_constraintHorizontal_bias="0.97"/>
+
+    <RatingBar
+        android:id="@+id/ratingBar_value_list_view"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:progressTint="@color/orange_base"
+        android:rating="3.5"
         app:layout_constraintBottom_toBottomOf="@+id/rent_list_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.943"
         app:layout_constraintStart_toEndOf="@+id/rent_list_view"
         app:layout_constraintTop_toTopOf="@+id/rent_list_view"
-        app:layout_constraintVertical_bias="0.0" >
-
-        <ImageView
-            android:id="@+id/star_rating_list_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_profile_ad_star_rate"
-            app:tint="@color/orange_base" />
-
-        <TextView
-            android:id="@+id/profile_ad_rating_list_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="4.5/5"
-            android:textColor="@color/orange_base"
-            android:textSize="16sp"/>
-
-    </LinearLayout>
+        app:layout_constraintVertical_bias="0.5" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -154,7 +152,7 @@
             app:tint="@color/orange_base" />
 
         <TextView
-            android:id="@+id/flat_genre_view_text"
+            android:id="@+id/genre_list_view_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
@@ -242,7 +240,7 @@
             app:tint="@color/orange_base" />
 
         <TextView
-            android:id="@+id/flat_religion_view_text"
+            android:id="@+id/religion_list_view_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"

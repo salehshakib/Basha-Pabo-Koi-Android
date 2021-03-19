@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -34,6 +33,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -46,8 +46,6 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
     CardView editPhoneNo, editAddress, editEmail;
 
     FloatingActionButton returnFromProfile;
-
-    String tempUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,18 +72,17 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
 
 
-        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                headerProfileName.setText(snapshot.child("name").getValue().toString());
-                ProfileName.setText(snapshot.child("name").getValue().toString());
-                profilePhoneNo.setText(snapshot.child("phoneNumber").getValue().toString());
+                headerProfileName.setText(Objects.requireNonNull(snapshot.child("name").getValue()).toString());
+                ProfileName.setText(Objects.requireNonNull(snapshot.child("name").getValue()).toString());
+                profilePhoneNo.setText(Objects.requireNonNull(snapshot.child("phoneNumber").getValue()).toString());
 
                 User u = snapshot.getValue(User.class);
 
-                tempUri = u.getProfileImage();
-
+                assert u != null;
                 Glide.with(getApplicationContext()).load(u.getProfileImage()).placeholder(R.drawable.user).into(headerProPic);
                 Glide.with(getApplicationContext()).load(u.getProfileImage()).placeholder(R.drawable.user).into(profilePicture);
 
@@ -108,12 +105,11 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                 List<OwnerAdShower> ownerAdShowers = new ArrayList<>();
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    String[] arrOfStr = dataSnapshot.getKey().split("-");
+                    String[] arrOfStr = Objects.requireNonNull(dataSnapshot.getKey()).split("-");
                     for (String s : arrOfStr){
                         if(FirebaseAuth.getInstance().getUid().equals(s)){
-                            //Log.d("aaaa",s);
 
-                            OwnerAdShower ad1 = new OwnerAdShower(dataSnapshot.child("rent").getValue().toString(), dataSnapshot.child("thana").getValue().toString(), dataSnapshot.child("flatType").getValue().toString(), dataSnapshot.child("genre").getValue().toString(), dataSnapshot.child("imageUrl1").getValue().toString(), 4.5f);
+                            OwnerAdShower ad1 = new OwnerAdShower(Objects.requireNonNull(dataSnapshot.child("rent").getValue()).toString(), Objects.requireNonNull(dataSnapshot.child("thana").getValue()).toString(), Objects.requireNonNull(dataSnapshot.child("flatType").getValue()).toString(), Objects.requireNonNull(dataSnapshot.child("genre").getValue()).toString(), Objects.requireNonNull(dataSnapshot.child("imageUrl1").getValue()).toString(), 4.5f);
 
                             ownerAdShowers.add(ad1);                                //"https://t.auntmia.com/nthumbs/2016-03-08/2284861/2284861_12b.jpg"
 
@@ -124,8 +120,6 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                             OwnerAdShower ad3 = new OwnerAdShower("6000", "Mohammadpur", "Sublet", "Family", "https://t.auntmia.com/nthumbs/2014-01-26/2697314/2697314_19b.jpg", 3.5f);
 
                             ownerAdShowers.add(ad3);  */                              //"https://t.auntmia.com/nthumbs/2014-01-26/2697314/2697314_19b.jpg"
-
-
 
                             break;
 
