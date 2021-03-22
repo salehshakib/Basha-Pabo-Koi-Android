@@ -192,7 +192,6 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
             if (isTermChecked) {
 
-                //TODO database handa //  done
                 String title = titleTextBox.getText().toString();
                 String address = addressTextBox.getText().toString();
                 String currentBill = currentBillTextBox.getText().toString();
@@ -613,8 +612,6 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                         outputImageUri = FileProvider.getUriForFile(this, "com.example.android.fileProvider", imageFile);
                         Log.d("aaa", outputImageUri.toString());
 
-
-
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, outputImageUri);
                         startActivityForResult(intent, REQUEST_CAMERA);
 
@@ -751,7 +748,6 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
                     assert data != null;
                     Uri selectedImageUri = data.getData();
-                    Log.d("aaa",selectedImageUri.toString());
                     StorageReference reference = storage.getReference().child("Ad_pictures").child(Objects.requireNonNull(auth.getUid())).child(randomKey).child("Image_1");
                     reference.putFile(selectedImageUri).addOnCompleteListener(task -> {
                         if(task.isSuccessful()){
@@ -775,12 +771,11 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                     assert data != null;
                     Uri selectedImageUri = data.getData();
                     StorageReference reference = storage.getReference().child("Ad_pictures").child(Objects.requireNonNull(auth.getUid())).child(randomKey).child("Image_2");
-                    reference.putFile(outputImageUri).addOnCompleteListener(task -> {
+                    reference.putFile(selectedImageUri).addOnCompleteListener(task -> {
                         if(task.isSuccessful()){
                             reference.getDownloadUrl().addOnSuccessListener(uri -> {
 
                                 image_url2 = uri.toString();
-                                Log.d("img_2", image_url2);
 
                             });
 
@@ -795,12 +790,11 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                     assert data != null;
                     Uri selectedImageUri = data.getData();
                     StorageReference reference = storage.getReference().child("Ad_pictures").child(Objects.requireNonNull(auth.getUid())).child(randomKey).child("Image_3");
-                    reference.putFile(outputImageUri).addOnCompleteListener(task -> {
+                    reference.putFile(selectedImageUri).addOnCompleteListener(task -> {
                         if(task.isSuccessful()){
                             reference.getDownloadUrl().addOnSuccessListener(uri -> {
 
                                 image_url3 = uri.toString();
-                                Log.d("img_3", image_url3);
 
                             });
 
@@ -815,12 +809,11 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                     assert data != null;
                     Uri selectedImageUri = data.getData();
                     StorageReference reference = storage.getReference().child("Ad_pictures").child(Objects.requireNonNull(auth.getUid())).child(randomKey).child("Image_4");
-                    reference.putFile(outputImageUri).addOnCompleteListener(task -> {
+                    reference.putFile(selectedImageUri).addOnCompleteListener(task -> {
                         if(task.isSuccessful()){
                             reference.getDownloadUrl().addOnSuccessListener(uri -> {
 
                                 image_url4 = uri.toString();
-                                Log.d("img_4", image_url4);
 
                             });
 
@@ -835,12 +828,11 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                     assert data != null;
                     Uri selectedImageUri = data.getData();
                     StorageReference reference = storage.getReference().child("Ad_pictures").child(Objects.requireNonNull(auth.getUid())).child(randomKey).child("Image_5");
-                    reference.putFile(outputImageUri).addOnCompleteListener(task -> {
+                    reference.putFile(selectedImageUri).addOnCompleteListener(task -> {
                         if(task.isSuccessful()){
                             reference.getDownloadUrl().addOnSuccessListener(uri -> {
 
                                 image_url5 = uri.toString();
-                                Log.d("img_5", image_url5);
 
                             });
 
