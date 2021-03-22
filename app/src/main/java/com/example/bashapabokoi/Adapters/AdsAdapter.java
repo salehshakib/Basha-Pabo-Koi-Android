@@ -125,13 +125,16 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.AdsViewHolder>{
                 holder.binding.vacantFromListViewText.setText(ad.getVacFrom());
             }
 
-
-
-            Glide.with(context).load(ad.getImageUrl1()).placeholder(R.drawable.user).into(holder.binding.listViewImage);
+            Glide.with(context).load(ad.getImageUrl1()).placeholder(R.drawable.ic_image_default).into(holder.binding.listViewImage);
 
             holder.itemView.setOnClickListener(v -> {
 
                 Intent intent = new Intent(context, AdDescriptionActivity.class);
+                intent.putExtra("imageUri1", ad.getImageUrl1());
+                intent.putExtra("imageUri2", ad.getImageUrl2());
+                intent.putExtra("imageUri3", ad.getImageUrl3());
+                intent.putExtra("imageUri4", ad.getImageUrl4());
+                intent.putExtra("imageUri5", ad.getImageUrl5());
                 context.startActivity(intent);
             });
         }
@@ -152,4 +155,3 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.AdsViewHolder>{
             }
         }
 }
-

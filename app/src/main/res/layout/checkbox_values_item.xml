@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="140dp"
+    android:layout_height="105dp"
+    android:padding="10dp"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/checkbox_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_water"
+            app:tint="@color/orange_base" />
+
+        <TextView
+            android:id="@+id/checkbox_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lift"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/orange_base"
+            android:textSize="20sp"
+            android:fontFamily="@font/roboto"/>
+
+        <TextView
+            android:id="@+id/checkbox_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yes"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/orange_base"
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/colorView"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
+    <TextView
+        android:id="@+id/tvAnimalName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp" />
+
+</androidx.cardview.widget.CardView>

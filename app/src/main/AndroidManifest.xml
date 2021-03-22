@@ -22,7 +22,7 @@
         android:roundIcon="@drawable/homescreen"
         android:supportsRtl="true"
         android:theme="@style/Theme.BashaPaboKoi">
-        <activity android:name=".AdDescriptionActivity"></activity>
+        <activity android:name=".AdDescriptionActivity" />
         <activity android:name=".ProfileActivity" />
 
         <provider

@@ -1,4 +1,4 @@
-package com.example.bashapabokoi;
+package com.example.bashapabokoi.Models;
 
 public class OwnerAdShower {
 

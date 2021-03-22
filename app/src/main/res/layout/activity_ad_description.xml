@@ -22,33 +22,33 @@
             android:id="@+id/switch_lang_dark"
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:layout_marginTop="316dp"
             android:layout_marginStart="220dp"
-            app:lottie_fileName="switch_dark.json"/>
+            android:layout_marginTop="316dp"
+            app:lottie_fileName="switch_dark.json" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/switch_lang"
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:layout_marginTop="316dp"
             android:layout_marginStart="220dp"
-            app:lottie_fileName="switch_light.json"/>
+            android:layout_marginTop="316dp"
+            app:lottie_fileName="switch_light.json" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/switch_mode_dark"
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:layout_marginTop="366dp"
             android:layout_marginStart="220dp"
-            app:lottie_fileName="switch_dark.json"/>
+            android:layout_marginTop="366dp"
+            app:lottie_fileName="switch_dark.json" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/switch_mode"
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:layout_marginTop="366dp"
             android:layout_marginStart="220dp"
-            app:lottie_fileName="switch_light.json"/>
+            android:layout_marginTop="366dp"
+            app:lottie_fileName="switch_light.json" />
     </com.google.android.material.navigation.NavigationView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -108,6 +108,442 @@
                 tools:ignore="ScrollViewCount">
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/description_image_shower"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/description_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/roboto"
+                            android:text="Rent is going on"
+                            android:textColor="@color/orange_base"
+                            android:textSize="30sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp">
+
+                        <ImageView
+                            android:id="@+id/ic_address_description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_profile_address"
+                            app:tint="@color/orange_base" />
+
+                        <TextView
+                            android:id="@+id/address_description_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="B-15, G-4, Motijheel, A.G.B colony, Hospital zone, Dhaka-1000."
+                            android:textColor="@color/orange_base"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50dp"
+                            android:layout_marginTop="20dp"
+                            android:orientation="vertical"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:id="@+id/ic_flat_type_description"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_flat_type"
+                                    app:tint="@color/orange_base" />
+
+                                <TextView
+                                    android:id="@+id/flat_type_description_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:text="sublet"
+                                    android:textColor="@color/orange_base"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp">
+
+                                <ImageView
+                                    android:id="@+id/ic_vacant_from_description"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_month"
+                                    app:tint="@color/orange_base" />
+
+                                <TextView
+                                    android:id="@+id/vacant_from_description_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:text="1 April, 2021"
+                                    android:textColor="@color/orange_base"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp">
+
+                                <ImageView
+                                    android:id="@+id/ic_bedroom_description"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_bedroom"
+                                    app:tint="@color/orange_base" />
+
+                                <TextView
+                                    android:id="@+id/bedroom_description_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:text="2 bedrooms"
+                                    android:textColor="@color/orange_base"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp">
+
+                                <ImageView
+                                    android:id="@+id/ic_religion_description"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_religion"
+                                    app:tint="@color/orange_base" />
+
+                                <TextView
+                                    android:id="@+id/religion_description_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:text="@string/muslim"
+                                    android:textColor="@color/orange_base"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="50dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:id="@+id/ic_washroom_description"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_washroom"
+                                    app:tint="@color/orange_base" />
+
+                                <TextView
+                                    android:id="@+id/washroom_description_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:text="3 washrooms"
+                                    android:textColor="@color/orange_base"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp">
+
+                                <ImageView
+                                    android:id="@+id/ic_veranda_description"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_veranda"
+                                    app:tint="@color/orange_base" />
+
+                                <TextView
+                                    android:id="@+id/veranda_description_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:text="3 verandas"
+                                    android:textColor="@color/orange_base"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp">
+
+                                <ImageView
+                                    android:id="@+id/ic_floor_description"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_floor"
+                                    app:tint="@color/orange_base" />
+
+                                <TextView
+                                    android:id="@+id/floor_description_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:text="5th floor"
+                                    android:textColor="@color/orange_base"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp">
+
+                                <ImageView
+                                    android:id="@+id/ic_genre_description"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_genre"
+                                    app:tint="@color/orange_base" />
+
+                                <TextView
+                                    android:id="@+id/genre_description_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:text="@string/only_student_male"
+                                    android:textColor="@color/orange_base"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/roboto"
+                            android:text="@string/other_charges"
+                            android:textColor="@color/orange_base"
+                            android:textSize="25sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50dp"
+                            android:layout_marginTop="20dp"
+                            android:orientation="vertical"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:id="@+id/ic_electricity_description"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_electricity"
+                                    app:tint="@color/orange_base" />
+
+                                <TextView
+                                    android:id="@+id/electricity_bill_description_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:text="1000 electricity bill"
+                                    android:textColor="@color/orange_base"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp">
+
+                                <ImageView
+                                    android:id="@+id/ic_gas_description"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_gas"
+                                    app:tint="@color/orange_base" />
+
+                                <TextView
+                                    android:id="@+id/gas_bill_description_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:text="1000 gas bill"
+                                    android:textColor="@color/orange_base"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="50dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:id="@+id/ic_water_description"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_water"
+                                    app:tint="@color/orange_base" />
+
+                                <TextView
+                                    android:id="@+id/water_bill_description_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:text="1000 water bill"
+                                    android:textColor="@color/orange_base"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp">
+
+                                <ImageView
+                                    android:id="@+id/ic_service_description"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_service"
+                                    app:tint="@color/orange_base" />
+
+                                <TextView
+                                    android:id="@+id/service_charge_description_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:text="1000 service charge"
+                                    android:textColor="@color/orange_base"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/roboto"
+                            android:text="@string/other_facilities"
+                            android:textColor="@color/orange_base"
+                            android:textSize="25sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/checkbox_value_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginBottom="20dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </ScrollView>
 

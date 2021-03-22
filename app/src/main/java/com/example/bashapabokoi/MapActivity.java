@@ -752,7 +752,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             case R.id.nav_pro:
 
                 Intent intentProfile = new Intent(MapActivity.this, ProfileActivity.class);
-                drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(intentProfile);
                 break;
 

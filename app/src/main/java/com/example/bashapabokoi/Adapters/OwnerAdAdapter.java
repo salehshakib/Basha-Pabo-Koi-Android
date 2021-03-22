@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bashapabokoi.OwnerAdShower;
+import com.example.bashapabokoi.Models.OwnerAdShower;
 import com.example.bashapabokoi.R;
 import com.squareup.picasso.Picasso;
 
@@ -66,7 +66,7 @@ public class OwnerAdAdapter extends RecyclerView.Adapter<OwnerAdAdapter.OwnerAdH
         @SuppressLint("SetTextI18n")
         void setAdData(OwnerAdShower ownerAdShower){
 
-            Picasso.get().load(ownerAdShower.imageUri).placeholder(R.drawable.user).into(adHolder);
+            Picasso.get().load(ownerAdShower.imageUri).placeholder(R.drawable.ic_image_default).into(adHolder);
             textRent.setText(ownerAdShower.rent);
             textLocation.setText(ownerAdShower.location);
             textFlatType.setText(ownerAdShower.flatType);

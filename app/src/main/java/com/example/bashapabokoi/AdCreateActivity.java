@@ -455,11 +455,49 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
         //TODO need to add more thana
         thanaCategories.add(getString(R.string.none));
-        thanaCategories.add("Adabor");
-        thanaCategories.add("Motijheel");
+        thanaCategories.add("Adabar");
+        thanaCategories.add("Azimpur");
+        thanaCategories.add("Badda");
+        thanaCategories.add("Bangshal");
+        thanaCategories.add("Bimanbandar");
+        thanaCategories.add("Cantonment");
+        thanaCategories.add("Chowkbazar");
+        thanaCategories.add("Darus Salam");
+        thanaCategories.add("Demra");
+        thanaCategories.add("Dhanmondi");
+        thanaCategories.add("Gendaria");
+        thanaCategories.add("Gulshan");
+        thanaCategories.add("Hazaribagh");
+        thanaCategories.add("Kadamtali");
+        thanaCategories.add("Kafrul");
+        thanaCategories.add("Kalabagan");
+        thanaCategories.add("Kamrangirchar");
+        thanaCategories.add("Khilgaon");
+        thanaCategories.add("Khilkhet");
+        thanaCategories.add("Kotwali");
+        thanaCategories.add("Lalbagh");
+        thanaCategories.add("Mirpur Model");
         thanaCategories.add("Mohammadpur");
-        thanaCategories.add("Ramna");
+        thanaCategories.add("Motijheel");
+        thanaCategories.add("New Market");
+        thanaCategories.add("Pallabi");
         thanaCategories.add("Paltan");
+        thanaCategories.add("Panthapath");
+        thanaCategories.add("Ramna");
+        thanaCategories.add("Rampura");
+        thanaCategories.add("Sabujbagh");
+        thanaCategories.add("Shah Ali");
+        thanaCategories.add("Shahbag");
+        thanaCategories.add("Sher-e-Bangla");
+        thanaCategories.add("Shyampur");
+        thanaCategories.add("Sutrapur");
+        thanaCategories.add("Tejgaon Industrial Area");
+        thanaCategories.add("Tejgaon");
+        thanaCategories.add("Turag");
+        thanaCategories.add("Uttar Khan");
+        thanaCategories.add("Uttara");
+        thanaCategories.add("Vatara");
+        thanaCategories.add("Wari");
 
         washBedVerandaCategories.add(getString(R.string.none));
         washBedVerandaCategories.add(getString(R.string.one));
@@ -731,7 +769,6 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
                     img1.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     img1.setImageURI(selectedImageUri);
-                    //Log.d("ddd", da.toString());
 
                 } else if(SELECT_FILE == 7){
 

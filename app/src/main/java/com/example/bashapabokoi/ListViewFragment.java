@@ -1,7 +1,6 @@
 package com.example.bashapabokoi;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 public class ListViewFragment extends Fragment {
@@ -42,30 +42,30 @@ public class ListViewFragment extends Fragment {
         binding.recyclerView.setAdapter(adsAdapter);
 
 
-        database.getReference().child("All_ad").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("All_ad").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds : snapshot.getChildren()){
 
-                    //todo reclyview horrizontal // aumi r akm // ei code alada
                     String[] arrOfStr = Objects.requireNonNull(ds.getKey()).split("-");
                     for (String s : arrOfStr){
-                        if(Objects.equals(auth.getUid(), s)){
-                            Log.d("aaaa",s);
-                            break;
+                        if(!Objects.equals(auth.getUid(), s)){
 
+                            /*CreateAd showAds = ds.getValue(CreateAd.class);
+                            allAds.add(showAds);*/
+
+                            break;
                         }
                         break;
                     }
 
-                    //todo eddura porjonto
+                    CreateAd showAds = ds.getValue(CreateAd.class);
+                    allAds.add(showAds);
 
-                        CreateAd showAds = ds.getValue(CreateAd.class);
-                        allAds.add(showAds);
-
-                    }
-                adsAdapter.notifyDataSetChanged();
                 }
+                Collections.reverse(allAds);
+                adsAdapter.notifyDataSetChanged();
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -79,7 +79,7 @@ public class ListViewFragment extends Fragment {
                 for (DataSnapshot ds1 : snapshot.getChildren()){
                     for (DataSnapshot ds2 : ds1.getChildren()){
                         CreateAd ca = ds2.getValue(CreateAd.class);
-                        Log.d("aaaaa",ca.getGas());
+
                     }
                 }
             }

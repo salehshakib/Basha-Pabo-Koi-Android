@@ -21,6 +21,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.example.bashapabokoi.Adapters.OwnerAdAdapter;
+import com.example.bashapabokoi.Models.OwnerAdShower;
 import com.example.bashapabokoi.Models.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -109,9 +110,9 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                     for (String s : arrOfStr){
                         if(FirebaseAuth.getInstance().getUid().equals(s)){
 
-                            OwnerAdShower ad1 = new OwnerAdShower(Objects.requireNonNull(dataSnapshot.child("rent").getValue()).toString(), Objects.requireNonNull(dataSnapshot.child("thana").getValue()).toString(), Objects.requireNonNull(dataSnapshot.child("flatType").getValue()).toString(), Objects.requireNonNull(dataSnapshot.child("genre").getValue()).toString(), Objects.requireNonNull(dataSnapshot.child("imageUrl1").getValue()).toString(), 4.5f);
+                            OwnerAdShower ad = new OwnerAdShower(Objects.requireNonNull(dataSnapshot.child("rent").getValue()).toString(), Objects.requireNonNull(dataSnapshot.child("thana").getValue()).toString(), Objects.requireNonNull(dataSnapshot.child("flatType").getValue()).toString(), Objects.requireNonNull(dataSnapshot.child("genre").getValue()).toString(), Objects.requireNonNull(dataSnapshot.child("imageUrl1").getValue()).toString(), 4.5f);
 
-                            ownerAdShowers.add(ad1);                                //"https://t.auntmia.com/nthumbs/2016-03-08/2284861/2284861_12b.jpg"
+                            ownerAdShowers.add(ad);                                //"https://t.auntmia.com/nthumbs/2016-03-08/2284861/2284861_12b.jpg"
 
                             /*OwnerAdShower ad2 = new OwnerAdShower("78000", "Motijheel", "Flat", "Female only", "https://t.auntmia.com/nthumbs/2015-05-07/2360911/2360911_10b.jpg", 4.9f);
 
@@ -189,11 +190,6 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         switch(item.getItemId()){
-
-            case R.id.nav_pro:
-
-                Intent intentProfile = new Intent(ProfileActivity.this, ProfileActivity.class);
-                startActivity(intentProfile);
 
             case R.id.nav_out:
 
