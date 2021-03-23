@@ -56,6 +56,7 @@ public class ChatsFragment extends Fragment {
                         list.clear();
                         for (DataSnapshot snapshot2 : snapshot.getChildren()) {
                             list.add(Objects.requireNonNull(snapshot2.getValue()).toString());
+                            Log.d("frnd", snapshot2.getValue().toString());
 
                         }
                     }
@@ -65,6 +66,7 @@ public class ChatsFragment extends Fragment {
 
                     }
                 });
+
 
         database.getReference().child("Chat_time").orderByValue().addValueEventListener(new ValueEventListener() {
                     @Override
@@ -92,9 +94,8 @@ public class ChatsFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         users.clear();
-                        //usersAdapter.notifyDataSetChanged();
                         for(String i : keys){
-
+                            Log.d("keys",i);
                             for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                                 User user = snapshot1.getValue(User.class);
                                 /*//for (String i : list) //TODO eida enable korte hobe

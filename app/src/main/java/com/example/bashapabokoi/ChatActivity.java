@@ -102,6 +102,13 @@ public class ChatActivity extends AppCompatActivity {
                     .addOnSuccessListener(aVoid -> {
 
                     });
+            database.getReference()
+                    .child("Chat_time")
+                    .child(receiverRoom)
+                    .setValue(date.getTime())
+                    .addOnSuccessListener(aVoid -> {
+
+                    });
 
             assert randomKey != null;
             database.getReference().child("Chats")

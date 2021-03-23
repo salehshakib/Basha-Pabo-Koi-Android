@@ -70,23 +70,6 @@ public class ListViewFragment extends Fragment {
             }
         });
 
-        /*database.getReference().child("Create_ad").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds1 : snapshot.getChildren()){
-                    for (DataSnapshot ds2 : ds1.getChildren()){
-                        CreateAd ca = ds2.getValue(CreateAd.class);
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
-
         return binding.getRoot();
     }
 }
