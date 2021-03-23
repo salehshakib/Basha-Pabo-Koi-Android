@@ -3,7 +3,6 @@ package com.example.bashapabokoi.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,12 +53,15 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
         String senderRoom = senderId + user.getUid();
 
         FirebaseDatabase.getInstance().getReference().child("Chats").child(senderRoom).addValueEventListener(new ValueEventListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()) {
                             String lastMsg = snapshot.child("lastMsg").getValue(String.class);
                             long time = snapshot.child("lastMsgTime").getValue(Long.class);
-                            @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+
+                            @SuppressLint("SimpleDateFormat")
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
                             holder.binding.msgTime.setText(dateFormat.format(new Date(time)));
                             holder.binding.lastMsg.setText(lastMsg);
                         } else {

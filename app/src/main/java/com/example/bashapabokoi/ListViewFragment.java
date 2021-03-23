@@ -51,16 +51,13 @@ public class ListViewFragment extends Fragment {
                     for (String s : arrOfStr){
                         if(!Objects.equals(auth.getUid(), s)){
 
-                            /*CreateAd showAds = ds.getValue(CreateAd.class);
-                            allAds.add(showAds);*/
+                            CreateAd showAds = ds.getValue(CreateAd.class);
+                            allAds.add(showAds);
 
                             break;
                         }
                         break;
                     }
-
-                    CreateAd showAds = ds.getValue(CreateAd.class);
-                    allAds.add(showAds);
 
                 }
                 Collections.reverse(allAds);

@@ -1,4 +1,4 @@
-package com.example.bashapabokoi.abbehSaleh;
+package com.example.bashapabokoi;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -9,7 +9,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.bashapabokoi.MapActivity;
 import com.example.bashapabokoi.Models.User;
 import com.example.bashapabokoi.databinding.ActivitySetupProfileBinding;
 import com.google.firebase.auth.FirebaseAuth;

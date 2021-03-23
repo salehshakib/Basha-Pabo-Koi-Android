@@ -63,9 +63,9 @@
             android:name=".MapActivity"
             android:screenOrientation="sensorPortrait" />
         <activity android:name=".ChatActivity" />
-        <activity android:name=".abbehSaleh.SetupProfileActivity" />
+        <activity android:name=".SetupProfileActivity" />
         <activity
-            android:name=".abbehSaleh.OTPActivity"
+            android:name=".OTPActivity"
             android:windowSoftInputMode="stateVisible" />
     </application>
 

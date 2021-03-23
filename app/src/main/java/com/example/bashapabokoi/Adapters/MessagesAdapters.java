@@ -30,7 +30,6 @@ public class MessagesAdapters extends RecyclerView.Adapter {
 
     }
 
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -77,7 +76,7 @@ public class MessagesAdapters extends RecyclerView.Adapter {
         return messages.size();
     }
 
-    public class SentViewHolder extends RecyclerView.ViewHolder {
+    public static class SentViewHolder extends RecyclerView.ViewHolder {
 
         ItemSentBinding binding;
 
@@ -87,7 +86,7 @@ public class MessagesAdapters extends RecyclerView.Adapter {
         }
     }
 
-    public class ReceiverViewHolder extends RecyclerView.ViewHolder {
+    public static class ReceiverViewHolder extends RecyclerView.ViewHolder {
 
         ItemReceiveBinding binding;
 

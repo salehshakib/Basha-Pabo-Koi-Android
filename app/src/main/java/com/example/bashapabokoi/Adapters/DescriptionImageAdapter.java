@@ -53,7 +53,6 @@ public class DescriptionImageAdapter extends  RecyclerView.Adapter<DescriptionIm
 
         void setData(DescriptionImageShower descriptionImageShower){
 
-            Log.d("ImageAdapter", "Value: "+ descriptionImageShower.imageUri);
             Picasso.get().load(descriptionImageShower.imageUri).placeholder(R.drawable.ic_image_default).into(imageHolder);
         }
     }

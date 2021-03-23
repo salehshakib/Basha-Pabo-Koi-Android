@@ -58,11 +58,11 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/return_from_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:clickable="true"
             android:contentDescription="@string/todo"
-            android:foregroundGravity="center"
+            app:fabCustomSize="50dp"
             android:rotation="180"
             android:src="@drawable/right"
             app:backgroundTint="@color/white"

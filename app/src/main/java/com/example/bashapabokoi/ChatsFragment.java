@@ -50,11 +50,7 @@ public class ChatsFragment extends Fragment {
         ArrayList<String> keys = new ArrayList<>();
 
         assert senderUid != null;
-        database.getReference()
-                .child("User_friends")
-                .child(senderUid)
-                .child("Friends")
-                .addValueEventListener(new ValueEventListener() {
+        database.getReference().child("User_friends").child(senderUid).child("Friends").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         list.clear();
@@ -70,13 +66,7 @@ public class ChatsFragment extends Fragment {
                     }
                 });
 
-
-
-
-        database.getReference()
-                .child("Chat_time")
-                .orderByValue()
-                .addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Chat_time").orderByValue().addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         keys.clear();
@@ -98,9 +88,7 @@ public class ChatsFragment extends Fragment {
                     }
                 });
 
-        database.getReference()
-                .child("Users")
-                .addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         users.clear();

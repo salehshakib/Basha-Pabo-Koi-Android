@@ -121,4 +121,18 @@
     <string name="no">No</string>
     <string name="ad_description">AD DESCRIPTION</string>
     <string name="other_charges">Other charges:</string>
+    <string name="details">Details:</string>
+    <string name="ad_by">Ad by:</string>
+    <string name="rate_this_ad">Rate this ad:</string>
+    <string name="washroom">washroom</string>
+    <string name="washroom_">washrooms</string>
+    <string name="veranda">veranda</string>
+    <string name="veranda_">verandas</string>
+    <string name="bedroom">bedroom</string>
+    <string name="bedroom_">bedrooms</string>
+    <string name="floor_">floor</string>
+    <string name="electricity_bill">electricity bill</string>
+    <string name="water_bill_">water bill</string>
+    <string name="gas_bill_">gas bill</string>
+    <string name="service_charge_">service charge</string>
 </resources>

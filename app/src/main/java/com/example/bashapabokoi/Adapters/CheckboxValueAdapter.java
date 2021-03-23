@@ -60,7 +60,7 @@ public class CheckboxValueAdapter extends RecyclerView.Adapter<CheckboxValueAdap
             checkBoxImage.setImageDrawable(checkBoxValueShower.imageId);
             checkBoxName.setText(checkBoxValueShower.checkBoxName);
 
-            if(checkBoxValueShower.value.equals("True")){
+            if(checkBoxValueShower.value.equals("true")){
 
                 checkboxValue.setText("Yes");
 

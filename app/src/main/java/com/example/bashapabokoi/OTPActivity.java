@@ -1,4 +1,4 @@
-package com.example.bashapabokoi.abbehSaleh;
+package com.example.bashapabokoi;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -10,8 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.bashapabokoi.MapActivity;
-import com.example.bashapabokoi.R;
 import com.example.bashapabokoi.databinding.ActivityOTPBinding;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,7 +51,7 @@ public class OTPActivity extends AppCompatActivity {
 
         try{
 
-            PhoneAuthOptions options = PhoneAuthOptions.newBuilder(auth).setPhoneNumber(phoneNumber).setTimeout(60L, TimeUnit.SECONDS).setActivity(com.example.bashapabokoi.abbehSaleh.OTPActivity.this).setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            PhoneAuthOptions options = PhoneAuthOptions.newBuilder(auth).setPhoneNumber(phoneNumber).setTimeout(60L, TimeUnit.SECONDS).setActivity(OTPActivity.this).setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                 @Override
                 public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
 

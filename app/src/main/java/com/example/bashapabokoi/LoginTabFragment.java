@@ -12,9 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.bashapabokoi.abbehSaleh.OTPActivity;
 import com.example.bashapabokoi.databinding.LoginTabFragmentBinding;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginTabFragment extends Fragment {
 

@@ -11,10 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.bashapabokoi.abbehSaleh.OTPActivity;
 import com.example.bashapabokoi.databinding.SignupTabFragmentBinding;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.core.UserWriteRecord;
 
 public class SignupTabFragment extends Fragment {
 

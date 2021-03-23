@@ -58,14 +58,14 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/return_from_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:clickable="true"
             android:contentDescription="@string/todo"
-            android:foregroundGravity="center"
             android:rotation="180"
             android:src="@drawable/right"
             app:backgroundTint="@color/white"
+            app:fabCustomSize="50dp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.045"
@@ -99,6 +99,7 @@
             app:layout_constraintVertical_bias="1">
 
             <ScrollView
+                android:id="@+id/scrollView3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -142,14 +143,16 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
                         android:paddingStart="5dp"
-                        android:paddingEnd="5dp">
+                        android:paddingEnd="5dp"
+                        tools:ignore="UseCompoundDrawables">
 
                         <ImageView
                             android:id="@+id/ic_address_description"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_profile_address"
-                            app:tint="@color/orange_base" />
+                            app:tint="@color/orange_base"
+                            android:contentDescription="@string/todo"/>
 
                         <TextView
                             android:id="@+id/address_description_text"
@@ -157,6 +160,7 @@
                             android:layout_height="wrap_content"
                             android:text="B-15, G-4, Motijheel, A.G.B colony, Hospital zone, Dhaka-1000."
                             android:textColor="@color/orange_base"
+                            android:fontFamily="@font/roboto"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -176,14 +180,16 @@
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                tools:ignore="UseCompoundDrawables">
 
                                 <ImageView
                                     android:id="@+id/ic_flat_type_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/ic_flat_type"
-                                    app:tint="@color/orange_base" />
+                                    app:tint="@color/orange_base"
+                                    android:contentDescription="@string/todo"/>
 
                                 <TextView
                                     android:id="@+id/flat_type_description_text"
@@ -191,6 +197,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
                                     android:text="sublet"
+                                    android:fontFamily="@font/roboto"
                                     android:textColor="@color/orange_base"
                                     android:textSize="16sp" />
 
@@ -199,14 +206,16 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp">
+                                android:layout_marginTop="20dp"
+                                tools:ignore="UseCompoundDrawables">
 
                                 <ImageView
                                     android:id="@+id/ic_vacant_from_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/ic_month"
-                                    app:tint="@color/orange_base" />
+                                    app:tint="@color/orange_base"
+                                    android:contentDescription="@string/todo"/>
 
                                 <TextView
                                     android:id="@+id/vacant_from_description_text"
@@ -214,6 +223,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
                                     android:text="1 April, 2021"
+                                    android:fontFamily="@font/roboto"
                                     android:textColor="@color/orange_base"
                                     android:textSize="16sp" />
 
@@ -222,14 +232,16 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp">
+                                android:layout_marginTop="20dp"
+                                tools:ignore="UseCompoundDrawables">
 
                                 <ImageView
                                     android:id="@+id/ic_bedroom_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/ic_bedroom"
-                                    app:tint="@color/orange_base" />
+                                    app:tint="@color/orange_base"
+                                    android:contentDescription="@string/todo"/>
 
                                 <TextView
                                     android:id="@+id/bedroom_description_text"
@@ -237,6 +249,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
                                     android:text="2 bedrooms"
+                                    android:fontFamily="@font/roboto"
                                     android:textColor="@color/orange_base"
                                     android:textSize="16sp" />
 
@@ -245,14 +258,16 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp">
+                                android:layout_marginTop="20dp"
+                                tools:ignore="UseCompoundDrawables">
 
                                 <ImageView
                                     android:id="@+id/ic_religion_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/ic_religion"
-                                    app:tint="@color/orange_base" />
+                                    app:tint="@color/orange_base"
+                                    android:contentDescription="@string/todo"/>
 
                                 <TextView
                                     android:id="@+id/religion_description_text"
@@ -260,6 +275,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
                                     android:text="@string/muslim"
+                                    android:fontFamily="@font/roboto"
                                     android:textColor="@color/orange_base"
                                     android:textSize="16sp" />
 
@@ -281,14 +297,16 @@
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                tools:ignore="UseCompoundDrawables">
 
                                 <ImageView
                                     android:id="@+id/ic_washroom_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/ic_washroom"
-                                    app:tint="@color/orange_base" />
+                                    app:tint="@color/orange_base"
+                                    android:contentDescription="@string/todo"/>
 
                                 <TextView
                                     android:id="@+id/washroom_description_text"
@@ -296,6 +314,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
                                     android:text="3 washrooms"
+                                    android:fontFamily="@font/roboto"
                                     android:textColor="@color/orange_base"
                                     android:textSize="16sp" />
 
@@ -304,14 +323,16 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp">
+                                android:layout_marginTop="20dp"
+                                tools:ignore="UseCompoundDrawables">
 
                                 <ImageView
                                     android:id="@+id/ic_veranda_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/ic_veranda"
-                                    app:tint="@color/orange_base" />
+                                    app:tint="@color/orange_base"
+                                    android:contentDescription="@string/todo"/>
 
                                 <TextView
                                     android:id="@+id/veranda_description_text"
@@ -319,6 +340,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
                                     android:text="3 verandas"
+                                    android:fontFamily="@font/roboto"
                                     android:textColor="@color/orange_base"
                                     android:textSize="16sp" />
 
@@ -327,14 +349,16 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp">
+                                android:layout_marginTop="20dp"
+                                tools:ignore="UseCompoundDrawables">
 
                                 <ImageView
                                     android:id="@+id/ic_floor_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/ic_floor"
-                                    app:tint="@color/orange_base" />
+                                    app:tint="@color/orange_base"
+                                    android:contentDescription="@string/todo"/>
 
                                 <TextView
                                     android:id="@+id/floor_description_text"
@@ -342,6 +366,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
                                     android:text="5th floor"
+                                    android:fontFamily="@font/roboto"
                                     android:textColor="@color/orange_base"
                                     android:textSize="16sp" />
 
@@ -350,14 +375,16 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp">
+                                android:layout_marginTop="20dp"
+                                tools:ignore="UseCompoundDrawables">
 
                                 <ImageView
                                     android:id="@+id/ic_genre_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/ic_genre"
-                                    app:tint="@color/orange_base" />
+                                    app:tint="@color/orange_base"
+                                    android:contentDescription="@string/todo"/>
 
                                 <TextView
                                     android:id="@+id/genre_description_text"
@@ -365,6 +392,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
                                     android:text="@string/only_student_male"
+                                    android:fontFamily="@font/roboto"
                                     android:textColor="@color/orange_base"
                                     android:textSize="16sp" />
 
@@ -406,14 +434,25 @@
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                tools:ignore="UseCompoundDrawables">
 
                                 <ImageView
                                     android:id="@+id/ic_electricity_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/ic_electricity"
-                                    app:tint="@color/orange_base" />
+                                    app:tint="@color/orange_base"
+                                    android:contentDescription="@string/todo"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:fontFamily="@font/roboto"
+                                    android:text="@string/taka_sign"
+                                    android:textColor="@color/orange_base"
+                                    android:textSize="16sp" />
 
                                 <TextView
                                     android:id="@+id/electricity_bill_description_text"
@@ -421,6 +460,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
                                     android:text="1000 electricity bill"
+                                    android:fontFamily="@font/roboto"
                                     android:textColor="@color/orange_base"
                                     android:textSize="16sp" />
 
@@ -429,14 +469,25 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp">
+                                android:layout_marginTop="20dp"
+                                tools:ignore="UseCompoundDrawables">
 
                                 <ImageView
                                     android:id="@+id/ic_gas_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/ic_gas"
-                                    app:tint="@color/orange_base" />
+                                    app:tint="@color/orange_base"
+                                    android:contentDescription="@string/todo"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:fontFamily="@font/roboto"
+                                    android:text="@string/taka_sign"
+                                    android:textColor="@color/orange_base"
+                                    android:textSize="16sp" />
 
                                 <TextView
                                     android:id="@+id/gas_bill_description_text"
@@ -465,14 +516,25 @@
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                tools:ignore="UseCompoundDrawables">
 
                                 <ImageView
                                     android:id="@+id/ic_water_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/ic_water"
-                                    app:tint="@color/orange_base" />
+                                    app:tint="@color/orange_base"
+                                    android:contentDescription="@string/todo"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:fontFamily="@font/roboto"
+                                    android:text="@string/taka_sign"
+                                    android:textColor="@color/orange_base"
+                                    android:textSize="16sp" />
 
                                 <TextView
                                     android:id="@+id/water_bill_description_text"
@@ -488,21 +550,32 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp">
+                                android:layout_marginTop="20dp"
+                                tools:ignore="UseCompoundDrawables">
 
                                 <ImageView
                                     android:id="@+id/ic_service_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/ic_service"
-                                    app:tint="@color/orange_base" />
+                                    app:tint="@color/orange_base"
+                                    android:contentDescription="@string/todo"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:fontFamily="@font/roboto"
+                                    android:text="@string/taka_sign"
+                                    android:textColor="@color/orange_base"
+                                    android:textSize="16sp" />
 
                                 <TextView
                                     android:id="@+id/service_charge_description_text"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
-                                    android:text="1000 service charge"
+                                    android:text="5000 service charge"
                                     android:textColor="@color/orange_base"
                                     android:textSize="16sp" />
 
@@ -538,14 +611,268 @@
                             android:id="@+id/checkbox_value_description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:layout_marginBottom="20dp"/>
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/roboto"
+                            android:text="@string/details"
+                            android:textColor="@color/orange_base"
+                            android:textSize="25sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/description_description_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Onnnk xooooosssss"
+                            android:textColor="@color/orange_base"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/roboto"
+                            android:text="@string/ad_by"
+                            android:textColor="@color/orange_base"
+                            android:textSize="25sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="20dp"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="5dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center">
+
+                                    <com.makeramen.roundedimageview.RoundedImageView
+                                        android:id="@+id/pro_pic_description"
+                                        android:layout_width="50dp"
+                                        android:layout_height="50dp"
+                                        android:background="@drawable/profile_image_bg"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/user"
+                                        app:riv_oval="true"
+                                        tools:ignore="TooDeepLayout" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical"
+                                    tools:ignore="TooManyViews">
+
+                                    <TextView
+                                        android:id="@+id/description_profile_name"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:fontFamily="@font/roboto_condensed_bold"
+                                        android:text="@string/profile_name"
+                                        android:textColor="@color/orange_base"
+                                        android:textSize="20sp" />
+
+                                    <TextView
+                                        android:id="@+id/description_phone_no"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:fontFamily="@font/roboto_thin"
+                                        android:text="@string/number_eg"
+                                        android:textColor="@color/orange_base"
+                                        android:textSize="16sp" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/roboto"
+                            android:text="@string/rate_this_ad"
+                            android:textColor="@color/orange_base"
+                            android:textSize="25sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="60dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="20dp"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="5dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    tools:ignore="UselessParent">
+
+                                    <RatingBar
+                                        android:id="@+id/ad_rating_description"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:progressTint="@color/orange_base" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
 
                     </LinearLayout>
 
                 </LinearLayout>
 
             </ScrollView>
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_nav"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/scrollView3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/orange_base"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView25"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:fontFamily="@font/roboto_condensed_bold"
+                        android:text="@string/taka_sign"
+                        android:textColor="@color/orange_base"
+                        android:textSize="25sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/rent_description_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:fontFamily="@font/roboto_condensed_bold"
+                        android:text="@string/rent_eg"
+                        android:textColor="@color/orange_base"
+                        android:textSize="25sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView25"
+                        app:layout_constraintStart_toEndOf="@+id/textView25"
+                        app:layout_constraintTop_toTopOf="@+id/textView25" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/add_to_wish_list_btn"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="120dp"
+                        android:src="@drawable/ic_wish_list"
+                        app:backgroundTint="@color/orange_base"
+                        app:fabCustomSize="50dp"
+                        android:contentDescription="@string/todo"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/description_to_chat"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/button_bg"
+                        android:src="@drawable/ic_chat_btn"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:contentDescription="@string/todo"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.bottomnavigation.BottomNavigationView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
