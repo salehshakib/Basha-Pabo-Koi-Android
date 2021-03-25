@@ -752,6 +752,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             case R.id.nav_pro:
 
                 Intent intentProfile = new Intent(MapActivity.this, ProfileActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(intentProfile);
                 break;
 
@@ -759,12 +760,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                 FirebaseAuth.getInstance().signOut();
                 Intent intentLogOut = new Intent(MapActivity.this, LoginActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(intentLogOut);
                 break;
 
             case R.id.nav_ad:
 
                 Intent intentAd = new Intent(MapActivity.this, AdCreateActivity.class);
+                intentAd.putExtra("FROM_ACTIVITY", "MapActivity");
                 drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(intentAd);
                 break;

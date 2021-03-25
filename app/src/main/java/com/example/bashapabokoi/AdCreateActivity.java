@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,6 +54,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -85,7 +87,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
 
     Spinner thanaSpinner, washSpinner, bedSpinner, religionSpinner, flatTypeSpinner, verandaSpinner, floorSpinner, genreSpinner;
-    TextView vacantText;
+    TextView vacantText, titleText;
 
     ImageView img1, img2, img3, img4, img5;
 
@@ -97,6 +99,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
     Calendar calendar;
 
+    Intent previousIntentData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +131,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
         floorSpinner = findViewById(R.id.floor_spinner);
         genreSpinner = findViewById(R.id.genre_spinner);
 
+        titleText = findViewById(R.id.create_title);
         vacantText = findViewById(R.id.vacant_text);
         vacantText.setOnClickListener(this);
 
@@ -189,74 +193,75 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
         createButton.setOnClickListener(v -> {
 
+            String title = titleTextBox.getText().toString();
+            String address = addressTextBox.getText().toString();
+            String currentBill = currentBillTextBox.getText().toString();
+            String waterBill = waterBillTextBox.getText().toString();
+            String gasBill = gasBillTextBox.getText().toString();
+            String otherCharge = otherChargeTextBox.getText().toString();
+            String description = descriptionTextBox.getText().toString();
+            String rent = rentTextBox.getText().toString();
+
+            String vacFrom = vacantText.getText().toString();
+            String thana = thanaSpinner.getSelectedItem().toString();
+            String washroom = washSpinner.getSelectedItem().toString();
+            String bedroom = bedSpinner.getSelectedItem().toString();
+            String religion = religionSpinner.getSelectedItem().toString();
+            String flatType = flatTypeSpinner.getSelectedItem().toString();
+            String veranda = verandaSpinner.getSelectedItem().toString();
+            String floor = floorSpinner.getSelectedItem().toString();
+            String genre = genreSpinner.getSelectedItem().toString();
 
             if (isTermChecked) {
 
-                String title = titleTextBox.getText().toString();
-                String address = addressTextBox.getText().toString();
-                String currentBill = currentBillTextBox.getText().toString();
-                String waterBill = waterBillTextBox.getText().toString();
-                String gasBill = gasBillTextBox.getText().toString();
-                String otherCharge = otherChargeTextBox.getText().toString();
-                String description = descriptionTextBox.getText().toString();
-                String rent = rentTextBox.getText().toString();
+                if(!TextUtils.isEmpty(title) && !TextUtils.isEmpty(address) && !TextUtils.isEmpty(rent) && !TextUtils.isEmpty(vacFrom) && !thanaSpinner.getSelectedItem().toString().matches("-") && !washSpinner.getSelectedItem().toString().matches("-") && !bedSpinner.getSelectedItem().toString().matches("-") && !religionSpinner.getSelectedItem().toString().matches("-") && !flatTypeSpinner.getSelectedItem().toString().matches("-") && !verandaSpinner.getSelectedItem().toString().matches("-") && !floorSpinner.getSelectedItem().toString().matches("-") && !genreSpinner.getSelectedItem().toString().matches("-")){
 
+                    AlertDialog.Builder markerPlacementDialog = new AlertDialog.Builder(this);
+                    markerPlacementDialog.setTitle("Are you at your place?");
+                    markerPlacementDialog.setMessage("We need to add a marker in the map so that renters can find your place easily. We recommend you to be at your place for precise marking.");
 
+                    markerPlacementDialog.setPositiveButton("Yes", (dialog, which) -> {
 
-                String vacFrom = vacantText.getText().toString();
-                String thana = thanaSpinner.getSelectedItem().toString();
-                String washroom = washSpinner.getSelectedItem().toString();
-                String bedroom = bedSpinner.getSelectedItem().toString();
-                String religion = religionSpinner.getSelectedItem().toString();
-                String flatType = flatTypeSpinner.getSelectedItem().toString();
-                String veranda = verandaSpinner.getSelectedItem().toString();
-                String floor = floorSpinner.getSelectedItem().toString();
-                String genre = genreSpinner.getSelectedItem().toString();
+                        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getApplicationContext());
 
+                        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-
-                AlertDialog.Builder markerPlacementDialog = new AlertDialog.Builder(this);
-                markerPlacementDialog.setTitle("Are you at your place?");
-                markerPlacementDialog.setMessage("We need to add a marker in the map so that renters can find your place easily. We recommend you to be at your place for precise marking.");
-
-                markerPlacementDialog.setPositiveButton("Yes", (dialog, which) -> {
-
-                    FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getApplicationContext());
-
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-                        return;
-                    }
-
-                    Task location = fusedLocationProviderClient.getLastLocation();
-
-                    location.addOnCompleteListener(task -> {
-
-                        if (task.isSuccessful()) {
-
-                            Location currentLocation = (Location) task.getResult();
-                            longitude = Double.toString(currentLocation.getLongitude());
-                            latitude = Double.toString(currentLocation.getLatitude());
-                            Date date = new Date();
-
-                            CreateAd newAd = new CreateAd(date.getTime(), auth.getUid()+randomKey, title, address, thana, vacFrom, flatType, washroom, veranda, bedroom, floor, religion, genre, currentBill, waterBill, gasBill, otherCharge, Boolean.toString(isLiftChecked), Boolean.toString(isGeneratorChecked), Boolean.toString(isParkingChecked), Boolean.toString(isSecurityChecked), Boolean.toString(isGasChecked), Boolean.toString(isWifiChecked), description, rent, image_url1,image_url2,image_url3,image_url4,image_url5, longitude, latitude);
-
-                            database.getReference().child("All_ad").child(auth.getUid()+randomKey).setValue(newAd)
-                                    .addOnSuccessListener(aVoid -> Toast.makeText(AdCreateActivity.this,"ok", Toast.LENGTH_SHORT).show());
-
-
-
+                            return;
                         }
+
+                        Task location = fusedLocationProviderClient.getLastLocation();
+
+                        location.addOnCompleteListener(task -> {
+
+                            if (task.isSuccessful()) {
+
+                                Location currentLocation = (Location) task.getResult();
+                                longitude = Double.toString(currentLocation.getLongitude());
+                                latitude = Double.toString(currentLocation.getLatitude());
+                                Date date = new Date();
+
+                                CreateAd newAd = new CreateAd(date.getTime(), auth.getUid()+randomKey, title, address, thana, vacFrom, flatType, washroom, veranda, bedroom, floor, religion, genre, currentBill, waterBill, gasBill, otherCharge, Boolean.toString(isLiftChecked), Boolean.toString(isGeneratorChecked), Boolean.toString(isParkingChecked), Boolean.toString(isSecurityChecked), Boolean.toString(isGasChecked), Boolean.toString(isWifiChecked), description, rent, image_url1,image_url2,image_url3,image_url4,image_url5, longitude, latitude);
+
+                                database.getReference().child("All_ad").child(auth.getUid()+randomKey).setValue(newAd)
+                                        .addOnSuccessListener(aVoid -> Toast.makeText(AdCreateActivity.this,"ok", Toast.LENGTH_SHORT).show());
+
+
+
+                            }
+                        });
+
+                        finish();
                     });
-                });
 
-                markerPlacementDialog.setNegativeButton("No", (dialog, which) -> {
+                    markerPlacementDialog.setNegativeButton("No", (dialog, which) -> {
 
+                    });
 
+                    markerPlacementDialog.show();
+                } else{
 
-                });
-
-                markerPlacementDialog.show();
+                    Toast.makeText(this, "Please fill up the basic information first", Toast.LENGTH_LONG).show();
+                }
 
             } else{
 
@@ -282,6 +287,13 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
             });*/
 
         });
+
+        previousIntentData = getIntent();
+
+        if(previousIntentData.getStringExtra("FROM_ACTIVITY").equals("AdDescriptionActivity")){
+
+            editAd();
+        }
 
         drawerLayout = findViewById(R.id.drawer_ad);
         navigationView = findViewById(R.id.nav_view_ad);
@@ -452,51 +464,50 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
         List<String> floorCategories = new ArrayList<>();
         List<String> genreCategories = new ArrayList<>();
 
-        //TODO need to add more thana
         thanaCategories.add(getString(R.string.none));
-        thanaCategories.add("Adabar");
-        thanaCategories.add("Azimpur");
-        thanaCategories.add("Badda");
-        thanaCategories.add("Bangshal");
-        thanaCategories.add("Bimanbandar");
-        thanaCategories.add("Cantonment");
-        thanaCategories.add("Chowkbazar");
-        thanaCategories.add("Darus Salam");
-        thanaCategories.add("Demra");
-        thanaCategories.add("Dhanmondi");
-        thanaCategories.add("Gendaria");
-        thanaCategories.add("Gulshan");
-        thanaCategories.add("Hazaribagh");
-        thanaCategories.add("Kadamtali");
-        thanaCategories.add("Kafrul");
-        thanaCategories.add("Kalabagan");
-        thanaCategories.add("Kamrangirchar");
-        thanaCategories.add("Khilgaon");
-        thanaCategories.add("Khilkhet");
-        thanaCategories.add("Kotwali");
-        thanaCategories.add("Lalbagh");
-        thanaCategories.add("Mirpur Model");
-        thanaCategories.add("Mohammadpur");
-        thanaCategories.add("Motijheel");
-        thanaCategories.add("New Market");
-        thanaCategories.add("Pallabi");
-        thanaCategories.add("Paltan");
-        thanaCategories.add("Panthapath");
-        thanaCategories.add("Ramna");
-        thanaCategories.add("Rampura");
-        thanaCategories.add("Sabujbagh");
-        thanaCategories.add("Shah Ali");
-        thanaCategories.add("Shahbag");
-        thanaCategories.add("Sher-e-Bangla");
-        thanaCategories.add("Shyampur");
-        thanaCategories.add("Sutrapur");
-        thanaCategories.add("Tejgaon Industrial Area");
-        thanaCategories.add("Tejgaon");
-        thanaCategories.add("Turag");
-        thanaCategories.add("Uttar Khan");
-        thanaCategories.add("Uttara");
-        thanaCategories.add("Vatara");
-        thanaCategories.add("Wari");
+        thanaCategories.add(getString(R.string.adabar));
+        thanaCategories.add(getString(R.string.zimpur));
+        thanaCategories.add(getString(R.string.badda));
+        thanaCategories.add(getString(R.string.bangshal));
+        thanaCategories.add(getString(R.string.bimanbandar));
+        thanaCategories.add(getString(R.string.cantonment));
+        thanaCategories.add(getString(R.string.chowkbazar));
+        thanaCategories.add(getString(R.string.darus_salam));
+        thanaCategories.add(getString(R.string.demra));
+        thanaCategories.add(getString(R.string.dhanmondi));
+        thanaCategories.add(getString(R.string.gendaria));
+        thanaCategories.add(getString(R.string.gulshan));
+        thanaCategories.add(getString(R.string.hazaribagh));
+        thanaCategories.add(getString(R.string.kadamtali));
+        thanaCategories.add(getString(R.string.kafrul));
+        thanaCategories.add(getString(R.string.kalabagan));
+        thanaCategories.add(getString(R.string.kamrangirchar));
+        thanaCategories.add(getString(R.string.khilgaon));
+        thanaCategories.add(getString(R.string.khilkhet));
+        thanaCategories.add(getString(R.string.kotwali));
+        thanaCategories.add(getString(R.string.lalbagh));
+        thanaCategories.add(getString(R.string.mirpur_model));
+        thanaCategories.add(getString(R.string.mohammadpur));
+        thanaCategories.add(getString(R.string.motijheel));
+        thanaCategories.add(getString(R.string.new_market));
+        thanaCategories.add(getString(R.string.pallabi));
+        thanaCategories.add(getString(R.string.paltan));
+        thanaCategories.add(getString(R.string.panthapath));
+        thanaCategories.add(getString(R.string.ramna));
+        thanaCategories.add(getString(R.string.rampura));
+        thanaCategories.add(getString(R.string.sabujbagh));
+        thanaCategories.add(getString(R.string.shah_ali));
+        thanaCategories.add(getString(R.string.shahbag));
+        thanaCategories.add(getString(R.string.sher_e_bangla));
+        thanaCategories.add(getString(R.string.shyampur));
+        thanaCategories.add(getString(R.string.sutrapur));
+        thanaCategories.add(getString(R.string.tejgaon_industrial_area));
+        thanaCategories.add(getString(R.string.tejgaon));
+        thanaCategories.add(getString(R.string.turag));
+        thanaCategories.add(getString(R.string.uttar_khan));
+        thanaCategories.add(getString(R.string.uttara));
+        thanaCategories.add(getString(R.string.vatara));
+        thanaCategories.add(getString(R.string.wari));
 
         washBedVerandaCategories.add(getString(R.string.none));
         washBedVerandaCategories.add(getString(R.string.one));
@@ -773,11 +784,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                     StorageReference reference = storage.getReference().child("Ad_pictures").child(Objects.requireNonNull(auth.getUid())).child(randomKey).child("Image_2");
                     reference.putFile(selectedImageUri).addOnCompleteListener(task -> {
                         if(task.isSuccessful()){
-                            reference.getDownloadUrl().addOnSuccessListener(uri -> {
-
-                                image_url2 = uri.toString();
-
-                            });
+                            reference.getDownloadUrl().addOnSuccessListener(uri -> image_url2 = uri.toString());
 
                         }
 
@@ -792,11 +799,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                     StorageReference reference = storage.getReference().child("Ad_pictures").child(Objects.requireNonNull(auth.getUid())).child(randomKey).child("Image_3");
                     reference.putFile(selectedImageUri).addOnCompleteListener(task -> {
                         if(task.isSuccessful()){
-                            reference.getDownloadUrl().addOnSuccessListener(uri -> {
-
-                                image_url3 = uri.toString();
-
-                            });
+                            reference.getDownloadUrl().addOnSuccessListener(uri -> image_url3 = uri.toString());
 
                         }
 
@@ -811,11 +814,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                     StorageReference reference = storage.getReference().child("Ad_pictures").child(Objects.requireNonNull(auth.getUid())).child(randomKey).child("Image_4");
                     reference.putFile(selectedImageUri).addOnCompleteListener(task -> {
                         if(task.isSuccessful()){
-                            reference.getDownloadUrl().addOnSuccessListener(uri -> {
-
-                                image_url4 = uri.toString();
-
-                            });
+                            reference.getDownloadUrl().addOnSuccessListener(uri -> image_url4 = uri.toString());
 
                         }
 
@@ -830,11 +829,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                     StorageReference reference = storage.getReference().child("Ad_pictures").child(Objects.requireNonNull(auth.getUid())).child(randomKey).child("Image_5");
                     reference.putFile(selectedImageUri).addOnCompleteListener(task -> {
                         if(task.isSuccessful()){
-                            reference.getDownloadUrl().addOnSuccessListener(uri -> {
-
-                                image_url5 = uri.toString();
-
-                            });
+                            reference.getDownloadUrl().addOnSuccessListener(uri -> image_url5 = uri.toString());
 
                         }
 
@@ -871,5 +866,160 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
         return Uri.parse(path);
 
+    }
+
+    @SuppressLint("SetTextI18n")
+    void editAd(){
+
+        titleText.setText(R.string.edit_ad);
+
+        titleTextBox.setText(previousIntentData.getStringExtra("title"));
+        rentTextBox.setText(previousIntentData.getStringExtra("rent"));
+        addressTextBox.setText(previousIntentData.getStringExtra("address"));
+
+        for(int i= 0; i < thanaSpinner.getAdapter().getCount(); i++)
+        {
+            if(thanaSpinner.getAdapter().getItem(i).toString().contains(previousIntentData.getStringExtra("thana")))
+            {
+                thanaSpinner.setSelection(i);
+            }
+        }
+
+        vacantText.setText(previousIntentData.getStringExtra("vacantFrom"));
+
+        for(int i= 0; i < flatTypeSpinner.getAdapter().getCount(); i++)
+        {
+            if(flatTypeSpinner.getAdapter().getItem(i).toString().contains(previousIntentData.getStringExtra("flatType")))
+            {
+                flatTypeSpinner.setSelection(i);
+            }
+        }
+
+        for(int i= 0; i < washSpinner.getAdapter().getCount(); i++)
+        {
+            if(washSpinner.getAdapter().getItem(i).toString().contains(previousIntentData.getStringExtra("washroom")))
+            {
+                washSpinner.setSelection(i);
+            }
+        }
+
+        for(int i= 0; i < verandaSpinner.getAdapter().getCount(); i++)
+        {
+            if(verandaSpinner.getAdapter().getItem(i).toString().contains(previousIntentData.getStringExtra("veranda")))
+            {
+                verandaSpinner.setSelection(i);
+            }
+        }
+
+        for(int i= 0; i < bedSpinner.getAdapter().getCount(); i++)
+        {
+            if(bedSpinner.getAdapter().getItem(i).toString().contains(previousIntentData.getStringExtra("bedroom")))
+            {
+                bedSpinner.setSelection(i);
+            }
+        }
+
+        for(int i= 0; i < floorSpinner.getAdapter().getCount(); i++)
+        {
+            if(floorSpinner.getAdapter().getItem(i).toString().contains(previousIntentData.getStringExtra("floor")))
+            {
+                floorSpinner.setSelection(i);
+            }
+        }
+
+        for(int i= 0; i < religionSpinner.getAdapter().getCount(); i++)
+        {
+            if(religionSpinner.getAdapter().getItem(i).toString().contains(previousIntentData.getStringExtra("religion")))
+            {
+                religionSpinner.setSelection(i);
+            }
+        }
+
+        for(int i= 0; i < genreSpinner.getAdapter().getCount(); i++)
+        {
+            if(genreSpinner.getAdapter().getItem(i).toString().contains(previousIntentData.getStringExtra("genre")))
+            {
+                genreSpinner.setSelection(i);
+            }
+        }
+
+        currentBillTextBox.setText(previousIntentData.getStringExtra("electricityBill"));
+        waterBillTextBox.setText(previousIntentData.getStringExtra("waterBill"));
+        gasBillTextBox.setText(previousIntentData.getStringExtra("gasBill"));
+        otherChargeTextBox.setText(previousIntentData.getStringExtra("serviceCharge"));
+
+        isLiftChecked = Boolean.parseBoolean(previousIntentData.getStringExtra("lift"));
+        isGeneratorChecked = Boolean.parseBoolean(previousIntentData.getStringExtra("generator"));
+        isParkingChecked = Boolean.parseBoolean(previousIntentData.getStringExtra("parking"));
+        isSecurityChecked = Boolean.parseBoolean(previousIntentData.getStringExtra("security"));
+        isGasChecked = Boolean.parseBoolean(previousIntentData.getStringExtra("gas"));
+        isWifiChecked = Boolean.parseBoolean(previousIntentData.getStringExtra("wifi"));
+
+        descriptionTextBox.setText(previousIntentData.getStringExtra("details"));
+
+        if(!previousIntentData.getStringExtra("imageUri1").equals("no_image")){
+
+            Picasso.get().load(previousIntentData.getStringExtra("imageUri1")).resize(300, 200).centerCrop().placeholder(R.drawable.ic_add_image).into(img1);
+        }
+
+        if(!previousIntentData.getStringExtra("imageUri2").equals("no_image")){
+
+            Picasso.get().load(previousIntentData.getStringExtra("imageUri2")).resize(300, 200).centerCrop().placeholder(R.drawable.ic_add_image).into(img2);
+        }
+
+        if(!previousIntentData.getStringExtra("imageUri3").equals("no_image")){
+
+            Picasso.get().load(previousIntentData.getStringExtra("imageUri3")).resize(300, 200).centerCrop().placeholder(R.drawable.ic_add_image).into(img3);
+        }
+
+        if(!previousIntentData.getStringExtra("imageUri4").equals("no_image")){
+
+            Picasso.get().load(previousIntentData.getStringExtra("imageUri4")).resize(300, 200).centerCrop().placeholder(R.drawable.ic_add_image).into(img4);
+        }
+
+        if(!previousIntentData.getStringExtra("imageUri5").equals("no_image")){
+
+            Picasso.get().load(previousIntentData.getStringExtra("imageUri5")).resize(300, 200).centerCrop().placeholder(R.drawable.ic_add_image).into(img5);
+        }
+
+        if(isLiftChecked){
+
+            liftBox.setProgress(1f);
+        }
+
+        if(isGeneratorChecked){
+
+            generatorBox.setProgress(1f);
+        }
+
+        if(isParkingChecked){
+
+            parkingBox.setProgress(1f);
+        }
+
+        if(isSecurityChecked){
+
+            securityBox.setProgress(1f);
+        }
+
+        if(isGasChecked){
+
+            gasBox.setProgress(1f);
+        }
+
+        if(isWifiChecked){
+
+            wifiBox.setProgress(1f);
+        }
+
+        createButton.setText("UPDATE");
+
+        createButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //TODO database update code here
+            }
+        });
     }
 }

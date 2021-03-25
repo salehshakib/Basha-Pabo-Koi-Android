@@ -3,7 +3,10 @@ package com.example.bashapabokoi;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +21,7 @@ import com.example.bashapabokoi.Adapters.DescriptionImageAdapter;
 import com.example.bashapabokoi.Models.CheckBoxValueShower;
 import com.example.bashapabokoi.Models.DescriptionImageShower;
 import com.example.bashapabokoi.Models.User;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -56,10 +60,18 @@ public class AdDescriptionActivity extends AppCompatActivity {
         final TextView rent = findViewById(R.id.rent_description_text);
         final TextView ownerName = findViewById(R.id.description_profile_name);
         final TextView ownerPhoneNo = findViewById(R.id.description_phone_no);
+        final TextView adBy = findViewById(R.id.ad_by_text);
+        final TextView rateThisAd = findViewById(R.id.rate_this_ad_text);
+
+        final LinearLayout ownerDetailsHolder = findViewById(R.id.owner_details_holder);
+        final LinearLayout ratingStarHolder = findViewById(R.id.rating_star_holder);
 
         final ImageButton descriptionToChat = findViewById(R.id.description_to_chat);
 
         final RoundedImageView ownerProPic = findViewById(R.id.pro_pic_description);
+
+        final FloatingActionButton editAd = findViewById(R.id.edit_ad_btn);
+        final FloatingActionButton addToWishList = findViewById(R.id.add_to_wish_list_btn);
 
         final ViewPager2 adImage = findViewById(R.id.description_image_shower);
         final List<DescriptionImageShower> descriptionImageShowers = new ArrayList<>();
@@ -111,6 +123,66 @@ public class AdDescriptionActivity extends AppCompatActivity {
 
         DescriptionImageShower image3 = new DescriptionImageShower("https://t.auntmia.com/nthumbs/2014-01-26/2697314/2697314_19b.jpg");
         descriptionImageShowers.add(image3);*/
+
+        if(previousIntentImage.getStringExtra("FROM_ACTIVITY").equals("ProfileActivity")){
+
+            editAd.setEnabled(true);
+            editAd.setAlpha(1f);
+
+            ((ViewGroup) adBy.getParent()).removeView(adBy);
+            ((ViewGroup) rateThisAd.getParent()).removeView(rateThisAd);
+            ((ViewGroup) ownerDetailsHolder.getParent()).removeView(ownerDetailsHolder);
+            ((ViewGroup) ratingStarHolder.getParent()).removeView(ratingStarHolder);
+
+            ((ViewGroup) descriptionToChat.getParent()).removeView(descriptionToChat);
+            ((ViewGroup) addToWishList.getParent()).removeView(addToWishList);
+
+            FloatingActionButton rentDone = findViewById(R.id.rent_done_btn);
+
+            rentDone.setEnabled(true);
+            rentDone.setAlpha(1f);
+
+            editAd.setOnClickListener(v -> {
+
+                Intent intent = new Intent(AdDescriptionActivity.this, AdCreateActivity.class);
+
+
+                intent.putExtra("imageUri1", previousIntentImage.getStringExtra("imageUri1"));
+                intent.putExtra("imageUri2", previousIntentImage.getStringExtra("imageUri2"));
+                intent.putExtra("imageUri3", previousIntentImage.getStringExtra("imageUri3"));
+                intent.putExtra("imageUri4", previousIntentImage.getStringExtra("imageUri4"));
+                intent.putExtra("imageUri5", previousIntentImage.getStringExtra("imageUri5"));
+
+                intent.putExtra("title", previousIntentImage.getStringExtra("title"));
+                intent.putExtra("address", previousIntentImage.getStringExtra("address"));
+                intent.putExtra("flatType", previousIntentImage.getStringExtra("flatType"));
+                intent.putExtra("washroom", previousIntentImage.getStringExtra("washroom"));
+                intent.putExtra("vacantFrom", previousIntentImage.getStringExtra("vacantFrom"));
+                intent.putExtra("veranda", previousIntentImage.getStringExtra("veranda"));
+                intent.putExtra("bedroom", previousIntentImage.getStringExtra("bedroom"));
+                intent.putExtra("floor", previousIntentImage.getStringExtra("floor"));
+                intent.putExtra("religion", previousIntentImage.getStringExtra("religion"));
+                intent.putExtra("genre", previousIntentImage.getStringExtra("genre"));
+                intent.putExtra("electricityBill", previousIntentImage.getStringExtra("electricityBill"));
+                intent.putExtra("waterBill", previousIntentImage.getStringExtra("waterBill"));
+                intent.putExtra("gasBill", previousIntentImage.getStringExtra("gasBill"));
+                intent.putExtra("serviceCharge", previousIntentImage.getStringExtra("serviceCharge"));
+                intent.putExtra("lift", previousIntentImage.getStringExtra("lift"));
+                intent.putExtra("generator", previousIntentImage.getStringExtra("generator"));
+                intent.putExtra("parking", previousIntentImage.getStringExtra("parking"));
+                intent.putExtra("security", previousIntentImage.getStringExtra("security"));
+                intent.putExtra("gas", previousIntentImage.getStringExtra("gas"));
+                intent.putExtra("wifi", previousIntentImage.getStringExtra("wifi"));
+                intent.putExtra("details", previousIntentImage.getStringExtra("details"));
+                intent.putExtra("rent", previousIntentImage.getStringExtra("rent"));
+                intent.putExtra("lat", previousIntentImage.getStringExtra("lat"));
+                intent.putExtra("long", previousIntentImage.getStringExtra("long"));
+                intent.putExtra("ownerKey", previousIntentImage.getStringExtra("ownerKey"));
+                intent.putExtra("thana", previousIntentImage.getStringExtra("thana"));
+                intent.putExtra("FROM_ACTIVITY", "AdDescriptionActivity");
+                startActivity(intent);
+            });
+        }
 
         title.setText(previousIntentImage.getStringExtra("title"));
         address.setText(previousIntentImage.getStringExtra("address"));
@@ -256,10 +328,8 @@ public class AdDescriptionActivity extends AppCompatActivity {
 
                 descriptionToChat.setOnClickListener(v -> {
 
-                    //TODO description to chat intent code here
-
                     Intent intent = new Intent(AdDescriptionActivity.this, ChatActivity.class);
-                    intent.putExtra("name", snapshot.child("name").getValue().toString());
+                    intent.putExtra("name", Objects.requireNonNull(snapshot.child("name").getValue()).toString());
                     intent.putExtra("uid", strOfOwnerUid[0]);
                     startActivity(intent);
                 });

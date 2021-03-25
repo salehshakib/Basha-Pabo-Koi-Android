@@ -160,6 +160,8 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.AdsViewHolder>{
                 intent.putExtra("lat", ad.getLatitude());
                 intent.putExtra("long", ad.getLongitude());
                 intent.putExtra("ownerKey", ad.getKey());
+                intent.putExtra("thana", ad.getThana());
+                intent.putExtra("FROM_ACTIVITY", "ListViewFragment");
                 context.startActivity(intent);
             });
         }

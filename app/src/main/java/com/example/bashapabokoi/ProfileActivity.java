@@ -21,6 +21,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.example.bashapabokoi.Adapters.OwnerAdAdapter;
+import com.example.bashapabokoi.Models.CreateAd;
 import com.example.bashapabokoi.Models.OwnerAdShower;
 import com.example.bashapabokoi.Models.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -104,6 +105,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
                 ViewPager2 ownerAd = findViewById(R.id.owner_ad_shower);
                 List<OwnerAdShower> ownerAdShowers = new ArrayList<>();
+                List<CreateAd> ownerAdDetails = new ArrayList<>();
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     String[] arrOfStr = Objects.requireNonNull(dataSnapshot.getKey()).split("-");
@@ -122,6 +124,8 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
                             ownerAdShowers.add(ad3);  */                              //"https://t.auntmia.com/nthumbs/2014-01-26/2697314/2697314_19b.jpg"
 
+                            ownerAdDetails.add(dataSnapshot.getValue(CreateAd.class));
+
                             break;
 
                         }
@@ -130,7 +134,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
 
                 }
-                ownerAd.setAdapter(new OwnerAdAdapter(ownerAdShowers));
+                ownerAd.setAdapter(new OwnerAdAdapter(ProfileActivity.this, ownerAdShowers, ownerAdDetails));
 
                 ownerAd.setClipToPadding(false);
                 ownerAd.setClipChildren(false);
@@ -201,6 +205,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             case R.id.nav_ad:
 
                 Intent intentAd = new Intent(ProfileActivity.this, AdCreateActivity.class);
+                intentAd.putExtra("FROM_ACTIVITY", "ProfileActivity");
                 drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(intentAd);
                 break;
