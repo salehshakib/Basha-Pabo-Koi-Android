@@ -168,21 +168,15 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:id="@+id/edit_phone_no"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="right"
-                                        android:src="@drawable/ic_edit"
-                                        tools:ignore="RtlHardcoded" />
+                                    android:orientation="vertical"
+                                    android:paddingTop="20dp">
 
                                     <ImageView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:src="@drawable/ic_phone" />
+                                        android:src="@drawable/ic_phone"
+                                        android:contentDescription="@string/todo"/>
 
                                     <TextView
                                         android:id="@+id/phone_no_profile"
@@ -290,7 +284,7 @@
                                         android:layout_marginTop="20dp"
                                         android:fontFamily="@font/roboto_thin"
                                         android:gravity="center"
-                                        android:text="B-15, G-4, Motijheel, A.G.B colony, Hospital zone, Dhaka-1000."
+                                        android:text="@string/address_eg"
                                         android:textColor="@color/orange_base"
                                         android:textSize="20sp" />
 

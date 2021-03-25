@@ -151,6 +151,14 @@ public class AdDescriptionActivity extends AppCompatActivity {
             rentDone.setEnabled(true);
             rentDone.setAlpha(1f);
 
+            rentDone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    //TODO delete your ad code here
+                }
+            });
+
             editAd.setOnClickListener(v -> {
 
                 Intent intent = new Intent(AdDescriptionActivity.this, AdCreateActivity.class);
@@ -365,11 +373,8 @@ public class AdDescriptionActivity extends AppCompatActivity {
             HashMap<String, Object> wishListObj = new HashMap<>();
             Date timeStamp = new Date();
 
-
             wishListObj.put(previousIntentImage.getStringExtra("ownerKey"), timeStamp.getTime());
             database.getReference().child("Users").child(auth.getUid()).child("Wishlist").updateChildren(wishListObj);
-
-
 
         });
 

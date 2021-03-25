@@ -1021,29 +1021,20 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
         createButton.setText("UPDATE");
 
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        createButton.setOnClickListener(v -> {
 
-                //Log.d("key", previousIntentData.getStringExtra("ownerKey"));
-                CreateAd updatedAd = new CreateAd(date.getTime(), previousIntentData.getStringExtra("ownerKey"), titleTextBox.getText().toString(), addressTextBox.getText().toString(), thanaSpinner.getSelectedItem().toString(), vacantText.getText().toString(), flatTypeSpinner.getSelectedItem().toString(), washSpinner.getSelectedItem().toString(), verandaSpinner.getSelectedItem().toString(), bedSpinner.getSelectedItem().toString(), floorSpinner.getSelectedItem().toString(), religionSpinner.getSelectedItem().toString(), genreSpinner.getSelectedItem().toString(), currentBillTextBox.getText().toString(), waterBillTextBox.getText().toString(), gasBillTextBox.getText().toString(), otherChargeTextBox.getText().toString(), Boolean.toString(isLiftChecked), Boolean.toString(isGeneratorChecked), Boolean.toString(isParkingChecked), Boolean.toString(isSecurityChecked), Boolean.toString(isGasChecked), Boolean.toString(isWifiChecked), descriptionTextBox.getText().toString(), rentTextBox.getText().toString(),
-                        image_url1,
-                        image_url2,
-                        image_url3,
-                        image_url4,
-                        image_url5,
-                        longitude, latitude);
+            CreateAd updatedAd = new CreateAd(date.getTime(), previousIntentData.getStringExtra("ownerKey"), titleTextBox.getText().toString(), addressTextBox.getText().toString(), thanaSpinner.getSelectedItem().toString(), vacantText.getText().toString(), flatTypeSpinner.getSelectedItem().toString(), washSpinner.getSelectedItem().toString(), verandaSpinner.getSelectedItem().toString(), bedSpinner.getSelectedItem().toString(), floorSpinner.getSelectedItem().toString(), religionSpinner.getSelectedItem().toString(), genreSpinner.getSelectedItem().toString(), currentBillTextBox.getText().toString(), waterBillTextBox.getText().toString(), gasBillTextBox.getText().toString(), otherChargeTextBox.getText().toString(), Boolean.toString(isLiftChecked), Boolean.toString(isGeneratorChecked), Boolean.toString(isParkingChecked), Boolean.toString(isSecurityChecked), Boolean.toString(isGasChecked), Boolean.toString(isWifiChecked), descriptionTextBox.getText().toString(), rentTextBox.getText().toString(),
+                    image_url1,
+                    image_url2,
+                    image_url3,
+                    image_url4,
+                    image_url5,
+                    longitude, latitude);
 
 
 
-                database.getReference().child("All_ad").child(previousIntentData.getStringExtra("ownerKey")).setValue(updatedAd).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(AdCreateActivity.this, "Updated", Toast.LENGTH_LONG).show();
-                    }
-                });
+            database.getReference().child("All_ad").child(previousIntentData.getStringExtra("ownerKey")).setValue(updatedAd).addOnSuccessListener(aVoid -> Toast.makeText(AdCreateActivity.this, "Updated", Toast.LENGTH_LONG).show());
 
-            }
         });
     }
 }

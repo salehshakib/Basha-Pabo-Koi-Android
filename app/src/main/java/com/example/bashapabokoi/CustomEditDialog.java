@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.FileObserver;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -82,13 +80,12 @@ public class CustomEditDialog extends Dialog implements View.OnClickListener {
 
                 if(editCode == 1){
 
-                    editPhoneNo();
+                    editEmail();
+
                 } else if(editCode == 2){
 
-                    editEmail();
-                } else if(editCode == 3){
-
                     editAddress();
+
                 }
 
                 break;
@@ -101,31 +98,23 @@ public class CustomEditDialog extends Dialog implements View.OnClickListener {
         dismiss();
     }
 
-    private void editPhoneNo(){
-        //todo ehan e edit kora lagbo
-
-        /*HashMap<String, Object> phoneNo = new HashMap<>();
-        phoneNo.put("phoneNumber", editContent.getText());*/
-
-
-        Toast.makeText(context, "Phone Number changed successfully!", Toast.LENGTH_SHORT).show();
-    }
-
     private void editEmail(){
-        //todo ehan e edit kora lagbo
+
         HashMap<String, Object> email = new HashMap<>();
         email.put("email", editContent.getText().toString());
         FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).updateChildren(email);
-
         Toast.makeText(context, "Email changed successfully!", Toast.LENGTH_SHORT).show();
+
+        ProfileActivity.profileMail.setText(editContent.getText().toString());
     }
 
     private void editAddress(){
-    //todo ehan e edit kora lagbo
 
         HashMap<String , Object> address = new HashMap<>();
         address.put("address", editContent.getText().toString());
         FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).updateChildren(address);
         Toast.makeText(context, "Address changed successfully!", Toast.LENGTH_SHORT).show();
+
+        ProfileActivity.profileAddress.setText(editContent.getText().toString());
     }
 }

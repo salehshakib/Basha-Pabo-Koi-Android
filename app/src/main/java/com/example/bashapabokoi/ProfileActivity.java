@@ -43,9 +43,10 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
     NavigationView navigationView;
 
     RoundedImageView profilePicture;
-    TextView ProfileName, profilePhoneNo, profileAddress, profileMail;
+    @SuppressLint("StaticFieldLeak")
+    public static TextView ProfileName, profilePhoneNo, profileAddress, profileMail;
 
-    CardView editPhoneNo, editAddress, editEmail;
+    CardView editAddress, editEmail;
 
     FloatingActionButton returnFromProfile;
 
@@ -62,7 +63,6 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
         returnFromProfile = findViewById(R.id.return_from_profile);
 
-        editPhoneNo = findViewById(R.id.profile_phone_no);
         editEmail = findViewById(R.id.profile_email);
         editAddress = findViewById(R.id.profile_address);
 
@@ -97,7 +97,35 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             }
         });
 
+        FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                try {
+
+                    profileAddress.setText(Objects.requireNonNull(snapshot.child("address").getValue()).toString());
+
+                } catch (NullPointerException e){
+
+                    profileAddress.setText(getString(R.string.address_eg));
+                }
+
+                try {
+
+                    profileMail.setText(Objects.requireNonNull(snapshot.child("email").getValue()).toString());
+
+                } catch (NullPointerException e){
+
+                    profileMail.setText(getString(R.string.email_eg));
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         FirebaseDatabase.getInstance().getReference().child("All_ad").addValueEventListener(new ValueEventListener() {
             @Override
@@ -163,23 +191,16 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         navigationView.setCheckedItem(R.id.nav_pro);
         navigationView.setNavigationItemSelectedListener(this);
 
-        editPhoneNo.setOnClickListener(v -> {
-
-            CustomEditDialog editNumber = new CustomEditDialog(ProfileActivity.this, "Edit phone number", "Enter your new phone number", 1);
-            editNumber.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            editNumber.show();
-        });
-
         editEmail.setOnClickListener(v -> {
 
-            CustomEditDialog editNumber = new CustomEditDialog(ProfileActivity.this, "Edit email", "Enter your new email", 2);
+            CustomEditDialog editNumber = new CustomEditDialog(ProfileActivity.this, "Edit email", "Enter your new email", 1);
             editNumber.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             editNumber.show();
         });
 
         editAddress.setOnClickListener(v -> {
 
-            CustomEditDialog editNumber = new CustomEditDialog(ProfileActivity.this, "Edit address", "Enter your new address", 3);
+            CustomEditDialog editNumber = new CustomEditDialog(ProfileActivity.this, "Edit address", "Enter your new address", 2);
             editNumber.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             editNumber.show();
         });
