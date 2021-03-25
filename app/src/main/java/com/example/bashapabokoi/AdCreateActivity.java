@@ -43,6 +43,7 @@ import com.example.bashapabokoi.Models.CreateAd;
 import com.example.bashapabokoi.Models.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -100,6 +101,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
     Calendar calendar;
 
     Intent previousIntentData;
+    Date date = new Date();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,7 +240,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                                 Location currentLocation = (Location) task.getResult();
                                 longitude = Double.toString(currentLocation.getLongitude());
                                 latitude = Double.toString(currentLocation.getLatitude());
-                                Date date = new Date();
+
 
                                 CreateAd newAd = new CreateAd(date.getTime(), auth.getUid()+randomKey, title, address, thana, vacFrom, flatType, washroom, veranda, bedroom, floor, religion, genre, currentBill, waterBill, gasBill, otherCharge, Boolean.toString(isLiftChecked), Boolean.toString(isGeneratorChecked), Boolean.toString(isParkingChecked), Boolean.toString(isSecurityChecked), Boolean.toString(isGasChecked), Boolean.toString(isWifiChecked), description, rent, image_url1,image_url2,image_url3,image_url4,image_url5, longitude, latitude);
 
@@ -861,7 +863,7 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         src.compress(format, quality, os);
 
-        String path = MediaStore.Images.Media.insertImage(getContentResolver(), src, "title", null);
+        String path = MediaStore.Images.Media.insertImage(getContentResolver(), src, "Basha Pabo Koi", null);
         Log.d("aaa",Uri.parse(path).toString());
 
         return Uri.parse(path);
@@ -958,26 +960,31 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
         descriptionTextBox.setText(previousIntentData.getStringExtra("details"));
 
         if(!previousIntentData.getStringExtra("imageUri1").equals("no_image")){
+            image_url1 = previousIntentData.getStringExtra("imageUri1");
 
             Picasso.get().load(previousIntentData.getStringExtra("imageUri1")).resize(300, 200).centerCrop().placeholder(R.drawable.ic_add_image).into(img1);
         }
 
         if(!previousIntentData.getStringExtra("imageUri2").equals("no_image")){
+            image_url2 = previousIntentData.getStringExtra("imageUri2");
 
             Picasso.get().load(previousIntentData.getStringExtra("imageUri2")).resize(300, 200).centerCrop().placeholder(R.drawable.ic_add_image).into(img2);
         }
 
         if(!previousIntentData.getStringExtra("imageUri3").equals("no_image")){
+            image_url3 = previousIntentData.getStringExtra("imageUri3");
 
             Picasso.get().load(previousIntentData.getStringExtra("imageUri3")).resize(300, 200).centerCrop().placeholder(R.drawable.ic_add_image).into(img3);
         }
 
         if(!previousIntentData.getStringExtra("imageUri4").equals("no_image")){
+            image_url4 = previousIntentData.getStringExtra("imageUri4");
 
             Picasso.get().load(previousIntentData.getStringExtra("imageUri4")).resize(300, 200).centerCrop().placeholder(R.drawable.ic_add_image).into(img4);
         }
 
         if(!previousIntentData.getStringExtra("imageUri5").equals("no_image")){
+            image_url5 = previousIntentData.getStringExtra("imageUri5");
 
             Picasso.get().load(previousIntentData.getStringExtra("imageUri5")).resize(300, 200).centerCrop().placeholder(R.drawable.ic_add_image).into(img5);
         }
@@ -1018,7 +1025,24 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                //TODO database update code here
+                //Log.d("key", previousIntentData.getStringExtra("ownerKey"));
+                CreateAd updatedAd = new CreateAd(date.getTime(), previousIntentData.getStringExtra("ownerKey"), titleTextBox.getText().toString(), addressTextBox.getText().toString(), thanaSpinner.getSelectedItem().toString(), vacantText.getText().toString(), flatTypeSpinner.getSelectedItem().toString(), washSpinner.getSelectedItem().toString(), verandaSpinner.getSelectedItem().toString(), bedSpinner.getSelectedItem().toString(), floorSpinner.getSelectedItem().toString(), religionSpinner.getSelectedItem().toString(), genreSpinner.getSelectedItem().toString(), currentBillTextBox.getText().toString(), waterBillTextBox.getText().toString(), gasBillTextBox.getText().toString(), otherChargeTextBox.getText().toString(), Boolean.toString(isLiftChecked), Boolean.toString(isGeneratorChecked), Boolean.toString(isParkingChecked), Boolean.toString(isSecurityChecked), Boolean.toString(isGasChecked), Boolean.toString(isWifiChecked), descriptionTextBox.getText().toString(), rentTextBox.getText().toString(),
+                        image_url1,
+                        image_url2,
+                        image_url3,
+                        image_url4,
+                        image_url5,
+                        longitude, latitude);
+
+
+
+                database.getReference().child("All_ad").child(previousIntentData.getStringExtra("ownerKey")).setValue(updatedAd).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(AdCreateActivity.this, "Updated", Toast.LENGTH_LONG).show();
+                    }
+                });
+
             }
         });
     }

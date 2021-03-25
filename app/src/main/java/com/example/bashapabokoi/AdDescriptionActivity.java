@@ -3,11 +3,12 @@ package com.example.bashapabokoi;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import com.example.bashapabokoi.Models.CheckBoxValueShower;
 import com.example.bashapabokoi.Models.DescriptionImageShower;
 import com.example.bashapabokoi.Models.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -29,12 +31,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
 public class AdDescriptionActivity extends AppCompatActivity {
 
     DescriptionImageShower image;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    FirebaseAuth auth = FirebaseAuth.getInstance();
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -66,12 +72,14 @@ public class AdDescriptionActivity extends AppCompatActivity {
         final LinearLayout ownerDetailsHolder = findViewById(R.id.owner_details_holder);
         final LinearLayout ratingStarHolder = findViewById(R.id.rating_star_holder);
 
+
         final ImageButton descriptionToChat = findViewById(R.id.description_to_chat);
 
-        final RoundedImageView ownerProPic = findViewById(R.id.pro_pic_description);
 
+        final RoundedImageView ownerProPic = findViewById(R.id.pro_pic_description);
         final FloatingActionButton editAd = findViewById(R.id.edit_ad_btn);
         final FloatingActionButton addToWishList = findViewById(R.id.add_to_wish_list_btn);
+
 
         final ViewPager2 adImage = findViewById(R.id.description_image_shower);
         final List<DescriptionImageShower> descriptionImageShowers = new ArrayList<>();
@@ -123,6 +131,7 @@ public class AdDescriptionActivity extends AppCompatActivity {
 
         DescriptionImageShower image3 = new DescriptionImageShower("https://t.auntmia.com/nthumbs/2014-01-26/2697314/2697314_19b.jpg");
         descriptionImageShowers.add(image3);*/
+
 
         if(previousIntentImage.getStringExtra("FROM_ACTIVITY").equals("ProfileActivity")){
 
@@ -311,7 +320,7 @@ public class AdDescriptionActivity extends AppCompatActivity {
 
         String[] strOfOwnerUid = Objects.requireNonNull(previousIntentImage.getStringExtra("ownerKey")).split("-");
 
-        FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(strOfOwnerUid[0])).addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Users").child(Objects.requireNonNull(strOfOwnerUid[0])).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -326,10 +335,14 @@ public class AdDescriptionActivity extends AppCompatActivity {
 
                 assert u != null;
 
+
+
                 descriptionToChat.setOnClickListener(v -> {
 
+                    //TODO description to chat intent code here
+
                     Intent intent = new Intent(AdDescriptionActivity.this, ChatActivity.class);
-                    intent.putExtra("name", Objects.requireNonNull(snapshot.child("name").getValue()).toString());
+                    intent.putExtra("name", snapshot.child("name").getValue().toString());
                     intent.putExtra("uid", strOfOwnerUid[0]);
                     startActivity(intent);
                 });
@@ -344,6 +357,22 @@ public class AdDescriptionActivity extends AppCompatActivity {
 
             }
         });
+
+
+        addToWishList.setOnClickListener(v -> {
+
+            Toast.makeText(AdDescriptionActivity.this, "Added To Your Wishlist",Toast.LENGTH_LONG).show();
+            HashMap<String, Object> wishListObj = new HashMap<>();
+            Date timeStamp = new Date();
+
+
+            wishListObj.put(previousIntentImage.getStringExtra("ownerKey"), timeStamp.getTime());
+            database.getReference().child("Users").child(auth.getUid()).child("Wishlist").updateChildren(wishListObj);
+
+
+
+        });
+
 
         RecyclerView checkBoxes = findViewById(R.id.checkbox_value_description);
 
