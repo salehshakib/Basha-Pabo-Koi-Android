@@ -1,5 +1,6 @@
 package com.example.bashapabokoi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,12 +13,18 @@ import androidx.fragment.app.Fragment;
 
 import com.example.bashapabokoi.Adapters.UsersAdapter;
 import com.example.bashapabokoi.Models.User;
+import com.example.bashapabokoi.Notifications.APIService;
+import com.example.bashapabokoi.Notifications.Client;
+import com.example.bashapabokoi.Notifications.Token;
 import com.example.bashapabokoi.databinding.FragmentChatsBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +37,9 @@ public class ChatsFragment extends Fragment {
 
     ArrayList<User> users;
     UsersAdapter usersAdapter;
+    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+    //APIService apiService ;
 
     @Nullable
     @Override
@@ -50,7 +60,7 @@ public class ChatsFragment extends Fragment {
         ArrayList<String> keys = new ArrayList<>();
 
         assert senderUid != null;
-        database.getReference().child("User_friends").child(senderUid).child("Friends").addValueEventListener(new ValueEventListener() {
+        /*database.getReference().child("User_friends").child(senderUid).child("Friends").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         list.clear();
@@ -65,7 +75,9 @@ public class ChatsFragment extends Fragment {
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
-                });
+                });*/
+
+        //apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
 
         database.getReference().child("Chat_time").orderByValue().addValueEventListener(new ValueEventListener() {
@@ -122,7 +134,18 @@ public class ChatsFragment extends Fragment {
                     }
                 });
 
+        //updateToken(FirebaseInstanceId.getInstance().getToken());
+
 
         return binding.getRoot();
     }
+
+
+    /*private void updateToken(String token){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token token1 = new Token(token);
+        databaseReference.child(firebaseUser.getUid()).setValue(token1);
+
+
+    }*/
 }

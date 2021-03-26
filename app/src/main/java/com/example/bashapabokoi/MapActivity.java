@@ -45,6 +45,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.bashapabokoi.Models.CreateAd;
 import com.example.bashapabokoi.Models.User;
+import com.example.bashapabokoi.Notifications.Token;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -74,10 +75,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.jetbrains.annotations.NotNull;
@@ -127,6 +131,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     // TODO saleh shakib
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
+    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
 
     ArrayList<String> longitude = new ArrayList<>();
@@ -155,6 +160,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+
+
+        //this is new // 26 march 2021
+        updateToken(FirebaseInstanceId.getInstance().getToken());
+
+
+
+
         setContentView(R.layout.activity_map);
 
         navItemIndex = R.id.nav_home;
@@ -273,6 +287,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
         //todo
+    }
+
+    private void updateToken(String token){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token token1 = new Token(token);
+        databaseReference.child(firebaseUser.getUid()).setValue(token1);
+
+
     }
 
     @Override
