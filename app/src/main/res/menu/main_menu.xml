@@ -11,7 +11,7 @@
     </group>
 
 
-    <item android:title="@string/switchable">
+    <item android:title="@string/preference">
 
         <menu>
 
@@ -48,16 +48,16 @@
     </item>
 
 
-    <item android:title="@string/preference">
+    <item android:title="@string/others">
 
         <menu>
 
             <group android:checkableBehavior="single">
 
                 <item
-                    android:id="@+id/nav_faq"
-                    android:icon="@drawable/faq"
-                    android:title="@string/faq" />
+                    android:id="@+id/nav_settings"
+                    android:icon="@drawable/ic_settings"
+                    android:title="@string/settings" />
 
                 <item
                     android:id="@+id/nav_about"

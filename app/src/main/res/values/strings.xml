@@ -180,4 +180,8 @@
     <string name="wari">Wari</string>
     <string name="edit_ad">EDIT YOUR AD</string>
     <string name="address_eg">Update your address</string>
+    <string name="others">Others</string>
+    <string name="settings">Settings</string>
+    <string name="lang">ENG</string>
+    <string name="off">OFF</string>
 </resources>

@@ -140,22 +140,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     //todo
 
-    public static void setIsModeSwitchOn(boolean isModeSwitchOn) {
-        MapActivity.isModeSwitchOn = isModeSwitchOn;
-    }
-
-    public static void setIsLangSwitchOn(boolean isLangSwitchOn) {
-        MapActivity.isLangSwitchOn = isLangSwitchOn;
-    }
-
-    public static boolean isIsModeSwitchOn() {
-        return isModeSwitchOn;
-    }
-
-    public static boolean isIsLangSwitchOn() {
-        return isLangSwitchOn;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -165,9 +149,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         //this is new // 26 march 2021
         updateToken(FirebaseInstanceId.getInstance().getToken());
-
-
-
 
         setContentView(R.layout.activity_map);
 
@@ -209,10 +190,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(this);
 
-        langSwitch = navigationView.findViewById(R.id.switch_lang);
         modeSwitch = navigationView.findViewById(R.id.switch_mode);
-        langSwitchDark = navigationView.findViewById(R.id.switch_lang_dark);
-        modeSwitchDark = navigationView.findViewById(R.id.switch_mode_dark);
+
 
         langSwitch.setOnClickListener(v -> {
 
@@ -475,7 +454,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             map.setMyLocationEnabled(true);
             map.getUiSettings().setMyLocationButtonEnabled(false);
             init();
-            //autoSuggestions();
+
         }
     }
 

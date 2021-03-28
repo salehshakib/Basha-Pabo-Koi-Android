@@ -19,37 +19,27 @@
         app:menu="@menu/main_menu"
         android:layout_gravity="start">
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/switch_lang_dark"
+        <TextView
+            android:id="@+id/switch_lang_state"
             android:layout_width="60dp"
             android:layout_height="40dp"
+            android:text="@string/lang"
+            android:gravity="center"
+            android:textColor="@color/orange_base"
+            android:fontFamily="@font/roboto"
             android:layout_marginTop="316dp"
-            android:layout_marginStart="220dp"
-            app:lottie_fileName="switch_dark.json"/>
+            android:layout_marginStart="220dp" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/switch_lang"
+        <TextView
+            android:id="@+id/switch_mode_state"
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:layout_marginTop="316dp"
-            android:layout_marginStart="220dp"
-            app:lottie_fileName="switch_light.json"/>
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/switch_mode_dark"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
+            android:text="@string/off"
+            android:gravity="center"
+            android:textColor="@color/orange_base"
+            android:fontFamily="@font/roboto"
             android:layout_marginTop="366dp"
-            android:layout_marginStart="220dp"
-            app:lottie_fileName="switch_dark.json"/>
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/switch_mode"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="366dp"
-            android:layout_marginStart="220dp"
-            app:lottie_fileName="switch_light.json"/>
+            android:layout_marginStart="220dp" />
     </com.google.android.material.navigation.NavigationView>
 
     <RelativeLayout

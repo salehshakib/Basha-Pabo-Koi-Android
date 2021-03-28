@@ -347,8 +347,6 @@ public class AdDescriptionActivity extends AppCompatActivity {
 
                 descriptionToChat.setOnClickListener(v -> {
 
-                    //TODO description to chat intent code here
-
                     Intent intent = new Intent(AdDescriptionActivity.this, ChatActivity.class);
                     intent.putExtra("name", snapshot.child("name").getValue().toString());
                     intent.putExtra("uid", strOfOwnerUid[0]);

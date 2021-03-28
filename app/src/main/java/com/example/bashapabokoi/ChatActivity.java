@@ -23,8 +23,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -174,7 +175,6 @@ public class ChatActivity extends AppCompatActivity {
                     User user = snapshot.getValue(User.class);
                     if(notify){
                         sendNotification(receiverUid, user.getName(), msg);
-                        Log.d("recieveruid", receiverUid);
 
                     }
                     notify = false;
@@ -196,7 +196,7 @@ public class ChatActivity extends AppCompatActivity {
     private void sendNotification(String receiverUid, String name, final String msg) {
 
         DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
-        Query query = tokens.orderByKey().equalTo(receiverUid);
+        //Query query = tokens.orderByKey().equalTo(receiverUid);
 
         tokens.addValueEventListener(new ValueEventListener() {
             @Override
@@ -214,7 +214,7 @@ public class ChatActivity extends AppCompatActivity {
                         apiService.sendNotification(sender)
                                 .enqueue(new Callback<MyResponse>() {
                                     @Override
-                                    public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                                    public void onResponse(@NotNull Call<MyResponse> call, @NotNull Response<MyResponse> response) {
                                         if (response.code() == 200){
                                             if(response.body().success != 1){
                                                 Toast.makeText(ChatActivity.this, "Failed!", Toast.LENGTH_LONG).show();
@@ -224,7 +224,7 @@ public class ChatActivity extends AppCompatActivity {
                                     }
 
                                     @Override
-                                    public void onFailure(Call<MyResponse> call, Throwable t) {
+                                    public void onFailure(@NotNull Call<MyResponse> call, @NotNull Throwable t) {
 
                                     }
                                 });
@@ -238,49 +238,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-
-        /*query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                Token token = snapshot.getValue(Token.class);
-
-
-                //todo ehan e icon
-                Data data = new Data(auth.getUid(), R.mipmap.ic_launcher_round, name +": "+ msg, "New Message", receiverUid);
-
-                Sender sender = new Sender(data, token.getToken());
-
-                apiService.sendNotification(sender)
-                        .enqueue(new Callback<MyResponse>() {
-                            @Override
-                            public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
-                                if (response.code() == 200){
-                                    if(response.body().success == 1){
-                                        Toast.makeText(ChatActivity.this, "Failed!", Toast.LENGTH_LONG).show();
-
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<MyResponse> call, Throwable t) {
-
-                            }
-                        });
-
-
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-         */
     }
 
 
