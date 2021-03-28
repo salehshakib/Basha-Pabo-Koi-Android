@@ -120,7 +120,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     NavigationView navigationView;
     BottomNavigationView bottomNavigationView;
 
-    public static LottieAnimationView langSwitch, modeSwitch, modeSwitchDark, langSwitchDark;
     private static boolean isLangSwitchOn = false;
     private static boolean isModeSwitchOn = false;
 
@@ -190,50 +189,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(this);
 
-        modeSwitch = navigationView.findViewById(R.id.switch_mode);
-
-
-        langSwitch.setOnClickListener(v -> {
-
-            if(isLangSwitchOn){
-
-                langSwitch.setMinAndMaxProgress(0.5f, 1.0f);
-                langSwitchDark.setMinAndMaxProgress(0.5f, 1.0f);
-                isLangSwitchOn = false;
-
-            } else{
-
-                langSwitch.setMinAndMaxProgress(0.0f, 0.5f);
-                langSwitchDark.setMinAndMaxProgress(0.0f, 0.5f);
-                isLangSwitchOn = true;
-            }
-            langSwitch.playAnimation();
-            langSwitchDark.playAnimation();
-        });
-
-        modeSwitch.setOnClickListener(v -> {
-
-            if(isModeSwitchOn){
-
-                modeSwitch.setMinAndMaxProgress(0.5f, 1.0f);
-                modeSwitchDark.setMinAndMaxProgress(0.5f, 1.0f);
-                isModeSwitchOn = false;
-
-                modeSwitch.animate().alphaBy(1.0f).setDuration(600);
-                langSwitch.animate().alphaBy(1.0f).setDuration(600);
-
-            } else{
-
-                modeSwitch.setMinAndMaxProgress(0.0f, 0.5f);
-                modeSwitchDark.setMinAndMaxProgress(0.0f, 0.5f);
-                isModeSwitchOn = true;
-
-                modeSwitch.animate().alphaBy(-1.0f).setDuration(600);
-                langSwitch.animate().alphaBy(-1.0f).setDuration(600);
-            }
-            modeSwitch.playAnimation();
-            modeSwitchDark.playAnimation();
-        });
 
         if (isServicesOK()) {
 
@@ -280,39 +235,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     protected void onResume() {
         super.onResume();
 
-        if(isModeSwitchOn){
-
-            langSwitch.setAlpha(0.0f);
-            modeSwitch.setAlpha(0.0f);
-
-            modeSwitch.setMinAndMaxProgress(0.0f, 0.5f);
-            modeSwitchDark.setMinAndMaxProgress(0.0f, 0.5f);
-
-        } else{
-
-            langSwitch.setAlpha(1.0f);
-            modeSwitch.setAlpha(1.0f);
-
-            modeSwitch.setMinAndMaxProgress(0.5f, 1.0f);
-            modeSwitchDark.setMinAndMaxProgress(0.5f, 1.0f);
-        }
-
-        if(isLangSwitchOn){
-
-            langSwitch.setMinAndMaxProgress(0.0f, 0.5f);
-            langSwitchDark.setMinAndMaxProgress(0.0f, 0.5f);
-
-        } else{
-
-            langSwitch.setMinAndMaxProgress(0.5f, 1.0f);
-            langSwitchDark.setMinAndMaxProgress(0.5f, 1.0f);
-        }
-
-        langSwitch.playAnimation();
-        langSwitchDark.playAnimation();
-        modeSwitch.playAnimation();
-        modeSwitchDark.playAnimation();
-        
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkReceiver, filter);
     }

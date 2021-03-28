@@ -270,24 +270,6 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                 Toast.makeText(this, "Please accept our terms and agreements", Toast.LENGTH_LONG).show();
             }
 
-
-
-
-            /*StorageReference reference = storage.getReference().child("Ads").child(auth.getUid());
-            reference.putFile(ehan e uri/bitmap img).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-
-
-                        }
-                    });
-
-                }
-            });*/
-
         });
 
         previousIntentData = getIntent();

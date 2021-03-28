@@ -123,7 +123,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
             builder = new NotificationCompat.Builder(this, CHANNEL_ID);
             builder.setContentTitle(title)
-                    .setSmallIcon(R.drawable.ic_baseline_attach_email_24) //todo icon
+                    .setSmallIcon(R.drawable.homescreen) //todo icon
                     .setContentText(body)
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true)
@@ -133,7 +133,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         } else {
             builder = new NotificationCompat.Builder(this);
             builder.setContentTitle(title)
-                    .setSmallIcon(R.drawable.ic_baseline_attach_email_24) //todo icon
+                    .setSmallIcon(R.drawable.homescreen) //todo icon
                     .setContentText(body)
                     .setPriority(NotificationManager.IMPORTANCE_HIGH)
                     .setContentIntent(pendingIntent)
