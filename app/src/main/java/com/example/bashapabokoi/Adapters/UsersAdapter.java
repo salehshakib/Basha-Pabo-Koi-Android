@@ -3,6 +3,7 @@ package com.example.bashapabokoi.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +22,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHolder>{
 
@@ -60,9 +60,34 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
                             String lastMsg = snapshot.child("lastMsg").getValue(String.class);
                             long time = snapshot.child("lastMsgTime").getValue(Long.class);
 
-                            @SuppressLint("SimpleDateFormat")
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
-                            holder.binding.msgTime.setText(dateFormat.format(new Date(time)));
+                            assert lastMsg != null;
+                            if(lastMsg.length() > 40){
+
+                                lastMsg = lastMsg.substring(0, 39) + "...";
+                            }
+
+                            Calendar msgTime = Calendar.getInstance();
+                            Calendar now = Calendar.getInstance();
+
+                            msgTime.setTimeInMillis(time);
+
+                            final String timeFormatString = "h:mm aa";
+                            final String dateTimeFormatString = "EEEE, MMMM d, h:mm aa";
+
+                            if (now.get(Calendar.DATE) == msgTime.get(Calendar.DATE) ) {
+
+                                holder.binding.msgTime.setText("Today, " + DateFormat.format(timeFormatString, msgTime));
+                            } else if (now.get(Calendar.DATE) - msgTime.get(Calendar.DATE) == 1  ){
+
+                                holder.binding.msgTime.setText("Yesterday, " + DateFormat.format(timeFormatString, msgTime));
+                            } else if (now.get(Calendar.YEAR) == msgTime.get(Calendar.YEAR)) {
+
+                                holder.binding.msgTime.setText(DateFormat.format(dateTimeFormatString, msgTime).toString());
+                            } else {
+
+                                holder.binding.msgTime.setText( DateFormat.format("MMMM dd yyyy, h:mm aa", msgTime).toString());
+                            }
+
                             holder.binding.lastMsg.setText(lastMsg);
                         } else {
                             holder.binding.lastMsg.setText("Tap to chat");

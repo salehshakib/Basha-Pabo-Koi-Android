@@ -39,14 +39,6 @@
             android:fontFamily="@font/roboto"
             android:layout_marginTop="366dp"
             android:layout_marginStart="220dp" />
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/switch_mode"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="366dp"
-            android:layout_marginStart="220dp"
-            app:lottie_fileName="switch_light.json"/>
     </com.google.android.material.navigation.NavigationView>
 
     <androidx.constraintlayout.widget.ConstraintLayout

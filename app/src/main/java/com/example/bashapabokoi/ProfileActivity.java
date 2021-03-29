@@ -2,6 +2,7 @@ package com.example.bashapabokoi;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -219,6 +220,12 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             case R.id.nav_out:
 
                 FirebaseAuth.getInstance().signOut();
+
+                SharedPreferences.Editor editor = SplashActivity.sharedPref.edit();
+                editor.putBoolean("keepMeLoggedIn", false);
+                editor.apply();
+
+                FirebaseAuth.getInstance().signOut();
                 Intent intentLogOut = new Intent(ProfileActivity.this, LoginActivity.class);
                 startActivity(intentLogOut);
                 break;
@@ -229,6 +236,13 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                 intentAd.putExtra("FROM_ACTIVITY", "ProfileActivity");
                 drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(intentAd);
+                break;
+
+            case R.id.nav_settings:
+
+                Intent intentSettings = new Intent(ProfileActivity.this, SettingsActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(intentSettings);
                 break;
         }
 

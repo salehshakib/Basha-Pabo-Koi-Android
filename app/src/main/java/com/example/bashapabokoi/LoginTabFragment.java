@@ -1,6 +1,7 @@
 package com.example.bashapabokoi;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +59,11 @@ public class LoginTabFragment extends Fragment {
                 binding.keepMeLoggedIn.setSpeed(1f);
                 isLoggedIn = true;
             }
+
+            SharedPreferences.Editor editor = SplashActivity.sharedPref.edit();
+            editor.putBoolean("keepMeLoggedIn", isLoggedIn);
+            editor.apply();
+
             binding.keepMeLoggedIn.playAnimation();
         });
 

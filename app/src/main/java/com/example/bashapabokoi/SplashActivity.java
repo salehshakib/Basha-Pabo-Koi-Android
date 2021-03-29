@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -21,7 +22,6 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -32,6 +32,7 @@ public class SplashActivity extends AppCompatActivity {
     private static final int pageNo = 3;
 
     SharedPreferences sharedPreferences;
+    public static SharedPreferences sharedPref;
 
     Animation anim;
 
@@ -95,7 +96,11 @@ public class SplashActivity extends AppCompatActivity {
 
             } else {
 
-                if(FirebaseAuth.getInstance().getCurrentUser() != null){
+                sharedPref = getSharedPreferences("SharedPref", MODE_PRIVATE);
+
+                Log.d("keepMeLoggedIn", "Value: "+ sharedPref.getBoolean("keepMeLoggedIn", false));
+
+                if(sharedPref.getBoolean("keepMeLoggedIn", false)){
 
                     Intent intent = new Intent(SplashActivity.this, MapActivity.class);
                     startActivity(intent);

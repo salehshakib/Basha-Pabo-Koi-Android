@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -41,7 +42,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.bashapabokoi.Models.CreateAd;
 import com.example.bashapabokoi.Models.User;
@@ -89,6 +89,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
 
@@ -119,9 +120,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     BottomNavigationView bottomNavigationView;
-
-    private static boolean isLangSwitchOn = false;
-    private static boolean isModeSwitchOn = false;
 
     private TextView netInfo;
 
@@ -161,16 +159,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.nav_view);
         View header =  navigationView.getHeaderView(0);
-        TextView headerProfileName = (TextView)header.findViewById(R.id.profile_name_header);
-        RoundedImageView headerProPic = (RoundedImageView)header.findViewById(R.id.pro_pic_header);
+        TextView headerProfileName = header.findViewById(R.id.profile_name_header);
+        RoundedImageView headerProPic = header.findViewById(R.id.pro_pic_header);
 
-        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                headerProfileName.setText(snapshot.child("name").getValue().toString());
+                headerProfileName.setText(Objects.requireNonNull(snapshot.child("name").getValue()).toString());
 
                 User u = snapshot.getValue(User.class);
+                assert u != null;
                 Glide.with(getApplicationContext()).load(u.getProfileImage()).placeholder(R.drawable.user).into(headerProPic);
             }
 
@@ -207,6 +206,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                 for(DataSnapshot snapshot1 : snapshot.getChildren()){
                     CreateAd ad = snapshot1.getValue(CreateAd.class);
+                    assert ad != null;
                     longitude.add(ad.getLongitude());
                     latitude.add(ad.getLatitude());
 
@@ -282,7 +282,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-            Fragment selectedFragments = null;
+            Fragment selectedFragments;
 
             if(item.getItemId() != R.id.nav_menu){
 
@@ -389,17 +389,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         placeAutocompleteAdapterNew = new PlaceAutocompleteAdapterNew(MapActivity.this,placesClient,autocompleteSessionToken);
         searchText.setAdapter(placeAutocompleteAdapterNew);*/
 
-        searchText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+        searchText.setOnEditorActionListener((v, actionId, event) -> {
 
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            if(actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE || event.getAction() == KeyEvent.ACTION_DOWN || event.getAction() == KeyEvent.KEYCODE_ENTER){
 
-                if(actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE || event.getAction() == KeyEvent.ACTION_DOWN || event.getAction() == KeyEvent.KEYCODE_ENTER){
-
-                    geoLocate();
-                }
-                return false;
+                geoLocate();
             }
+            return false;
         });
 
         gps.setOnClickListener(v -> getDeviceLocation());
@@ -422,22 +418,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             Address address = list.get(0);
 
-            moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), defaultZoom, address.getAddressLine(0));
+            moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), address.getAddressLine(0));
 
-            map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(Marker marker) {
+            map.setOnMarkerClickListener(marker -> {
 
-                    BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(MapActivity.this, R.style.BottomSheetDialogTheme);
-                    View bottomSheetView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_bottom_sheet, findViewById(R.id.bottom_sheet_container));
+                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(MapActivity.this, R.style.BottomSheetDialogTheme);
+                View bottomSheetView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_bottom_sheet, findViewById(R.id.bottom_sheet_container));
 
-                    bottomSheetDialog.setContentView(bottomSheetView);
-                    bottomSheetDialog.show();
+                bottomSheetDialog.setContentView(bottomSheetView);
+                bottomSheetDialog.show();
 
-                    TextView botAdd = (TextView)bottomSheetView.findViewById(R.id.bottom_address);
-                    botAdd.setText(address.getAddressLine(0));
-                    return true;
-                }
+                TextView botAdd = bottomSheetView.findViewById(R.id.bottom_address);
+                botAdd.setText(address.getAddressLine(0));
+                return true;
             });
         }
 
@@ -457,6 +450,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 backToast.cancel();
                 moveTaskToBack(true);
                 android.os.Process.killProcess(android.os.Process.myPid());
+
+                final SharedPreferences sharedPref = MapActivity.this.getPreferences(Context.MODE_PRIVATE);
+
+                if(!sharedPref.getBoolean("keepMeLoggedIn", false)){
+
+                    FirebaseAuth.getInstance().signOut();
+                }
+
                 System.exit(1);
                 return;
             } else{
@@ -488,7 +489,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                         if(isDeviceLocationOn() && currentLocation != null){
 
-                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), defaultZoom, "My Location");
+                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), "My Location");
                         }
                     } else {
 
@@ -511,52 +512,44 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         googleApiClient = null;
 
-        if (googleApiClient == null) {
-            googleApiClient = new GoogleApiClient.Builder(MapActivity.this).addApi(LocationServices.API).addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
-                        @Override
-                        public void onConnected(Bundle bundle) {
+        googleApiClient = new GoogleApiClient.Builder(MapActivity.this).addApi(LocationServices.API).addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+                    @Override
+                    public void onConnected(Bundle bundle) {
 
-                        }
-
-                        @Override
-                        public void onConnectionSuspended(int i) {
-                            googleApiClient.connect();
-                        }
-                    })
-                    .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
-                        @Override
-                        public void onConnectionFailed(@NotNull ConnectionResult connectionResult) {
-
-                        }
-                    }).build();
-            googleApiClient.connect();
-
-            LocationRequest locationRequest = LocationRequest.create();
-            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-            locationRequest.setInterval(30 * 1000);
-            locationRequest.setFastestInterval(5 * 1000);
-            LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
-
-            builder.setAlwaysShow(true);
-
-            PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
-            result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
-                @Override
-                public void onResult(LocationSettingsResult result) {
-                    final Status status = result.getStatus();
-                    if (status.getStatusCode() == LocationSettingsStatusCodes.RESOLUTION_REQUIRED) {
-                        try {
-                            // Show the dialog by calling startResolutionForResult(),
-                            // and check the result in onActivityResult().
-                            status.startResolutionForResult(MapActivity.this, REQUEST_LOCATION);
-
-                        } catch (IntentSender.SendIntentException e) {
-                            // Ignore the error.
-                        }
                     }
+
+                    @Override
+                    public void onConnectionSuspended(int i) {
+                        googleApiClient.connect();
+                    }
+                })
+                .addOnConnectionFailedListener(connectionResult -> {
+
+                }).build();
+        googleApiClient.connect();
+
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(30 * 1000);
+        locationRequest.setFastestInterval(5 * 1000);
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
+
+        builder.setAlwaysShow(true);
+
+        PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
+        result.setResultCallback(result1 -> {
+            final Status status = result1.getStatus();
+            if (status.getStatusCode() == LocationSettingsStatusCodes.RESOLUTION_REQUIRED) {
+                try {
+                    // Show the dialog by calling startResolutionForResult(),
+                    // and check the result in onActivityResult().
+                    status.startResolutionForResult(MapActivity.this, REQUEST_LOCATION);
+
+                } catch (IntentSender.SendIntentException e) {
+                    // Ignore the error.
                 }
-            });
-        }
+            }
+        });
     }
 
     private boolean isDeviceLocationOn(){
@@ -578,8 +571,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         return gpsEnabled;
     }
 
-    private void moveCamera(LatLng latLng, float zoom, String title) {
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+    private void moveCamera(LatLng latLng, String title) {
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, MapActivity.defaultZoom));
 
         if(!title.equals("My Location")){
 
@@ -682,6 +675,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             case R.id.nav_out:
 
                 FirebaseAuth.getInstance().signOut();
+
+                SharedPreferences.Editor editor = SplashActivity.sharedPref.edit();
+                editor.putBoolean("keepMeLoggedIn", false);
+                editor.apply();
+
                 Intent intentLogOut = new Intent(MapActivity.this, LoginActivity.class);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(intentLogOut);
@@ -693,6 +691,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 intentAd.putExtra("FROM_ACTIVITY", "MapActivity");
                 drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(intentAd);
+                break;
+
+            case R.id.nav_settings:
+
+                Intent intentSettings = new Intent(MapActivity.this, SettingsActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(intentSettings);
                 break;
         }
 

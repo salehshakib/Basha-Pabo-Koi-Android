@@ -348,7 +348,7 @@ public class AdDescriptionActivity extends AppCompatActivity {
                 descriptionToChat.setOnClickListener(v -> {
 
                     Intent intent = new Intent(AdDescriptionActivity.this, ChatActivity.class);
-                    intent.putExtra("name", snapshot.child("name").getValue().toString());
+                    intent.putExtra("name", Objects.requireNonNull(snapshot.child("name").getValue()).toString());
                     intent.putExtra("uid", strOfOwnerUid[0]);
                     startActivity(intent);
                 });
@@ -372,7 +372,7 @@ public class AdDescriptionActivity extends AppCompatActivity {
             Date timeStamp = new Date();
 
             wishListObj.put(previousIntentImage.getStringExtra("ownerKey"), timeStamp.getTime());
-            database.getReference().child("Users").child(auth.getUid()).child("Wishlist").updateChildren(wishListObj);
+            database.getReference().child("Users").child(Objects.requireNonNull(auth.getUid())).child("Wishlist").updateChildren(wishListObj);
 
         });
 

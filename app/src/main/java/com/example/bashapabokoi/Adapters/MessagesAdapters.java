@@ -15,6 +15,7 @@ import com.example.bashapabokoi.databinding.ItemSentBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MessagesAdapters extends RecyclerView.Adapter {
 
@@ -48,7 +49,7 @@ public class MessagesAdapters extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         Message message = messages.get(position);
-        if (FirebaseAuth.getInstance().getUid().equals(message.getSenderId())) {
+        if (Objects.equals(FirebaseAuth.getInstance().getUid(), message.getSenderId())) {
             return ITEM_SENT;
         } else {
             return ITEM_RECEIVE;

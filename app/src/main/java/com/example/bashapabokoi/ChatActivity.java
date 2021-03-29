@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.bumptech.glide.Glide;
 import com.example.bashapabokoi.Adapters.MessagesAdapters;
 import com.example.bashapabokoi.Models.Message;
 import com.example.bashapabokoi.Models.User;
@@ -30,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,15 +45,12 @@ public class ChatActivity extends AppCompatActivity {
 
     String senderRoom, receiverRoom;
 
-
     FirebaseDatabase database;
     FirebaseAuth auth = FirebaseAuth.getInstance();
 
     APIService apiService;
 
     boolean notify = false;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,18 +63,39 @@ public class ChatActivity extends AppCompatActivity {
 
         messages = new ArrayList<>();
         adapter = new MessagesAdapters(this, messages);
-        binding.recylerView.setLayoutManager(new LinearLayoutManager(this));
-        binding.recylerView.setAdapter(adapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);
+        binding.recyclerView.setLayoutManager(linearLayoutManager);
+        binding.recyclerView.setAdapter(adapter);
 
 
-        //String name = getIntent().getStringExtra("name");
+        String name = getIntent().getStringExtra("name");
         String receiverUid = getIntent().getStringExtra("uid");
         String senderUid = FirebaseAuth.getInstance().getUid();
+
+        binding.profileNameChat.setText(name);
 
         senderRoom = senderUid + receiverUid;
         receiverRoom = receiverUid + senderUid;
 
         database = FirebaseDatabase.getInstance();
+
+        database.getReference().child("Users").child(Objects.requireNonNull(receiverUid)).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                User u = snapshot.getValue(User.class);
+
+                assert u != null;
+                Glide.with(getApplicationContext()).load(u.getProfileImage()).placeholder(R.drawable.user).into(binding.proPicChat);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         database.getReference().child("Chats")
                 .child(senderRoom)
@@ -87,6 +107,7 @@ public class ChatActivity extends AppCompatActivity {
                         for(DataSnapshot snapshot1 : snapshot.getChildren()){
                             Message message = snapshot1.getValue(Message.class);
                             messages.add(message);
+                            binding.recyclerView.scrollToPosition(messages.size() - 1);
                         }
 
                         adapter.notifyDataSetChanged();
@@ -101,93 +122,95 @@ public class ChatActivity extends AppCompatActivity {
 
         binding.sendBtn.setOnClickListener(v -> {
 
-            notify = true;
-
             String messageTxt = binding.messageBox.getText().toString();
 
-            Date date = new Date();
+            if(!messageTxt.matches("")){
+
+                notify = true;
+
+                Date date = new Date();
 
 
-            Message message = new Message(messageTxt, senderUid, date.getTime());
-            binding.messageBox.setText("");
+                Message message = new Message(messageTxt, senderUid, date.getTime());
+                binding.messageBox.setText("");
 
 
-            String randomKey = database.getReference().push().getKey();
+                String randomKey = database.getReference().push().getKey();
 
-            HashMap<String, Object> lastMsgObj = new HashMap<>();
-            lastMsgObj.put("lastMsg", message.getMessage());
-            lastMsgObj.put("lastMsgTime", date.getTime());
+                HashMap<String, Object> lastMsgObj = new HashMap<>();
+                lastMsgObj.put("lastMsg", message.getMessage());
+                lastMsgObj.put("lastMsgTime", date.getTime());
 
-            database.getReference().child("Chats").child(senderRoom).updateChildren(lastMsgObj);
-            database.getReference().child("Chats").child(receiverRoom).updateChildren(lastMsgObj);
-
-
-            // for sorting
-            database.getReference()
-                    .child("Chat_time")
-                    .child(senderRoom)
-                    .setValue(date.getTime())
-                    .addOnSuccessListener(aVoid -> {
-
-                    });
-            database.getReference()
-                    .child("Chat_time")
-                    .child(receiverRoom)
-                    .setValue(date.getTime())
-                    .addOnSuccessListener(aVoid -> {
-
-                    });
-
-            // for sorting
+                database.getReference().child("Chats").child(senderRoom).updateChildren(lastMsgObj);
+                database.getReference().child("Chats").child(receiverRoom).updateChildren(lastMsgObj);
 
 
-            assert randomKey != null;
-            database.getReference().child("Chats")
-                    .child(senderRoom)
-                    .child("messages")
-                    .child(randomKey)
-                    .setValue(message).addOnSuccessListener(aVoid -> {
-                assert senderUid != null;
-                database.getReference().child("User_friends")
-                        .child(senderUid)
-                        .child("Friends")
+                // for sorting
+                database.getReference()
+                        .child("Chat_time")
                         .child(senderRoom)
-                        .setValue(receiverUid).addOnSuccessListener(aVoid1 -> database.getReference().child("Chats")
-                                .child(receiverRoom)
-                                .child("messages")
-                                .child(randomKey)
-                                .setValue(message).addOnSuccessListener(aVoid11 -> database.getReference().child("User_friends")
-                                        .child(receiverUid)
-                                        .child("Friends")
-                                        .child(receiverRoom)
-                                        .setValue(senderUid).addOnSuccessListener(aVoid111 -> {
+                        .setValue(date.getTime())
+                        .addOnSuccessListener(aVoid -> {
 
-                                        })));
-            });
+                        });
+                database.getReference()
+                        .child("Chat_time")
+                        .child(receiverRoom)
+                        .setValue(date.getTime())
+                        .addOnSuccessListener(aVoid -> {
+
+                        });
+
+                // for sorting
 
 
-            // this is new
+                assert randomKey != null;
+                database.getReference().child("Chats")
+                        .child(senderRoom)
+                        .child("messages")
+                        .child(randomKey)
+                        .setValue(message).addOnSuccessListener(aVoid -> {
+                    assert senderUid != null;
+                    database.getReference().child("User_friends")
+                            .child(senderUid)
+                            .child("Friends")
+                            .child(senderRoom)
+                            .setValue(receiverUid).addOnSuccessListener(aVoid1 -> database.getReference().child("Chats")
+                            .child(receiverRoom)
+                            .child("messages")
+                            .child(randomKey)
+                            .setValue(message).addOnSuccessListener(aVoid11 -> database.getReference().child("User_friends")
+                                    .child(receiverUid)
+                                    .child("Friends")
+                                    .child(receiverRoom)
+                                    .setValue(senderUid).addOnSuccessListener(aVoid111 -> {
 
-            final String msg = messageTxt;
-            database.getReference().child("Users").child(auth.getUid()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    User user = snapshot.getValue(User.class);
-                    if(notify){
-                        sendNotification(receiverUid, user.getName(), msg);
+                                    })));
+                });
+
+
+                // this is new
+
+                final String msg = messageTxt;
+                database.getReference().child("Users").child(Objects.requireNonNull(auth.getUid())).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        User user = snapshot.getValue(User.class);
+                        if(notify){
+                            assert user != null;
+                            sendNotification(receiverUid, user.getName(), msg);
+
+                        }
+                        notify = false;
 
                     }
-                    notify = false;
 
-                }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-
+                    }
+                });
+            }
 
         });
 
@@ -204,6 +227,7 @@ public class ChatActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()){
                     if(receiverUid.equals(dataSnapshot.getKey())){
                         Token token = dataSnapshot.getValue(Token.class);
+                        assert token != null;
                         String s = token.getToken();
                         Log.d("token", s);
 
@@ -216,6 +240,7 @@ public class ChatActivity extends AppCompatActivity {
                                     @Override
                                     public void onResponse(@NotNull Call<MyResponse> call, @NotNull Response<MyResponse> response) {
                                         if (response.code() == 200){
+                                            assert response.body() != null;
                                             if(response.body().success != 1){
                                                 Toast.makeText(ChatActivity.this, "Failed!", Toast.LENGTH_LONG).show();
 

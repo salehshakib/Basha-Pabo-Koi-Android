@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -35,6 +36,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -43,7 +45,6 @@ import com.example.bashapabokoi.Models.CreateAd;
 import com.example.bashapabokoi.Models.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -317,6 +318,11 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
             case R.id.nav_out:
 
                 FirebaseAuth.getInstance().signOut();
+
+                SharedPreferences.Editor editor = SplashActivity.sharedPref.edit();
+                editor.putBoolean("keepMeLoggedIn", false);
+                editor.apply();
+
                 Intent intentLogOut = new Intent(AdCreateActivity.this, LoginActivity.class);
                 startActivity(intentLogOut);
                 break;
@@ -325,6 +331,13 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
                 Intent intentAd = new Intent(AdCreateActivity.this, AdCreateActivity.class);
                 startActivity(intentAd);
+                break;
+
+            case R.id.nav_settings:
+
+                Intent intentSettings = new Intent(AdCreateActivity.this, SettingsActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(intentSettings);
                 break;
         }
 

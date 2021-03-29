@@ -88,7 +88,7 @@ public class ChatsFragment extends Fragment {
                             if(Objects.requireNonNull(ds.getKey()).substring(0, 28).equals(senderUid)) {
                                 String s = ds.getKey().replaceAll(senderUid, "");
                                 keys.add(s);
-                                Log.d("aaa", s);
+
                             }
 
                         }

@@ -8,18 +8,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
-import com.example.bashapabokoi.ChatActivity;
-import com.example.bashapabokoi.ChatsFragment;
 import com.example.bashapabokoi.MapActivity;
 import com.example.bashapabokoi.R;
 import com.google.firebase.auth.FirebaseAuth;
