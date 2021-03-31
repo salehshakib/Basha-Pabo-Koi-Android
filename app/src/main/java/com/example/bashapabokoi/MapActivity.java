@@ -22,6 +22,7 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -42,6 +43,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.airbnb.lottie.L;
 import com.bumptech.glide.Glide;
 import com.example.bashapabokoi.Models.CreateAd;
 import com.example.bashapabokoi.Models.User;
@@ -179,6 +181,37 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
+        // todo aumi
+
+        FirebaseDatabase.getInstance().getReference().child("All_ad").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                longitude.clear();
+                latitude.clear();
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+
+                    if (dataSnapshot.child("latitude").exists() && dataSnapshot.child("longitude").exists()){
+                        latitude.add(dataSnapshot.child("latitude").getValue().toString());
+                        longitude.add(dataSnapshot.child("longitude").getValue().toString());
+                        Log.d("longi", dataSnapshot.child("latitude").getValue().toString());
+
+
+                    }
+                    //latitude.add(dataSnapshot.child("latitude").getValue().toString());
+                    //Log.d("long",dataSnapshot.child("latitude").getValue().toString());
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         drawerLayout.addDrawerListener(drawerListener);
 
         bottomNavigationView = findViewById(R.id.bottom_nav);
@@ -197,7 +230,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
 
-        //todo saleh shakib
+        //todo saleh shakib // eda maybe kothao use hoy nai tao delete koris na
         database.getReference().child("Create_ad").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -220,7 +253,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
 
 
-        //todo
+        //todo // ei  porjotno
     }
 
     private void updateToken(String token){

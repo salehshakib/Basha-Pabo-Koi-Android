@@ -3,6 +3,7 @@ package com.example.bashapabokoi;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -151,11 +152,41 @@ public class AdDescriptionActivity extends AppCompatActivity {
             rentDone.setEnabled(true);
             rentDone.setAlpha(1f);
 
+
+
             rentDone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    //TODO delete your ad code here
+                    //TODO delete your ad code here // todo saleh
+
+
+                    database.getReference().child("All_ad").child(previousIntentImage.getStringExtra("ownerKey")).removeValue();
+
+                    database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                            for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+                                if(dataSnapshot.child("Wishlist").child(previousIntentImage.getStringExtra("ownerKey")).exists()){
+                                    database.getReference().child("Users").child(dataSnapshot.getKey()).child("Wishlist").child(previousIntentImage.getStringExtra("ownerKey")).removeValue();
+
+
+
+                                }
+                                //Log.d("gggg", dataSnapshot.child("Wishlist").child(previousIntentImage.getStringExtra("ownerKey")).getValue().toString());
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                    Toast.makeText(AdDescriptionActivity.this, "ADD DELETED",Toast.LENGTH_LONG).show();
+
                 }
             });
 
