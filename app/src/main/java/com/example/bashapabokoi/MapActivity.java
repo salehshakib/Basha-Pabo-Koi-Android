@@ -22,7 +22,6 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -51,7 +50,6 @@ import com.bumptech.glide.Glide;
 import com.example.bashapabokoi.Adapters.BottomSheetImageAdapter;
 import com.example.bashapabokoi.Models.BottomSheetImageShower;
 import com.example.bashapabokoi.Models.CreateAd;
-import com.example.bashapabokoi.Models.OwnerKey;
 import com.example.bashapabokoi.Models.User;
 import com.example.bashapabokoi.Notifications.Token;
 import com.google.android.gms.common.ConnectionResult;
@@ -186,7 +184,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-        OwnerKey ok = new OwnerKey(firebaseUser.getUid());
+
 
         FirebaseDatabase.getInstance().getReference().addValueEventListener(new ValueEventListener() {
             @Override
