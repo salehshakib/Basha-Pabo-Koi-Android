@@ -135,7 +135,9 @@
                 android:id="@+id/star_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_profile_ad_star_rate" />
+                android:src="@drawable/ic_profile_ad_star_rate"
+                app:tint="#808080"
+                android:contentDescription="@string/todo"/>
 
             <TextView
                 android:id="@+id/profile_ad_rating"
