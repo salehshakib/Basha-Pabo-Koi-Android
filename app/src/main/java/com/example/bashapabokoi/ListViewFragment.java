@@ -158,7 +158,7 @@ public class ListViewFragment extends Fragment {
         thanaCategoriesBn.add("বিমানবন্দর");
         thanaCategoriesBn.add("ক্যান্টনমেন্ট");
         thanaCategoriesBn.add("চকবাজার");
-        thanaCategoriesBn.add("দারুস সালাম");
+        thanaCategoriesBn.add("দারুস-সালাম");
         thanaCategoriesBn.add("ডেমরা");
         thanaCategoriesBn.add("ধানমন্ডি");
         thanaCategoriesBn.add("গেন্ডারিয়া");
@@ -169,9 +169,9 @@ public class ListViewFragment extends Fragment {
         thanaCategoriesBn.add("কলাবাগান");
         thanaCategoriesBn.add("কামরাঙ্গিরচর");
         thanaCategoriesBn.add("খিলগাও");
-        thanaCategoriesBn.add("খিলখেত");
-        thanaCategoriesBn.add("কোটওয়ালি");
-        thanaCategoriesBn.add("লালবাঘ");
+        thanaCategoriesBn.add("খিলক্ষেত");
+        thanaCategoriesBn.add("কোতওয়ালি");
+        thanaCategoriesBn.add("লালবাগ");
         thanaCategoriesBn.add("মিরপুর মডেল");
         thanaCategoriesBn.add("মোহাম্মদপুর");
         thanaCategoriesBn.add("মতিঝিল");
@@ -187,10 +187,10 @@ public class ListViewFragment extends Fragment {
         thanaCategoriesBn.add("শের-এ-বাংলা");
         thanaCategoriesBn.add("শ্যামপুর");
         thanaCategoriesBn.add("সুত্রাপুর");
-        thanaCategoriesBn.add("তেজগাও বানিজ্যিক এরিয়া");
-        thanaCategoriesBn.add("তেজগাও");
+        thanaCategoriesBn.add("তেজগাঁও বাণিজ্যিক এরিয়া");
+        thanaCategoriesBn.add("তেজগাঁও");
         thanaCategoriesBn.add("তুরাগ");
-        thanaCategoriesBn.add("উত্তরখান");
+        thanaCategoriesBn.add("উত্তর খান");
         thanaCategoriesBn.add("উত্তরা");
         thanaCategoriesBn.add("ভাটারা");
         thanaCategoriesBn.add("ওয়ারী");
