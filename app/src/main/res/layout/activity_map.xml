@@ -16,6 +16,7 @@
         app:itemIconTint="@drawable/drawer_item_color"
         app:itemTextColor="@drawable/drawer_item_color"
         app:headerLayout="@layout/header"
+        android:background="?attr/bgColor"
         app:menu="@menu/main_menu"
         android:layout_gravity="start">
 
@@ -25,7 +26,7 @@
             android:layout_height="40dp"
             android:text="@string/lang"
             android:gravity="center"
-            android:textColor="@color/orange_base"
+            android:textColor="?attr/textColor"
             android:fontFamily="@font/roboto"
             android:layout_marginTop="316dp"
             android:layout_marginStart="220dp" />
@@ -36,7 +37,7 @@
             android:layout_height="40dp"
             android:text="@string/off"
             android:gravity="center"
-            android:textColor="@color/orange_base"
+            android:textColor="?attr/textColor"
             android:fontFamily="@font/roboto"
             android:layout_marginTop="366dp"
             android:layout_marginStart="220dp" />
@@ -60,7 +61,7 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:background="@color/orange_base"
+            android:background="?attr/bgTopColor"
             android:text="@null"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -99,13 +100,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/ic_magnify"
+                android:layout_toEndOf="@id/ic_magnify"
                 android:textCursorDrawable="@drawable/cursor_color"
                 android:background="@null"
                 android:hint="@string/search_by_location"
                 android:imeOptions="actionDone"
                 android:singleLine="true"
-                android:textColor="#000"
+                android:textColor="?attr/colorOnSecondary"
                 android:textSize="18sp" />
 
         </RelativeLayout>
@@ -122,7 +123,7 @@
             android:elevation="35dp"
             android:foreground="@drawable/ic_gps"
             android:foregroundGravity="center"
-            app:backgroundTint="@color/white"
+            app:backgroundTint="?attr/fabColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.975"
             app:layout_constraintStart_toStartOf="parent"
@@ -146,7 +147,7 @@
             app:itemTextColor="@drawable/drawer_item_color"
             app:menu="@menu/bottom_menu"
             android:elevation="75dp"
-            android:background="@color/white">
+            android:background="?attr/bgColor">
 
         </com.google.android.material.bottomnavigation.BottomNavigationView>
 

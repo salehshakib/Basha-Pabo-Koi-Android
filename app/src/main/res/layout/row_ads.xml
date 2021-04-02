@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
+    android:background="?attr/bgColor"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -28,7 +27,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_image_default" />
+                android:src="@drawable/ic_image_default"
+                android:contentDescription="@string/todo" />
 
         </LinearLayout>
 
@@ -43,8 +43,8 @@
         android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/roboto_condensed_bold"
-        android:textColor="@color/orange_base"
-        android:text="Flat rent is going on"
+        android:textColor="?attr/textColor"
+        android:text="@string/rent_eg"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +57,7 @@
         android:layout_marginStart="10dp"
         android:fontFamily="@font/roboto_condensed_bold"
         android:text="@string/taka_sign"
-        android:textColor="@color/orange_base"
+        android:textColor="?attr/textColor"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/rent_list_view"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/roboto_condensed_bold"
         android:text="@string/rent_eg"
-        android:textColor="@color/orange_base"
+        android:textColor="?attr/textColor"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/textView25"
         app:layout_constraintTop_toBottomOf="@+id/ad_title_list_view" />
@@ -82,8 +82,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_condensed_bold"
-        android:text="3.5"
-        android:textColor="@color/orange_base"
+        android:text="@string/rating_eg"
+        android:textColor="?attr/textColor"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/rent_list_view"
         app:layout_constraintEnd_toStartOf="@+id/ratingBar_value_list_view"
@@ -96,7 +96,7 @@
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:progressTint="@color/orange_base"
+        android:progressTint="?attr/textColor"
         android:rating="3.5"
         app:layout_constraintBottom_toBottomOf="@+id/rent_list_view"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,14 +121,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_profile_address"
-            app:tint="@color/orange_base" />
+            app:tint="?attr/iconColor"
+            android:contentDescription="@string/todo" />
 
         <TextView
             android:id="@+id/thana_list_view_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Motijheel"
-            android:textColor="@color/orange_base"
+            android:text="@string/motijheel"
+            android:textColor="?attr/textColor"
             android:textSize="16sp" />
 
     </LinearLayout>
@@ -149,15 +150,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_genre"
-            app:tint="@color/orange_base" />
+            app:tint="?attr/iconColor"
+            android:contentDescription="@string/todo" />
 
         <TextView
             android:id="@+id/genre_list_view_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:text="Small family"
-            android:textColor="@color/orange_base"
+            android:text="@string/small_family"
+            android:textColor="?attr/textColor"
             android:textSize="16sp" />
 
     </LinearLayout>
@@ -178,15 +180,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_month"
-            app:tint="@color/orange_base" />
+            app:tint="?attr/iconColor"
+            android:contentDescription="@string/todo" />
 
         <TextView
             android:id="@+id/vacant_from_list_view_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:text="April"
-            android:textColor="@color/orange_base"
+            android:text="@string/april"
+            android:textColor="?attr/textColor"
             android:textSize="16sp" />
 
     </LinearLayout>
@@ -208,15 +211,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_flat_type"
-            app:tint="@color/orange_base" />
+            app:tint="?attr/iconColor"
+            android:contentDescription="@string/todo" />
 
         <TextView
             android:id="@+id/flat_type_list_view_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:text="Flat"
-            android:textColor="@color/orange_base"
+            android:text="@string/flat"
+            android:textColor="?attr/textColor"
             android:textSize="16sp" />
 
     </LinearLayout>
@@ -237,7 +241,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_religion"
-            app:tint="@color/orange_base"
+            app:tint="?attr/iconColor"
             android:contentDescription="@string/todo"/>
 
         <TextView
@@ -245,8 +249,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:text="Muslim"
-            android:textColor="@color/orange_base"
+            android:text="@string/muslim"
+            android:textColor="?attr/textColor"
             android:textSize="16sp" />
 
     </LinearLayout>
@@ -259,7 +263,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:background="#656565"
+        android:background="?attr/bgTopColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

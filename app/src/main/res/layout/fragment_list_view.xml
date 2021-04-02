@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
-        android:text="THE LIST VIEW IS HERE!"
+        android:text="@string/list_view_eg"
         android:layout_centerInParent="true"/>
 
 </RelativeLayout>

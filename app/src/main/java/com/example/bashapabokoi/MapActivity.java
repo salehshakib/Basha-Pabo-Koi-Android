@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -35,6 +36,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
@@ -48,6 +50,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.example.bashapabokoi.Adapters.BottomSheetImageAdapter;
+import com.example.bashapabokoi.Helper.LocaleHelper;
 import com.example.bashapabokoi.Models.BottomSheetImageShower;
 import com.example.bashapabokoi.Models.CreateAd;
 import com.example.bashapabokoi.Models.User;
@@ -72,9 +75,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
-import com.google.android.libraries.places.api.model.AutocompletePrediction;
-import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
-import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.navigation.NavigationView;
@@ -93,6 +93,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import io.paperdb.Paper;
+
+@SuppressWarnings({"deprecation", "unchecked"})
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
 
     private static final int ERROR_DIALOG_REQUEST = 9001;
@@ -107,7 +110,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private Toast backToast;
 
     private AutoCompleteTextView searchText;
-    private PlaceAutocompleteAdapterNew placeAutocompleteAdapterNew;
+    //private PlaceAutocompleteAdapterNew placeAutocompleteAdapterNew;
     private ImageView gps;
 
     private static final String fineLocation = Manifest.permission.ACCESS_FINE_LOCATION;
@@ -115,9 +118,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private boolean mLocationPermissionGranted = false;
     private GoogleMap map;
-    private AutocompleteSessionToken autocompleteSessionToken;
-    private PlacesClient placesClient;
-    private List<AutocompletePrediction> predictionList;
+    //private AutocompleteSessionToken autocompleteSessionToken;
+    //private PlacesClient placesClient;
+    //private List<AutocompletePrediction> predictionList;
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -127,25 +130,175 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     BottomSheetDialog bottomSheetDialog;
 
     private TextView netInfo;
+    private TextView langState, modeState;
 
-    private static String[] ownerKey ;
-    private static String anotherOwnerKey;
+    private static String[] ownerKey;
 
     FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
     ArrayList<LatLng> latLongs = new ArrayList<>();
 
     @Override
+    protected void onPostResume() {
+
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+
+            setTheme(R.style.Theme_BashaPaboKoi_Dark);
+        } else {
+
+            setTheme(R.style.Theme_BashaPaboKoi);
+        }
+
+        Paper.init(this);
+
+        String language = Paper.book().read("language");
+        if (language == null) {
+
+            Paper.book().write("language", "en");
+        }
+        super.onPostResume();
+
+        updateView(Paper.book().read("language"));
+
+        Context context = LocaleHelper.setLocale(this, language);
+        Resources resources = context.getResources();
+
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+
+            modeState.setText(resources.getString(R.string.on));
+
+        } else {
+
+            modeState.setText(resources.getString(R.string.off));
+        }
+
+        FirebaseDatabase.getInstance().getReference().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                latLongs.clear();
+                for (DataSnapshot dataSnapshot : snapshot.child("All_ad").getChildren()) {
+
+                    if (dataSnapshot.child("latitude").exists() && dataSnapshot.child("longitude").exists()) {
+
+                        latLongs.add(new LatLng(Double.parseDouble(Objects.requireNonNull(dataSnapshot.child("latitude").getValue()).toString()), Double.parseDouble(Objects.requireNonNull(dataSnapshot.child("longitude").getValue()).toString())));
+                    }
+
+                }
+
+                try {
+
+                    for (int i = 0; i < latLongs.size(); i++) {
+
+                        map.addMarker(new MarkerOptions().position(latLongs.get(i)).icon(vectorToBitmap()));
+                    }
+
+                    map.setOnMarkerClickListener(marker -> {
+
+                        CreateAd ad = null;
+
+
+                        for (DataSnapshot snapshot1 : snapshot.child("All_ad").getChildren()) {
+
+                            if (snapshot1.child("latitude").exists() && snapshot1.child("longitude").exists()) {
+
+                                if (marker.getPosition().latitude == Double.parseDouble(Objects.requireNonNull(snapshot1.child("latitude").getValue()).toString()) && marker.getPosition().longitude == Double.parseDouble(Objects.requireNonNull(snapshot1.child("longitude").getValue()).toString())) {
+
+                                    ad = snapshot1.getValue(CreateAd.class);
+                                    assert ad != null;
+
+                                    ownerKey = ad.getKey().split("-");
+
+                                    User u = snapshot.child("Users").child(ownerKey[0]).getValue(User.class);
+                                    assert u != null;
+
+                                }
+
+                            }
+
+                        }
+
+                        CreateAd finalAd = ad;
+                        Intent intent = new Intent(MapActivity.this, AdDescriptionActivity.class);
+                        intent.putExtra("imageUri1", finalAd.getImageUrl1());
+                        intent.putExtra("imageUri2", finalAd.getImageUrl2());
+                        intent.putExtra("imageUri3", finalAd.getImageUrl3());
+                        intent.putExtra("imageUri4", finalAd.getImageUrl4());
+                        intent.putExtra("imageUri5", finalAd.getImageUrl5());
+                        intent.putExtra("title", finalAd.getTitle());
+                        intent.putExtra("address", finalAd.getAddress());
+                        intent.putExtra("flatType", finalAd.getFlatType());
+                        intent.putExtra("washroom", finalAd.getWashroom());
+                        intent.putExtra("vacantFrom", finalAd.getVacFrom());
+                        intent.putExtra("veranda", finalAd.getVeranda());
+                        intent.putExtra("bedroom", finalAd.getBedroom());
+                        intent.putExtra("floor", finalAd.getFloor());
+                        intent.putExtra("religion", finalAd.getReligion());
+                        intent.putExtra("genre", finalAd.getGenre());
+                        intent.putExtra("electricityBill", finalAd.getCurrentBill());
+                        intent.putExtra("waterBill", finalAd.getWaterBill());
+                        intent.putExtra("gasBill", finalAd.getGasBill());
+                        intent.putExtra("serviceCharge", finalAd.getOtherCharges());
+                        intent.putExtra("lift", finalAd.getLift());
+                        intent.putExtra("generator", finalAd.getGenerator());
+                        intent.putExtra("parking", finalAd.getParking());
+                        intent.putExtra("security", finalAd.getSecurity());
+                        intent.putExtra("gas", finalAd.getGas());
+                        intent.putExtra("wifi", finalAd.getWifi());
+                        intent.putExtra("details", finalAd.getDescription());
+                        intent.putExtra("rent", finalAd.getRent());
+                        intent.putExtra("lat", finalAd.getLatitude());
+                        intent.putExtra("long", finalAd.getLongitude());
+                        intent.putExtra("ownerKey", finalAd.getKey());
+                        intent.putExtra("thana", finalAd.getThana());
+                        intent.putExtra("FROM_ACTIVITY", "ListViewFragment");
+                        startActivity(intent);
+
+                        return true;
+                    });
+
+                } catch (NullPointerException ignored) {
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+
+            setTheme(R.style.Theme_BashaPaboKoi_Dark);
+        } else {
+
+            setTheme(R.style.Theme_BashaPaboKoi);
+        }
+
         super.onCreate(savedInstanceState);
+
+        Paper.init(this);
+
+        String language = Paper.book().read("language");
+        if (language == null) {
+
+            Paper.book().write("language", "en");
+        }
 
         //this is new // 26 march 2021
         updateToken(FirebaseInstanceId.getInstance().getToken());
 
         setContentView(R.layout.activity_map);
 
-        anotherOwnerKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        langState = findViewById(R.id.switch_lang_state);
+        modeState = findViewById(R.id.switch_mode_state);
 
         navItemIndex = R.id.nav_home;
         searchText = findViewById(R.id.input_search);
@@ -159,13 +312,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         View header = navigationView.getHeaderView(0);
         TextView headerProfileName = header.findViewById(R.id.profile_name_header);
         RoundedImageView headerProPic = header.findViewById(R.id.pro_pic_header);
-
-        bottomSheetDialog = new BottomSheetDialog(MapActivity.this, R.style.BottomSheetDialogTheme);
-        bottomSheetView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_bottom_sheet, findViewById(R.id.bottom_sheet_container));
-
-        TextView botOwnerName = bottomSheetView.findViewById(R.id.profile_name_bottom);
-        TextView botOwnerNumber = bottomSheetView.findViewById(R.id.phone_no_bottom);
-        RoundedImageView botOwnerPic = bottomSheetView.findViewById(R.id.pro_pic_bottom);
 
         FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).addValueEventListener(new ValueEventListener() {
             @Override
@@ -184,8 +330,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-
-
         FirebaseDatabase.getInstance().getReference().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -194,199 +338,44 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                     if (dataSnapshot.child("latitude").exists() && dataSnapshot.child("longitude").exists()) {
 
-                        latLongs.add(new LatLng(Double.parseDouble(dataSnapshot.child("latitude").getValue().toString()), Double.parseDouble(dataSnapshot.child("longitude").getValue().toString())));
+                        latLongs.add(new LatLng(Double.parseDouble(Objects.requireNonNull(dataSnapshot.child("latitude").getValue()).toString()), Double.parseDouble(Objects.requireNonNull(dataSnapshot.child("longitude").getValue()).toString())));
                     }
 
                 }
 
-                for (int i = 0; i < latLongs.size(); i++) {
+                try {
 
-                    map.addMarker(new MarkerOptions().position(latLongs.get(i)).icon(vectorToBitmap()));
-                }
+                    for (int i = 0; i < latLongs.size(); i++) {
+
+                        map.addMarker(new MarkerOptions().position(latLongs.get(i)).icon(vectorToBitmap()));
+                    }
+
+                    map.setOnMarkerClickListener(marker -> {
+
+                        CreateAd ad = null;
 
 
+                        for (DataSnapshot snapshot1 : snapshot.child("All_ad").getChildren()) {
 
+                            if (snapshot1.child("latitude").exists() && snapshot1.child("longitude").exists()) {
 
+                                if (marker.getPosition().latitude == Double.parseDouble(Objects.requireNonNull(snapshot1.child("latitude").getValue()).toString()) && marker.getPosition().longitude == Double.parseDouble(Objects.requireNonNull(snapshot1.child("longitude").getValue()).toString())) {
 
-                map.setOnMarkerClickListener(marker -> {
+                                    ad = snapshot1.getValue(CreateAd.class);
+                                    assert ad != null;
 
-                    CreateAd ad = null;
+                                    ownerKey = ad.getKey().split("-");
 
-                    for (DataSnapshot snapshot1 : snapshot.child("All_ad").getChildren()) {
+                                    User u = snapshot.child("Users").child(ownerKey[0]).getValue(User.class);
+                                    assert u != null;
 
-                        if (snapshot1.child("latitude").exists() && snapshot1.child("longitude").exists()) {
-
-                            if (marker.getPosition().latitude == Double.parseDouble(snapshot1.child("latitude").getValue().toString()) && marker.getPosition().longitude == Double.parseDouble(snapshot1.child("longitude").getValue().toString())) {
-
-                                ad = snapshot1.getValue(CreateAd.class);
-                                assert ad != null;
-
-                                ownerKey = ad.getKey().split("-");
-
-                                botOwnerName.setText(snapshot.child("Users").child(ownerKey[0]).child("name").getValue().toString());
-                                botOwnerNumber.setText(snapshot.child("Users").child(ownerKey[0]).child("phoneNumber").getValue().toString());
-
-                                User u = snapshot.child("Users").child(ownerKey[0]).getValue(User.class);
-                                assert u != null;
-
-                                Glide.with(getApplicationContext()).load(u.getProfileImage()).placeholder(R.drawable.user).into(botOwnerPic);
-
+                                }
 
                             }
 
                         }
 
-                    }
-
-
-
-
-
-                    TextView botTitle = bottomSheetView.findViewById(R.id.title_bottom);
-                    TextView botRent = bottomSheetView.findViewById(R.id.rent_bottom);
-                    TextView botFlatType = bottomSheetView.findViewById(R.id.flat_type_bottom_text);
-                    TextView botGenre = bottomSheetView.findViewById(R.id.genre_bottom_text);
-                    TextView botReligion = bottomSheetView.findViewById(R.id.religion_bottom_text);
-                    TextView botVacFrom = bottomSheetView.findViewById(R.id.vacant_from_bottom_text);
-                    TextView botRating = bottomSheetView.findViewById(R.id.ad_rating_bottom);
-                    Button botToDescription = bottomSheetView.findViewById(R.id.go_to_description_btn);
-
-                    ViewPager2 botAd = bottomSheetView.findViewById(R.id.bottom_ad_shower);
-                    List<BottomSheetImageShower> bottomSheetImageShowers = new ArrayList<>();
-
-                    if (!ad.getImageUrl1().matches("no_image")) {
-
-                        bottomSheetImageShowers.add(new BottomSheetImageShower(ad.getImageUrl1()));
-                    }
-
-                    if (!ad.getImageUrl2().matches("no_image")) {
-
-                        bottomSheetImageShowers.add(new BottomSheetImageShower(ad.getImageUrl2()));
-                    }
-
-                    if (!ad.getImageUrl3().matches("no_image")) {
-
-                        bottomSheetImageShowers.add(new BottomSheetImageShower(ad.getImageUrl3()));
-                    }
-
-                    if (!ad.getImageUrl4().matches("no_image")) {
-
-                        bottomSheetImageShowers.add(new BottomSheetImageShower(ad.getImageUrl4()));
-                    }
-
-                    if (!ad.getImageUrl5().matches("no_image")) {
-
-                        bottomSheetImageShowers.add(new BottomSheetImageShower(ad.getImageUrl5()));
-                    }
-
-                    botTitle.setText(ad.getTitle());
-                    botRent.setText(ad.getRent());
-                    botFlatType.setText(ad.getFlatType());
-                    botGenre.setText(ad.getGenre());
-                    botReligion.setText(ad.getReligion());
-                    botRating.setText("4.9/5");
-
-                    try {
-
-                        String[] date = ad.getVacFrom().split("-");
-                        String month;
-
-                        switch (date[1]) {
-                            case "01":
-
-                                month = "January";
-
-                                break;
-                            case "02":
-
-                                month = "February";
-
-                                break;
-                            case "03":
-
-                                month = "March";
-
-                                break;
-                            case "04":
-
-                                month = "April";
-
-                                break;
-                            case "05":
-
-                                month = "May";
-
-                                break;
-                            case "06":
-
-                                month = "June";
-
-                                break;
-                            case "07":
-
-                                month = "July";
-
-                                break;
-                            case "08":
-
-                                month = "August";
-
-                                break;
-                            case "09":
-
-                                month = "September";
-
-                                break;
-                            case "10":
-
-                                month = "October";
-
-                                break;
-                            case "11":
-
-                                month = "November";
-
-                                break;
-                            case "12":
-
-                                month = "December";
-
-                                break;
-                            default:
-
-                                month = ad.getVacFrom();
-                        }
-
-                        botVacFrom.setText(month);
-
-                    } catch (ArrayIndexOutOfBoundsException e) {
-
-                        botVacFrom.setText(ad.getVacFrom());
-                    }
-
-                    botAd.setAdapter(new BottomSheetImageAdapter(bottomSheetImageShowers));
-
-                    botAd.setClipToPadding(false);
-                    botAd.setClipChildren(false);
-                    botAd.setOffscreenPageLimit(3);
-                    botAd.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-
-                    CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
-                    compositePageTransformer.addTransformer(new MarginPageTransformer(20));
-                    compositePageTransformer.addTransformer((page, position) -> {
-
-                        float r = 1 - Math.abs(position);
-                        page.setScaleY(0.95f + r * 0.05f);
-                    });
-
-                    botAd.setPageTransformer(compositePageTransformer);
-
-                    bottomSheetDialog.setContentView(bottomSheetView);
-                    bottomSheetDialog.show();
-
-                    CreateAd finalAd = ad;
-                    botToDescription.setOnClickListener(v -> {
-
+                        CreateAd finalAd = ad;
                         Intent intent = new Intent(MapActivity.this, AdDescriptionActivity.class);
                         intent.putExtra("imageUri1", finalAd.getImageUrl1());
                         intent.putExtra("imageUri2", finalAd.getImageUrl2());
@@ -421,17 +410,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         intent.putExtra("thana", finalAd.getThana());
                         intent.putExtra("FROM_ACTIVITY", "ListViewFragment");
                         startActivity(intent);
+
+                        return true;
                     });
-                    return true;
-                });
+
+                } catch (NullPointerException ignored) {
 
 
-
-
-
-
-
-
+                }
 
             }
 
@@ -442,260 +428,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         });
 
-        /*FirebaseDatabase.getInstance().getReference().child("All_ad").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                /*latLongs.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+        Context context = LocaleHelper.setLocale(this, language);
+        Resources resources = context.getResources();
 
-                    if (dataSnapshot.child("latitude").exists() && dataSnapshot.child("longitude").exists()) {
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
 
-                        latLongs.add(new LatLng(Double.parseDouble(dataSnapshot.child("latitude").getValue().toString()), Double.parseDouble(dataSnapshot.child("longitude").getValue().toString())));
-                    }
+            modeState.setText(resources.getString(R.string.on));
 
-                }
+        } else {
 
-                for (int i = 0; i < latLongs.size(); i++) {
-
-                    map.addMarker(new MarkerOptions().position(latLongs.get(i)).icon(vectorToBitmap()));
-                }
-
-                map.setOnMarkerClickListener(marker -> {
-
-                    CreateAd ad = null;
-
-
-
-                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-
-                        if (snapshot1.child("latitude").exists() && snapshot1.child("longitude").exists()) {
-
-                            if (marker.getPosition().latitude == Double.parseDouble(snapshot1.child("latitude").getValue().toString()) && marker.getPosition().longitude == Double.parseDouble(snapshot1.child("longitude").getValue().toString())) {
-
-                                ad = snapshot1.getValue(CreateAd.class);
-                                assert ad != null;
-
-                                ownerKey = ad.getKey().split("-");
-                                ok.setOwnerKey(ownerKey[0]);
-
-
-                            }
-
-                        }
-
-                    }
-
-                    TextView botTitle = bottomSheetView.findViewById(R.id.title_bottom);
-                    TextView botRent = bottomSheetView.findViewById(R.id.rent_bottom);
-                    TextView botFlatType = bottomSheetView.findViewById(R.id.flat_type_bottom_text);
-                    TextView botGenre = bottomSheetView.findViewById(R.id.genre_bottom_text);
-                    TextView botReligion = bottomSheetView.findViewById(R.id.religion_bottom_text);
-                    TextView botVacFrom = bottomSheetView.findViewById(R.id.vacant_from_bottom_text);
-                    TextView botRating = bottomSheetView.findViewById(R.id.ad_rating_bottom);
-                    Button botToDescription = bottomSheetView.findViewById(R.id.go_to_description_btn);
-
-                    ViewPager2 botAd = bottomSheetView.findViewById(R.id.bottom_ad_shower);
-                    List<BottomSheetImageShower> bottomSheetImageShowers = new ArrayList<>();
-
-                    if (!ad.getImageUrl1().matches("no_image")) {
-
-                        bottomSheetImageShowers.add(new BottomSheetImageShower(ad.getImageUrl1()));
-                    }
-
-                    if (!ad.getImageUrl2().matches("no_image")) {
-
-                        bottomSheetImageShowers.add(new BottomSheetImageShower(ad.getImageUrl2()));
-                    }
-
-                    if (!ad.getImageUrl3().matches("no_image")) {
-
-                        bottomSheetImageShowers.add(new BottomSheetImageShower(ad.getImageUrl3()));
-                    }
-
-                    if (!ad.getImageUrl4().matches("no_image")) {
-
-                        bottomSheetImageShowers.add(new BottomSheetImageShower(ad.getImageUrl4()));
-                    }
-
-                    if (!ad.getImageUrl5().matches("no_image")) {
-
-                        bottomSheetImageShowers.add(new BottomSheetImageShower(ad.getImageUrl5()));
-                    }
-
-                    botTitle.setText(ad.getTitle());
-                    botRent.setText(ad.getRent());
-                    botFlatType.setText(ad.getFlatType());
-                    botGenre.setText(ad.getGenre());
-                    botReligion.setText(ad.getReligion());
-                    botRating.setText("4.9/5");
-
-                    try {
-
-                        String[] date = ad.getVacFrom().split("-");
-                        String month;
-
-                        switch (date[1]) {
-                            case "01":
-
-                                month = "January";
-
-                                break;
-                            case "02":
-
-                                month = "February";
-
-                                break;
-                            case "03":
-
-                                month = "March";
-
-                                break;
-                            case "04":
-
-                                month = "April";
-
-                                break;
-                            case "05":
-
-                                month = "May";
-
-                                break;
-                            case "06":
-
-                                month = "June";
-
-                                break;
-                            case "07":
-
-                                month = "July";
-
-                                break;
-                            case "08":
-
-                                month = "August";
-
-                                break;
-                            case "09":
-
-                                month = "September";
-
-                                break;
-                            case "10":
-
-                                month = "October";
-
-                                break;
-                            case "11":
-
-                                month = "November";
-
-                                break;
-                            case "12":
-
-                                month = "December";
-
-                                break;
-                            default:
-
-                                month = ad.getVacFrom();
-                        }
-
-                        botVacFrom.setText(month);
-
-                    } catch (ArrayIndexOutOfBoundsException e) {
-
-                        botVacFrom.setText(ad.getVacFrom());
-                    }
-
-                    botAd.setAdapter(new BottomSheetImageAdapter(bottomSheetImageShowers));
-
-                    botAd.setClipToPadding(false);
-                    botAd.setClipChildren(false);
-                    botAd.setOffscreenPageLimit(3);
-                    botAd.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-
-                    CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
-                    compositePageTransformer.addTransformer(new MarginPageTransformer(20));
-                    compositePageTransformer.addTransformer((page, position) -> {
-
-                        float r = 1 - Math.abs(position);
-                        page.setScaleY(0.95f + r * 0.05f);
-                    });
-
-                    botAd.setPageTransformer(compositePageTransformer);
-
-                    bottomSheetDialog.setContentView(bottomSheetView);
-                    bottomSheetDialog.show();
-
-                    CreateAd finalAd = ad;
-                    botToDescription.setOnClickListener(v -> {
-
-                        Intent intent = new Intent(MapActivity.this, AdDescriptionActivity.class);
-                        intent.putExtra("imageUri1", finalAd.getImageUrl1());
-                        intent.putExtra("imageUri2", finalAd.getImageUrl2());
-                        intent.putExtra("imageUri3", finalAd.getImageUrl3());
-                        intent.putExtra("imageUri4", finalAd.getImageUrl4());
-                        intent.putExtra("imageUri5", finalAd.getImageUrl5());
-                        intent.putExtra("title", finalAd.getTitle());
-                        intent.putExtra("address", finalAd.getAddress());
-                        intent.putExtra("flatType", finalAd.getFlatType());
-                        intent.putExtra("washroom", finalAd.getWashroom());
-                        intent.putExtra("vacantFrom", finalAd.getVacFrom());
-                        intent.putExtra("veranda", finalAd.getVeranda());
-                        intent.putExtra("bedroom", finalAd.getBedroom());
-                        intent.putExtra("floor", finalAd.getFloor());
-                        intent.putExtra("religion", finalAd.getReligion());
-                        intent.putExtra("genre", finalAd.getGenre());
-                        intent.putExtra("electricityBill", finalAd.getCurrentBill());
-                        intent.putExtra("waterBill", finalAd.getWaterBill());
-                        intent.putExtra("gasBill", finalAd.getGasBill());
-                        intent.putExtra("serviceCharge", finalAd.getOtherCharges());
-                        intent.putExtra("lift", finalAd.getLift());
-                        intent.putExtra("generator", finalAd.getGenerator());
-                        intent.putExtra("parking", finalAd.getParking());
-                        intent.putExtra("security", finalAd.getSecurity());
-                        intent.putExtra("gas", finalAd.getGas());
-                        intent.putExtra("wifi", finalAd.getWifi());
-                        intent.putExtra("details", finalAd.getDescription());
-                        intent.putExtra("rent", finalAd.getRent());
-                        intent.putExtra("lat", finalAd.getLatitude());
-                        intent.putExtra("long", finalAd.getLongitude());
-                        intent.putExtra("ownerKey", finalAd.getKey());
-                        intent.putExtra("thana", finalAd.getThana());
-                        intent.putExtra("FROM_ACTIVITY", "ListViewFragment");
-                        startActivity(intent);
-                    });
-                    return true;
-                });
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
-
-        /*FirebaseDatabase.getInstance().getReference().child("Users").child(ok.getOwnerKey()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                botOwnerName.setText(Objects.requireNonNull(snapshot.child("name").getValue()).toString());
-                botOwnerNumber.setText(Objects.requireNonNull(snapshot.child("phoneNumber").getValue()).toString());
-
-                User u = snapshot.getValue(User.class);
-                assert u != null;
-
-                Glide.with(getApplicationContext()).load(u.getProfileImage()).placeholder(R.drawable.user).into(botOwnerPic);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
+            modeState.setText(resources.getString(R.string.off));
+        }
 
         drawerLayout.addDrawerListener(drawerListener);
 
@@ -705,6 +448,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(this);
+
+        updateView(Paper.book().read("language"));
 
         if (isServicesOK()) {
 
@@ -717,7 +462,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Tokens");
         Token token1 = new Token(token);
         databaseReference.child(firebaseUser.getUid()).setValue(token1);
-
 
     }
 
@@ -907,13 +651,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             Address address = list.get(0);
 
-            moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), address.getAddressLine(0));
-
-            map.setOnMarkerClickListener(marker -> {
-
-
-                return true;
-            });
+            moveCamera(new LatLng(address.getLatitude(), address.getLongitude()));
         }
 
 
@@ -961,6 +699,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             if (mLocationPermissionGranted) {
 
+                @SuppressWarnings("rawtypes")
                 Task location = fusedLocationProviderClient.getLastLocation();
 
                 location.addOnCompleteListener(task -> {
@@ -971,7 +710,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                         if (isDeviceLocationOn() && currentLocation != null) {
 
-                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), "My Location");
+                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
                         }
                     } else {
 
@@ -983,11 +722,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         } catch (SecurityException ignored) {
 
         }
-    }
-
-    private void autoSuggestions() {
-
-
     }
 
     private void enableLoc() {
@@ -1054,15 +788,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         return gpsEnabled;
     }
 
-    private void moveCamera(LatLng latLng, String title) {
+    private void moveCamera(LatLng latLng) {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, MapActivity.defaultZoom));
-
-        if (!title.equals("My Location")) {
-
-            MarkerOptions options = new MarkerOptions().position(latLng).title(title).icon(vectorToBitmap());
-
-            map.addMarker(options);
-        }
     }
 
     private void initMap() {
@@ -1106,7 +833,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                     if (grantResult != PackageManager.PERMISSION_GRANTED) {
 
-                        mLocationPermissionGranted = false;
                         return;
                     }
                 }
@@ -1195,6 +921,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         vectorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         vectorDrawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
+    private void updateView(String language) {
+
+        Context context = LocaleHelper.setLocale(this, language);
+        Resources resources = context.getResources();
+
+        searchText.setHint(resources.getString(R.string.search_by_location));
+        langState.setText(resources.getString(R.string.lang));
+        bottomNavigationView.getMenu().getItem(0).setTitle(resources.getString(R.string.menu));
+        bottomNavigationView.getMenu().getItem(1).setTitle(resources.getString(R.string.list_view));
+        bottomNavigationView.getMenu().getItem(2).setTitle(resources.getString(R.string.home));
+        bottomNavigationView.getMenu().getItem(3).setTitle(resources.getString(R.string.wish_list));
+        bottomNavigationView.getMenu().getItem(4).setTitle(resources.getString(R.string.chats));
+
     }
 
 }

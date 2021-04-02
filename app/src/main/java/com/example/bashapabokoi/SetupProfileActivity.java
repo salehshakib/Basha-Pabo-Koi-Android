@@ -1,14 +1,18 @@
 package com.example.bashapabokoi;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
+import com.example.bashapabokoi.Helper.LocaleHelper;
 import com.example.bashapabokoi.Models.User;
 import com.example.bashapabokoi.databinding.ActivitySetupProfileBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,7 +20,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.Objects;
 
+import io.paperdb.Paper;
+
+@SuppressWarnings("deprecation")
 public class SetupProfileActivity extends AppCompatActivity {
 
     ActivitySetupProfileBinding binding;
@@ -30,6 +38,22 @@ public class SetupProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+
+            setTheme(R.style.Theme_BashaPaboKoi_Dark);
+        } else{
+
+            setTheme(R.style.Theme_BashaPaboKoi);
+        }
+
+        Paper.init(this);
+
+        String language = Paper.book().read("language");
+        if(language == null){
+
+            Paper.book().write("language", "en");
+        }
         super.onCreate(savedInstanceState);
         binding = ActivitySetupProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -42,6 +66,8 @@ public class SetupProfileActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
         auth = FirebaseAuth.getInstance();
+
+        updateView(Paper.book().read("language"));
 
         binding.proPic.setOnClickListener(v -> {
 
@@ -63,13 +89,13 @@ public class SetupProfileActivity extends AppCompatActivity {
             dialog.show();
 
             if(selectedImage != null){
-                StorageReference reference = storage.getReference().child("profiles").child(auth.getUid());
+                StorageReference reference = storage.getReference().child("profiles").child(Objects.requireNonNull(auth.getUid()));
                 reference.putFile(selectedImage).addOnCompleteListener(task -> {
                    if(task.isSuccessful()){
                        reference.getDownloadUrl().addOnSuccessListener(uri -> {
                            String imageUrl = uri.toString();
                            String uid = auth.getUid();
-                           String phone = auth.getCurrentUser().getPhoneNumber();
+                           String phone = Objects.requireNonNull(auth.getCurrentUser()).getPhoneNumber();
 
                            User user = new User(uid, name, phone,imageUrl);
 
@@ -91,12 +117,13 @@ public class SetupProfileActivity extends AppCompatActivity {
                 });
             } else {
                 String uid = auth.getUid();
-                String phone = auth.getCurrentUser().getPhoneNumber();
+                String phone = Objects.requireNonNull(auth.getCurrentUser()).getPhoneNumber();
 
 
 
                 User user = new User(uid, name, phone, "No Image");
 
+                assert uid != null;
                 database.getReference().child("Users").child(uid).setValue(user).addOnSuccessListener(aVoid -> {
 
                     dialog.dismiss();
@@ -124,5 +151,16 @@ public class SetupProfileActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    private void updateView(String language) {
+
+        Context context = LocaleHelper.setLocale(this, language);
+        Resources resources = context.getResources();
+
+        binding.info.setText(resources.getString(R.string.profile_name_and_picture));
+        binding.textView2.setText(resources.getString(R.string.tap_on_the_image_to_update_your_profile_picture));
+        binding.profileNameText.setHint(resources.getString(R.string.enter_your_profile_name_here));
+        binding.continueBtn3.setText(resources.getString(R.string.continue_sign_up));
     }
 }

@@ -1,6 +1,8 @@
 package com.example.bashapabokoi.Adapters;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +12,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bashapabokoi.Helper.LocaleHelper;
 import com.example.bashapabokoi.Models.CheckBoxValueShower;
 import com.example.bashapabokoi.R;
 
 import java.util.List;
 
+import io.paperdb.Paper;
+
 public class CheckboxValueAdapter extends RecyclerView.Adapter<CheckboxValueAdapter.ValueHolder>{
 
     private final List<CheckBoxValueShower> checkBoxValueShowers;
+    public final Context context;
 
-    public CheckboxValueAdapter(List<CheckBoxValueShower> checkBoxValueShowers) {
+    public CheckboxValueAdapter(Context context, List<CheckBoxValueShower> checkBoxValueShowers) {
         this.checkBoxValueShowers = checkBoxValueShowers;
+        this.context = context;
     }
 
     @NonNull
@@ -32,7 +39,7 @@ public class CheckboxValueAdapter extends RecyclerView.Adapter<CheckboxValueAdap
     @Override
     public void onBindViewHolder(@NonNull ValueHolder holder, int position) {
 
-        holder.setData(checkBoxValueShowers.get(position));
+        holder.setData(context, checkBoxValueShowers.get(position));
     }
 
     @Override
@@ -55,18 +62,29 @@ public class CheckboxValueAdapter extends RecyclerView.Adapter<CheckboxValueAdap
         }
 
         @SuppressLint("SetTextI18n")
-        void setData(CheckBoxValueShower checkBoxValueShower){
+        void setData(Context context, CheckBoxValueShower checkBoxValueShower){
 
             checkBoxImage.setImageDrawable(checkBoxValueShower.imageId);
             checkBoxName.setText(checkBoxValueShower.checkBoxName);
 
+            Paper.init(context);
+
+            String language = Paper.book().read("language");
+            if(language == null){
+
+                Paper.book().write("language", "en");
+            }
+
+            Context con = LocaleHelper.setLocale(context, language);
+            Resources resources = con.getResources();
+
             if(checkBoxValueShower.value.equals("true")){
 
-                checkboxValue.setText("Yes");
+                checkboxValue.setText(resources.getString(R.string.yes));
 
             } else{
 
-                checkboxValue.setText("No");
+                checkboxValue.setText(resources.getString(R.string.no));
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.example.bashapabokoi;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,22 +8,18 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import com.example.bashapabokoi.Adapters.UsersAdapter;
 import com.example.bashapabokoi.Models.User;
-import com.example.bashapabokoi.Notifications.APIService;
-import com.example.bashapabokoi.Notifications.Client;
-import com.example.bashapabokoi.Notifications.Token;
 import com.example.bashapabokoi.databinding.FragmentChatsBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,6 +40,13 @@ public class ChatsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+
+            Objects.requireNonNull(getActivity()).setTheme(R.style.Theme_BashaPaboKoi_Dark);
+        } else{
+
+            Objects.requireNonNull(getActivity()).setTheme(R.style.Theme_BashaPaboKoi);
+        }
 
         super.onCreate(savedInstanceState);
         binding = FragmentChatsBinding.inflate(inflater, container, false);

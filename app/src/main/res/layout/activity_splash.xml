@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="?attr/bgColor"
     tools:context=".SplashActivity">
 
     <com.cuberto.liquid_swipe.LiquidPager
@@ -24,7 +24,7 @@
         android:id="@+id/splash_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="?attr/bgColor"
         android:elevation="2dp" />
 
     <TextView
@@ -36,7 +36,7 @@
         android:fontFamily="@font/roboto"
         android:text="@string/welcome"
         android:alpha="0.0"
-        android:textColor="@color/orange_base"
+        android:textColor="?attr/textColor"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,7 @@
         android:fontFamily="@font/roboto"
         android:text="@string/to"
         android:alpha="0.0"
-        android:textColor="@color/orange_base"
+        android:textColor="?attr/textColor"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -83,7 +83,7 @@
         android:fontFamily="@font/roboto_condensed_bold"
         android:text="@string/name"
         android:alpha="0.0"
-        android:textColor="@color/orange_base"
+        android:textColor="?attr/textColor"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -97,7 +97,7 @@
         android:elevation="2dp"
         android:fontFamily="@font/roboto"
         android:text="@string/powered"
-        android:textColor="@color/orange_base"
+        android:textColor="?attr/textColor"
         android:alpha="0.0"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"

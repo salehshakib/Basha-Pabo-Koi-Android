@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="?attr/titleColor"
         app:headerLayout="@layout/header"
         app:itemIconTint="@drawable/drawer_item_color"
         app:itemTextColor="@drawable/drawer_item_color"
@@ -22,29 +23,29 @@
             android:id="@+id/switch_lang_state"
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:text="@string/lang"
-            android:gravity="center"
-            android:textColor="@color/orange_base"
-            android:fontFamily="@font/roboto"
+            android:layout_marginStart="220dp"
             android:layout_marginTop="316dp"
-            android:layout_marginStart="220dp" />
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="@string/lang"
+            android:textColor="?attr/textColor" />
 
         <TextView
             android:id="@+id/switch_mode_state"
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:text="@string/off"
-            android:gravity="center"
-            android:textColor="@color/orange_base"
-            android:fontFamily="@font/roboto"
+            android:layout_marginStart="220dp"
             android:layout_marginTop="366dp"
-            android:layout_marginStart="220dp" />
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="@string/off"
+            android:textColor="?attr/textColor" />
     </com.google.android.material.navigation.NavigationView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/orange_base">
+        android:background="?attr/bgTopColor">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/return_from_description"
@@ -54,7 +55,8 @@
             android:contentDescription="@string/todo"
             android:rotation="180"
             android:src="@drawable/right"
-            app:backgroundTint="@color/white"
+            android:tint="?attr/iconColor"
+            app:backgroundTint="?attr/fabColor"
             app:fabCustomSize="50dp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -64,11 +66,12 @@
             app:layout_constraintVertical_bias="0.551" />
 
         <TextView
+            android:id="@+id/ad_description_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
             android:text="@string/ad_description"
-            android:textColor="@color/white"
+            android:textColor="?attr/titleColor"
             android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -79,25 +82,25 @@
             android:id="@+id/edit_ad_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:elevation="20dp"
-            app:backgroundTint="@color/white"
-            android:src="@drawable/ic_edit"
-            android:enabled="false"
             android:alpha="0.0"
+            android:clickable="true"
+            android:contentDescription="@string/todo"
+            android:elevation="20dp"
+            android:enabled="false"
+            android:src="@drawable/ic_edit"
+            app:backgroundTint="?attr/cardColor"
             app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.95"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-            app:layout_constraintVertical_bias="0.9"
-            app:layout_constraintHorizontal_bias="0.95"
-            android:contentDescription="@string/todo" />
+            app:layout_constraintVertical_bias="0.9" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/white"
+            android:background="?attr/bgColor"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -115,7 +118,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ScrollViewCount">
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -139,8 +141,8 @@
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="20dp"
                             android:fontFamily="@font/roboto"
-                            android:text="Rent is going on"
-                            android:textColor="@color/orange_base"
+                            android:text="@string/rent_is_going_on"
+                            android:textColor="?attr/textColor"
                             android:textSize="30sp" />
 
                     </LinearLayout>
@@ -158,17 +160,17 @@
                             android:id="@+id/ic_address_description"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:contentDescription="@string/todo"
                             android:src="@drawable/ic_profile_address"
-                            app:tint="@color/orange_base"
-                            android:contentDescription="@string/todo"/>
+                            app:tint="?attr/iconColor" />
 
                         <TextView
                             android:id="@+id/address_description_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="B-15, G-4, Motijheel, A.G.B colony, Hospital zone, Dhaka-1000."
-                            android:textColor="@color/orange_base"
                             android:fontFamily="@font/roboto"
+                            android:text="@string/address_eg_1"
+                            android:textColor="?attr/textColor"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -195,18 +197,17 @@
                                     android:id="@+id/ic_flat_type_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_flat_type"
-                                    app:tint="@color/orange_base"
-                                    android:contentDescription="@string/todo"/>
+                                    android:contentDescription="@string/todo"
+                                    android:src="@drawable/ic_flat_type" />
 
                                 <TextView
                                     android:id="@+id/flat_type_description_text"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
-                                    android:text="sublet"
                                     android:fontFamily="@font/roboto"
-                                    android:textColor="@color/orange_base"
+                                    android:text="@string/sublet"
+                                    android:textColor="?attr/textColor"
                                     android:textSize="16sp" />
 
                             </LinearLayout>
@@ -221,18 +222,17 @@
                                     android:id="@+id/ic_vacant_from_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_month"
-                                    app:tint="@color/orange_base"
-                                    android:contentDescription="@string/todo"/>
+                                    android:contentDescription="@string/todo"
+                                    android:src="@drawable/ic_month" />
 
                                 <TextView
                                     android:id="@+id/vacant_from_description_text"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
-                                    android:text="1 April, 2021"
                                     android:fontFamily="@font/roboto"
-                                    android:textColor="@color/orange_base"
+                                    android:text="@string/date_eg"
+                                    android:textColor="?attr/textColor"
                                     android:textSize="16sp" />
 
                             </LinearLayout>
@@ -247,18 +247,17 @@
                                     android:id="@+id/ic_bedroom_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_bedroom"
-                                    app:tint="@color/orange_base"
-                                    android:contentDescription="@string/todo"/>
+                                    android:contentDescription="@string/todo"
+                                    android:src="@drawable/ic_bedroom" />
 
                                 <TextView
                                     android:id="@+id/bedroom_description_text"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
-                                    android:text="2 bedrooms"
                                     android:fontFamily="@font/roboto"
-                                    android:textColor="@color/orange_base"
+                                    android:text="@string/bedroom_eg"
+                                    android:textColor="?attr/textColor"
                                     android:textSize="16sp" />
 
                             </LinearLayout>
@@ -273,18 +272,17 @@
                                     android:id="@+id/ic_religion_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_religion"
-                                    app:tint="@color/orange_base"
-                                    android:contentDescription="@string/todo"/>
+                                    android:contentDescription="@string/todo"
+                                    android:src="@drawable/ic_religion" />
 
                                 <TextView
                                     android:id="@+id/religion_description_text"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
-                                    android:text="@string/muslim"
                                     android:fontFamily="@font/roboto"
-                                    android:textColor="@color/orange_base"
+                                    android:text="@string/muslim"
+                                    android:textColor="?attr/textColor"
                                     android:textSize="16sp" />
 
                             </LinearLayout>
@@ -312,18 +310,18 @@
                                     android:id="@+id/ic_washroom_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:contentDescription="@string/todo"
                                     android:src="@drawable/ic_washroom"
-                                    app:tint="@color/orange_base"
-                                    android:contentDescription="@string/todo"/>
+                                    app:tint="?attr/iconColor" />
 
                                 <TextView
                                     android:id="@+id/washroom_description_text"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
-                                    android:text="3 washrooms"
                                     android:fontFamily="@font/roboto"
-                                    android:textColor="@color/orange_base"
+                                    android:text="@string/wash_eg"
+                                    android:textColor="?attr/textColor"
                                     android:textSize="16sp" />
 
                             </LinearLayout>
@@ -338,18 +336,18 @@
                                     android:id="@+id/ic_veranda_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:contentDescription="@string/todo"
                                     android:src="@drawable/ic_veranda"
-                                    app:tint="@color/orange_base"
-                                    android:contentDescription="@string/todo"/>
+                                    app:tint="?attr/iconColor" />
 
                                 <TextView
                                     android:id="@+id/veranda_description_text"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
-                                    android:text="3 verandas"
                                     android:fontFamily="@font/roboto"
-                                    android:textColor="@color/orange_base"
+                                    android:text="@string/ver_eg"
+                                    android:textColor="?attr/textColor"
                                     android:textSize="16sp" />
 
                             </LinearLayout>
@@ -364,18 +362,18 @@
                                     android:id="@+id/ic_floor_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:contentDescription="@string/todo"
                                     android:src="@drawable/ic_floor"
-                                    app:tint="@color/orange_base"
-                                    android:contentDescription="@string/todo"/>
+                                    app:tint="?attr/iconColor" />
 
                                 <TextView
                                     android:id="@+id/floor_description_text"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
-                                    android:text="5th floor"
                                     android:fontFamily="@font/roboto"
-                                    android:textColor="@color/orange_base"
+                                    android:text="@string/floor_eg"
+                                    android:textColor="?attr/textColor"
                                     android:textSize="16sp" />
 
                             </LinearLayout>
@@ -390,18 +388,17 @@
                                     android:id="@+id/ic_genre_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_genre"
-                                    app:tint="@color/orange_base"
-                                    android:contentDescription="@string/todo"/>
+                                    android:contentDescription="@string/todo"
+                                    android:src="@drawable/ic_genre" />
 
                                 <TextView
                                     android:id="@+id/genre_description_text"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
-                                    android:text="@string/only_student_male"
                                     android:fontFamily="@font/roboto"
-                                    android:textColor="@color/orange_base"
+                                    android:text="@string/only_student_male"
+                                    android:textColor="?attr/textColor"
                                     android:textSize="16sp" />
 
                             </LinearLayout>
@@ -416,13 +413,14 @@
                         android:layout_marginTop="10dp">
 
                         <TextView
+                            android:id="@+id/other_charges_title_des"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="20dp"
                             android:fontFamily="@font/roboto"
                             android:text="@string/other_charges"
-                            android:textColor="@color/orange_base"
+                            android:textColor="?attr/textColor"
                             android:textSize="25sp" />
 
                     </LinearLayout>
@@ -449,9 +447,9 @@
                                     android:id="@+id/ic_electricity_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:contentDescription="@string/todo"
                                     android:src="@drawable/ic_electricity"
-                                    app:tint="@color/orange_base"
-                                    android:contentDescription="@string/todo"/>
+                                    app:tint="?attr/iconColor" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -459,7 +457,7 @@
                                     android:layout_marginStart="3dp"
                                     android:fontFamily="@font/roboto"
                                     android:text="@string/taka_sign"
-                                    android:textColor="@color/orange_base"
+                                    android:textColor="?attr/iconColor"
                                     android:textSize="16sp" />
 
                                 <TextView
@@ -467,9 +465,9 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
-                                    android:text="1000 electricity bill"
                                     android:fontFamily="@font/roboto"
-                                    android:textColor="@color/orange_base"
+                                    android:text="@string/e_bill_eg"
+                                    android:textColor="?attr/iconColor"
                                     android:textSize="16sp" />
 
                             </LinearLayout>
@@ -484,9 +482,9 @@
                                     android:id="@+id/ic_gas_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:contentDescription="@string/todo"
                                     android:src="@drawable/ic_gas"
-                                    app:tint="@color/orange_base"
-                                    android:contentDescription="@string/todo"/>
+                                    app:tint="?attr/iconColor" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -494,7 +492,7 @@
                                     android:layout_marginStart="3dp"
                                     android:fontFamily="@font/roboto"
                                     android:text="@string/taka_sign"
-                                    android:textColor="@color/orange_base"
+                                    android:textColor="?attr/iconColor"
                                     android:textSize="16sp" />
 
                                 <TextView
@@ -502,8 +500,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
-                                    android:text="1000 gas bill"
-                                    android:textColor="@color/orange_base"
+                                    android:text="@string/g_bill_eg"
+                                    android:textColor="?attr/iconColor"
                                     android:textSize="16sp" />
 
                             </LinearLayout>
@@ -531,9 +529,9 @@
                                     android:id="@+id/ic_water_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:contentDescription="@string/todo"
                                     android:src="@drawable/ic_water"
-                                    app:tint="@color/orange_base"
-                                    android:contentDescription="@string/todo"/>
+                                    app:tint="?attr/iconColor" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -541,7 +539,7 @@
                                     android:layout_marginStart="3dp"
                                     android:fontFamily="@font/roboto"
                                     android:text="@string/taka_sign"
-                                    android:textColor="@color/orange_base"
+                                    android:textColor="?attr/iconColor"
                                     android:textSize="16sp" />
 
                                 <TextView
@@ -549,8 +547,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
-                                    android:text="1000 water bill"
-                                    android:textColor="@color/orange_base"
+                                    android:text="@string/w_bill_eg"
+                                    android:textColor="?attr/iconColor"
                                     android:textSize="16sp" />
 
                             </LinearLayout>
@@ -565,9 +563,9 @@
                                     android:id="@+id/ic_service_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:contentDescription="@string/todo"
                                     android:src="@drawable/ic_service"
-                                    app:tint="@color/orange_base"
-                                    android:contentDescription="@string/todo"/>
+                                    app:tint="?attr/iconColor" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -575,7 +573,7 @@
                                     android:layout_marginStart="3dp"
                                     android:fontFamily="@font/roboto"
                                     android:text="@string/taka_sign"
-                                    android:textColor="@color/orange_base"
+                                    android:textColor="?attr/iconColor"
                                     android:textSize="16sp" />
 
                                 <TextView
@@ -583,8 +581,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="3dp"
-                                    android:text="5000 service charge"
-                                    android:textColor="@color/orange_base"
+                                    android:text="@string/s_charge_eg"
+                                    android:textColor="?attr/iconColor"
                                     android:textSize="16sp" />
 
                             </LinearLayout>
@@ -599,13 +597,14 @@
                         android:layout_marginTop="10dp">
 
                         <TextView
+                            android:id="@+id/other_facilities_title_des"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="20dp"
                             android:fontFamily="@font/roboto"
                             android:text="@string/other_facilities"
-                            android:textColor="@color/orange_base"
+                            android:textColor="?attr/iconColor"
                             android:textSize="25sp" />
 
                     </LinearLayout>
@@ -629,13 +628,14 @@
                         android:layout_marginTop="10dp">
 
                         <TextView
+                            android:id="@+id/details_title_des"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="20dp"
                             android:fontFamily="@font/roboto"
                             android:text="@string/details"
-                            android:textColor="@color/orange_base"
+                            android:textColor="?attr/iconColor"
                             android:textSize="25sp" />
 
                     </LinearLayout>
@@ -653,8 +653,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="10dp"
-                            android:text="Onnnk xooooosssss"
-                            android:textColor="@color/orange_base"
+                            android:text="@string/onnnk_xooooosssss"
+                            android:textColor="?attr/iconColor"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -672,7 +672,7 @@
                             android:layout_marginTop="20dp"
                             android:fontFamily="@font/roboto"
                             android:text="@string/ad_by"
-                            android:textColor="@color/orange_base"
+                            android:textColor="?attr/iconColor"
                             android:textSize="25sp" />
 
                     </LinearLayout>
@@ -689,6 +689,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="20dp"
                             android:layout_marginBottom="20dp"
+                            app:cardBackgroundColor="?attr/cardColor"
                             app:cardCornerRadius="10dp"
                             app:cardElevation="5dp">
 
@@ -729,7 +730,7 @@
                                         android:layout_marginStart="10dp"
                                         android:fontFamily="@font/roboto_condensed_bold"
                                         android:text="@string/profile_name"
-                                        android:textColor="@color/orange_base"
+                                        android:textColor="?attr/iconColor"
                                         android:textSize="20sp" />
 
                                     <TextView
@@ -739,7 +740,7 @@
                                         android:layout_marginStart="10dp"
                                         android:fontFamily="@font/roboto_thin"
                                         android:text="@string/number_eg"
-                                        android:textColor="@color/orange_base"
+                                        android:textColor="?attr/iconColor"
                                         android:textSize="16sp" />
 
                                 </LinearLayout>
@@ -762,7 +763,7 @@
                             android:layout_marginStart="20dp"
                             android:fontFamily="@font/roboto"
                             android:text="@string/rate_this_ad"
-                            android:textColor="@color/orange_base"
+                            android:textColor="?attr/iconColor"
                             android:textSize="25sp" />
 
                     </LinearLayout>
@@ -779,6 +780,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="20dp"
                             android:layout_marginBottom="20dp"
+                            app:cardBackgroundColor="?attr/cardColor"
                             app:cardCornerRadius="10dp"
                             app:cardElevation="5dp">
 
@@ -789,27 +791,27 @@
                                 android:orientation="vertical">
 
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center"
-                                    tools:ignore="UselessParent">
+                                    android:layout_marginTop="5dp">
 
                                     <RatingBar
                                         android:id="@+id/ad_rating_description"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:progressTint="@color/orange_base" />
-
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:numStars="5"
+                                        android:progressTint="?attr/iconColor" />
                                 </LinearLayout>
 
                                 <Button
                                     android:id="@+id/rating_submit_btn"
                                     android:layout_width="200dp"
                                     android:layout_height="50dp"
+                                    android:layout_marginBottom="10dp"
                                     android:background="@drawable/button_bg"
                                     android:text="@string/submit"
-                                    android:textColor="@color/white"
-                                    android:layout_marginBottom="10dp"/>
+                                    android:textColor="?attr/titleColor" />
 
                             </LinearLayout>
 
@@ -828,8 +830,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
                             android:layout_margin="20dp"
-                            app:cardBackgroundColor="@color/orange_base"
                             android:clickable="true"
+                            app:cardBackgroundColor="?attr/btnColor"
                             app:cardCornerRadius="10dp">
 
                             <LinearLayout
@@ -843,18 +845,19 @@
                                     android:layout_width="25dp"
                                     android:layout_height="25dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_address"
-                                    app:tint="@color/white"
-                                    android:contentDescription="@string/todo" />
+                                    android:contentDescription="@string/todo"
+                                    app:tint="?attr/bgColor"
+                                    android:src="@drawable/ic_address" />
 
                                 <TextView
+                                    android:id="@+id/find_on_map_title_des"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textColor="@color/white"
-                                    android:text="Find on map"
                                     android:layout_gravity="center"
                                     android:fontFamily="@font/roboto_thin"
-                                    android:textSize="20sp"/>
+                                    android:text="@string/find_on_map"
+                                    android:textColor="?attr/titleColor"
+                                    android:textSize="20sp" />
 
                             </LinearLayout>
 
@@ -870,7 +873,7 @@
                 android:id="@+id/bottom_nav"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:background="@color/white"
+                android:background="?attr/bgColor"
                 app:layout_constraintBottom_toBottomOf="@+id/scrollView3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -885,7 +888,7 @@
                         android:id="@+id/view2"
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
-                        android:background="@color/orange_base"
+                        android:background="?attr/iconColor"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -896,7 +899,7 @@
                         android:layout_marginStart="20dp"
                         android:fontFamily="@font/roboto_condensed_bold"
                         android:text="@string/taka_sign"
-                        android:textColor="@color/orange_base"
+                        android:textColor="?attr/iconColor"
                         android:textSize="25sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -909,7 +912,7 @@
                         android:layout_marginStart="5dp"
                         android:fontFamily="@font/roboto_condensed_bold"
                         android:text="@string/rent_eg"
-                        android:textColor="@color/orange_base"
+                        android:textColor="?attr/textColor"
                         android:textSize="25sp"
                         app:layout_constraintBottom_toBottomOf="@+id/textView25"
                         app:layout_constraintStart_toEndOf="@+id/textView25"
@@ -920,11 +923,11 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginEnd="120dp"
-                        android:src="@drawable/ic_wish_list"
-                        app:backgroundTint="@color/orange_base"
-                        app:fabCustomSize="50dp"
                         android:clickable="true"
                         android:contentDescription="@string/todo"
+                        android:src="@drawable/ic_wish_list"
+                        app:backgroundTint="?attr/iconColor"
+                        app:fabCustomSize="50dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -934,13 +937,14 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginEnd="20dp"
-                        android:src="@drawable/ic_done"
-                        app:backgroundTint="@color/orange_base"
-                        app:fabCustomSize="50dp"
-                        android:clickable="true"
-                        android:enabled="false"
                         android:alpha="0.0"
+                        android:clickable="true"
                         android:contentDescription="@string/todo"
+                        android:enabled="false"
+                        android:src="@drawable/ic_trash"
+                        android:tint="?attr/fabColor"
+                        app:backgroundTint="?attr/iconColor"
+                        app:fabCustomSize="50dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -950,13 +954,13 @@
                         android:layout_width="100dp"
                         android:layout_height="50dp"
                         android:layout_marginEnd="10dp"
-                        android:clickable="true"
                         android:background="@drawable/button_bg"
+                        android:clickable="true"
+                        android:contentDescription="@string/todo"
                         android:src="@drawable/ic_chat_btn"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:contentDescription="@string/todo"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

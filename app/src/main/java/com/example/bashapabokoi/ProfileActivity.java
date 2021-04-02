@@ -1,8 +1,10 @@
 package com.example.bashapabokoi;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -22,6 +25,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.example.bashapabokoi.Adapters.OwnerAdAdapter;
+import com.example.bashapabokoi.Helper.LocaleHelper;
 import com.example.bashapabokoi.Models.CreateAd;
 import com.example.bashapabokoi.Models.OwnerAdShower;
 import com.example.bashapabokoi.Models.User;
@@ -38,6 +42,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import io.paperdb.Paper;
+
 public class ProfileActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawerLayout;
@@ -47,14 +53,35 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
     @SuppressLint("StaticFieldLeak")
     public static TextView ProfileName, profilePhoneNo, profileAddress, profileMail;
 
+    TextView yourAdTitle;
+
     CardView editAddress, editEmail;
 
     FloatingActionButton returnFromProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+
+            setTheme(R.style.Theme_BashaPaboKoi_Dark);
+        } else{
+
+            setTheme(R.style.Theme_BashaPaboKoi);
+        }
+
+        Paper.init(this);
+
+        String language = Paper.book().read("language");
+        if(language == null){
+
+            Paper.book().write("language", "en");
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        yourAdTitle = findViewById(R.id.your_ad_title);
 
         profilePicture = findViewById(R.id.pro_pic);
         ProfileName = findViewById(R.id.profile_name);
@@ -73,7 +100,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         TextView headerProfileName = header.findViewById(R.id.profile_name_header);
         RoundedImageView headerProPic = header.findViewById(R.id.pro_pic_header);
 
-
+        updateView(Paper.book().read("language"));
 
         FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).addValueEventListener(new ValueEventListener() {
             @Override
@@ -249,4 +276,11 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         return true;
     }
 
+    private void updateView(String language) {
+
+        Context context = LocaleHelper.setLocale(this, language);
+        Resources resources = context.getResources();
+
+        yourAdTitle.setText(resources.getString(R.string.your_ads));
+    }
 }

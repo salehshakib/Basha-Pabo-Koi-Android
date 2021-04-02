@@ -14,6 +14,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/header"
+        android:background="?attr/bgColor"
         app:itemIconTint="@drawable/drawer_item_color"
         app:itemTextColor="@drawable/drawer_item_color"
         app:menu="@menu/main_menu">
@@ -24,7 +25,7 @@
             android:layout_height="40dp"
             android:text="@string/lang"
             android:gravity="center"
-            android:textColor="@color/orange_base"
+            android:textColor="?attr/textColor"
             android:fontFamily="@font/roboto"
             android:layout_marginTop="316dp"
             android:layout_marginStart="220dp" />
@@ -35,7 +36,7 @@
             android:layout_height="40dp"
             android:text="@string/off"
             android:gravity="center"
-            android:textColor="@color/orange_base"
+            android:textColor="?attr/textColor"
             android:fontFamily="@font/roboto"
             android:layout_marginTop="366dp"
             android:layout_marginStart="220dp" />
@@ -44,7 +45,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/orange_base">
+        android:background="?attr/bgTopColor">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/return_from_profile"
@@ -55,7 +56,8 @@
             app:fabCustomSize="50dp"
             android:rotation="180"
             android:src="@drawable/right"
-            app:backgroundTint="@color/white"
+            android:tint="?attr/iconColor"
+            app:backgroundTint="?attr/fabColor"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.045"
@@ -86,7 +88,7 @@
             android:gravity="bottom"
             android:layout_marginTop="250dp"
             android:text="@string/profile_name"
-            android:textColor="@color/orange_base"
+            android:textColor="?attr/textColor"
             android:textSize="35sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +98,7 @@
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/white"
+            android:background="?attr/bgColor"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -108,6 +110,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:background="?attr/bgColor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent=".79"
@@ -119,7 +122,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:elevation="7dp"
-                    android:background="@color/orange_base"
+                    android:background="?attr/textColor"
                     app:layout_constraintBottom_toTopOf="@+id/scrollView2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -152,6 +155,7 @@
                                 android:layout_height="120dp"
                                 android:layout_marginStart="20dp"
                                 android:layout_marginTop="20dp"
+                                app:cardBackgroundColor="?attr/cardColor"
                                 android:layout_marginBottom="20dp"
                                 app:cardCornerRadius="10dp">
 
@@ -159,14 +163,16 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:orientation="vertical"
-                                    android:paddingTop="20dp">
+                                    android:paddingTop="20dp"
+                                    tools:ignore="UseCompoundDrawables">
 
                                     <ImageView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:src="@drawable/ic_phone"
-                                        android:contentDescription="@string/todo"/>
+                                        android:contentDescription="@string/todo"
+                                        tools:ignore="TooDeepLayout" />
 
                                     <TextView
                                         android:id="@+id/phone_no_profile"
@@ -177,7 +183,7 @@
                                         android:fontFamily="@font/roboto_thin"
                                         android:gravity="center"
                                         android:text="@string/number_eg"
-                                        android:textColor="@color/orange_base"
+                                        android:textColor="?attr/textColor"
                                         android:textSize="20sp" />
 
                                 </LinearLayout>
@@ -195,6 +201,7 @@
                                 android:layout_height="120dp"
                                 android:layout_marginTop="20dp"
                                 android:layout_marginBottom="20dp"
+                                app:cardBackgroundColor="?attr/cardColor"
                                 android:layout_marginEnd="20dp"
                                 app:cardCornerRadius="10dp">
 
@@ -209,13 +216,15 @@
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="right"
                                         android:src="@drawable/ic_edit"
-                                        tools:ignore="RtlHardcoded" />
+                                        tools:ignore="RtlHardcoded"
+                                        android:contentDescription="@string/todo" />
 
                                     <ImageView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:src="@drawable/ic_email" />
+                                        android:src="@drawable/ic_email"
+                                        android:contentDescription="@string/todo" />
 
                                     <TextView
                                         android:id="@+id/email_profile"
@@ -226,7 +235,7 @@
                                         android:fontFamily="@font/roboto_thin"
                                         android:gravity="center"
                                         android:text="@string/email_eg"
-                                        android:textColor="@color/orange_base"
+                                        android:textColor="?attr/textColor"
                                         android:textSize="16sp" />
 
                                 </LinearLayout>
@@ -245,6 +254,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="200dp"
                                 android:layout_margin="20dp"
+                                app:cardBackgroundColor="?attr/cardColor"
                                 app:cardCornerRadius="10dp">
 
                                 <LinearLayout
@@ -258,13 +268,15 @@
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="right"
                                         android:src="@drawable/ic_edit"
-                                        tools:ignore="RtlHardcoded" />
+                                        tools:ignore="RtlHardcoded"
+                                        android:contentDescription="@string/todo" />
 
                                     <ImageView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:src="@drawable/ic_address" />
+                                        android:src="@drawable/ic_address"
+                                        android:contentDescription="@string/todo" />
 
                                     <TextView
                                         android:id="@+id/address_profile"
@@ -275,7 +287,7 @@
                                         android:fontFamily="@font/roboto_thin"
                                         android:gravity="center"
                                         android:text="@string/address_eg"
-                                        android:textColor="@color/orange_base"
+                                        android:textColor="?attr/textColor"
                                         android:textSize="20sp" />
 
                                 </LinearLayout>
@@ -289,12 +301,13 @@
                             android:layout_height="wrap_content">
 
                             <TextView
+                                android:id="@+id/your_ad_title"
                                 android:layout_marginStart="20dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto_thin"
                                 android:text="@string/your_ads"
-                                android:textColor="@color/orange_base"
+                                android:textColor="?attr/textColor"
                                 android:textSize="25sp" />
 
                         </LinearLayout>
@@ -312,47 +325,6 @@
                                 android:layout_marginBottom="20dp"
                                 android:paddingStart="30dp"
                                 android:paddingEnd="30dp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="20dp">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="match_parent"
-                                android:layout_height="75dp"
-                                android:layout_margin="20dp"
-                                app:cardBackgroundColor="@color/orange_base"
-                                android:clickable="true"
-                                app:cardCornerRadius="10dp">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:layout_width="25dp"
-                                        android:layout_height="25dp"
-                                        android:layout_gravity="center"
-                                        android:src="@drawable/wish_list"
-                                        app:tint="@color/white" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textColor="@color/white"
-                                        android:text="@string/check_your_wish_list"
-                                        android:layout_gravity="center"
-                                        android:fontFamily="@font/roboto_thin"
-                                        android:textSize="20sp"/>
-
-                                </LinearLayout>
-
-                            </androidx.cardview.widget.CardView>
 
                         </LinearLayout>
 

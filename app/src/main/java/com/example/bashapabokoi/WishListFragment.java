@@ -1,18 +1,17 @@
 package com.example.bashapabokoi;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import com.example.bashapabokoi.Adapters.AdsAdapter;
 import com.example.bashapabokoi.Models.CreateAd;
-import com.example.bashapabokoi.databinding.FragmentWishListBinding;
 import com.example.bashapabokoi.databinding.FragmentWishlistViewBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +25,7 @@ import java.util.Objects;
 
 public class WishListFragment extends Fragment {
 
-    @NonNull
+
     FragmentWishlistViewBinding binding;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -35,11 +34,18 @@ public class WishListFragment extends Fragment {
     ArrayList<String> key = new ArrayList<>();
     AdsAdapter adsAdapter;
 
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+
+            Objects.requireNonNull(getContext()).setTheme(R.style.Theme_BashaPaboKoi_Dark);
+        } else{
+
+            Objects.requireNonNull(getContext()).setTheme(R.style.Theme_BashaPaboKoi);
+        }
+
         super.onCreate(savedInstanceState);
 
         binding = FragmentWishlistViewBinding.inflate(inflater, container, false);
@@ -47,7 +53,7 @@ public class WishListFragment extends Fragment {
         adsAdapter = new AdsAdapter(getContext(), wishListAd);
         binding.recyclerView.setAdapter(adsAdapter);
 
-        database.getReference().child("Users").child(auth.getUid()).child("Wishlist").orderByValue().addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Users").child(Objects.requireNonNull(auth.getUid())).child("Wishlist").orderByValue().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
@@ -69,7 +75,7 @@ public class WishListFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (String s : key){
-                    Log.d("aka", s);
+
                     for (DataSnapshot ds : snapshot.getChildren()){
                         if (s.equals(ds.getKey())){
                             CreateAd ad = ds.getValue(CreateAd.class);
@@ -87,11 +93,6 @@ public class WishListFragment extends Fragment {
 
             }
         });
-
-
-
-
-
 
         return binding.getRoot();
 

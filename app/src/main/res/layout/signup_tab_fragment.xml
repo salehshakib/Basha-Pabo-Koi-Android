@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/bgColor"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,6 +16,7 @@
         android:paddingStart="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:textColor="?attr/colorOnSecondary"
         android:textCursorDrawable="@drawable/cursor_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +24,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.411"
         app:layout_constraintWidth_percent=".8"
-        tools:ignore="RtlSymmetry,TextFields" />
+        tools:ignore="RtlSymmetry,TextFields"
+        android:autofillHints="@string/todo" />
 
     <Button
         android:id="@+id/but_sign_next"
@@ -32,7 +35,7 @@
         android:clickable="true"
         android:fontFamily="@font/roboto"
         android:text="@string/next"
-        android:textColor="@color/white"
+        android:textColor="?attr/bgColor"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

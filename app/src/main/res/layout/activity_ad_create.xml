@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="?attr/titleColor"
         app:headerLayout="@layout/header"
         app:itemIconTint="@drawable/drawer_item_color"
         app:itemTextColor="@drawable/drawer_item_color"
@@ -24,7 +25,7 @@
             android:layout_height="40dp"
             android:text="@string/lang"
             android:gravity="center"
-            android:textColor="@color/orange_base"
+            android:textColor="?attr/textColor"
             android:fontFamily="@font/roboto"
             android:layout_marginTop="316dp"
             android:layout_marginStart="220dp" />
@@ -35,7 +36,7 @@
             android:layout_height="40dp"
             android:text="@string/off"
             android:gravity="center"
-            android:textColor="@color/orange_base"
+            android:textColor="?attr/textColor"
             android:fontFamily="@font/roboto"
             android:layout_marginTop="366dp"
             android:layout_marginStart="220dp" />
@@ -44,7 +45,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/orange_base">
+        android:background="?attr/bgTopColor">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/return_from_ad"
@@ -54,8 +55,9 @@
             android:contentDescription="@string/todo"
             android:rotation="180"
             android:src="@drawable/right"
-            app:backgroundTint="@color/white"
+            app:backgroundTint="?attr/fabColor"
             app:fabCustomSize="50dp"
+            android:tint="?attr/iconColor"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.045"
@@ -69,7 +71,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
             android:text="@string/create_an_ad_title"
-            android:textColor="@color/white"
+            android:textColor="?attr/titleColor"
             android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +82,7 @@
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/white"
+            android:background="?attr/bgColor"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -111,21 +113,25 @@
                         android:layout_marginBottom="20dp">
 
                         <TextView
+                            android:id="@+id/basic_info"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="58dp"
                             android:fontFamily="@font/roboto"
                             android:text="@string/basic_information"
+                            android:textColor="?attr/defaultTextColor"
                             android:textSize="20sp" />
 
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="120dp"
                         android:fontFamily="@font/roboto"
                         android:text="@string/title"
+                        android:textColor="?attr/defaultTextColor"
                         android:textSize="16sp" />
 
                     <EditText
@@ -139,6 +145,7 @@
                         android:paddingStart="20dp"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
+                        android:textColor="?attr/colorOnSecondary"
                         android:textCursorDrawable="@drawable/cursor_color"
                         tools:ignore="LabelFor,RtlSymmetry" />
 
@@ -157,6 +164,7 @@
                             android:layout_marginTop="1dp">
 
                             <TextView
+                                android:id="@+id/rent"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentTop="true"
@@ -164,6 +172,7 @@
                                 android:layout_marginEnd="120dp"
                                 android:fontFamily="@font/roboto"
                                 android:text="@string/rent"
+                                android:textColor="?attr/defaultTextColor"
                                 android:textSize="16sp" />
 
                         </RelativeLayout>
@@ -180,6 +189,7 @@
                             android:paddingStart="30dp"
                             android:paddingTop="10dp"
                             android:paddingBottom="10dp"
+                            android:textColor="?attr/colorOnSecondary"
                             android:textCursorDrawable="@drawable/cursor_color"
                             tools:ignore="LabelFor,RtlSymmetry" />
 
@@ -191,7 +201,7 @@
                             android:layout_marginStart="18dp"
                             android:layout_marginBottom="10dp"
                             android:text="@string/taka_sign"
-                            android:textColor="@color/black"
+                            android:textColor="?attr/colorOnSecondary"
                             android:textSize="18sp" />
 
                     </RelativeLayout>
@@ -204,11 +214,13 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/address_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="105dp"
                             android:fontFamily="@font/roboto"
                             android:text="@string/address"
+                            android:textColor="?attr/defaultTextColor"
                             android:textSize="16sp" />
 
                         <EditText
@@ -224,17 +236,20 @@
                             android:paddingTop="10dp"
                             android:paddingEnd="20dp"
                             android:paddingBottom="10dp"
+                            android:textColor="?attr/colorOnSecondary"
                             android:textCursorDrawable="@drawable/cursor_color"
                             tools:ignore="LabelFor,RtlSymmetry" />
 
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/thana_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30dp"
                         android:layout_marginEnd="120dp"
                         android:fontFamily="@font/roboto"
+                        android:textColor="?attr/defaultTextColor"
                         android:text="@string/thana"
                         android:textSize="16sp" />
 
@@ -259,12 +274,13 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textView7"
+                                android:id="@+id/vac_from_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/roboto"
                                 android:text="@string/vacant_from"
+                                android:textColor="?attr/defaultTextColor"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -276,7 +292,7 @@
                                 android:paddingTop="7dp"
                                 android:text="@string/none"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
+                                android:textColor="?attr/colorOnSecondary"
                                 android:textSize="18sp" />
 
                         </LinearLayout>
@@ -289,11 +305,12 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textView8"
+                                android:id="@+id/flat_type_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/roboto"
+                                android:textColor="?attr/defaultTextColor"
                                 android:text="@string/flat_type"
                                 android:textSize="16sp" />
 
@@ -322,11 +339,12 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textView9"
+                                android:id="@+id/washroom_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/roboto"
+                                android:textColor="?attr/defaultTextColor"
                                 android:text="@string/washrooms"
                                 android:textSize="16sp" />
 
@@ -349,12 +367,13 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textView10"
+                                android:id="@+id/verandas_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/roboto"
                                 android:text="@string/verandas"
+                                android:textColor="?attr/defaultTextColor"
                                 android:textSize="16sp" />
 
                             <Spinner
@@ -382,11 +401,12 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textView11"
+                                android:id="@+id/bedroom_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/roboto"
+                                android:textColor="?attr/defaultTextColor"
                                 android:text="@string/bedrooms"
                                 android:textSize="16sp" />
 
@@ -409,12 +429,13 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textView12"
+                                android:id="@+id/floor_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/roboto"
                                 android:text="@string/floor"
+                                android:textColor="?attr/defaultTextColor"
                                 android:textSize="16sp" />
 
                             <Spinner
@@ -442,11 +463,12 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textView13"
+                                android:id="@+id/religion_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/roboto"
+                                android:textColor="?attr/defaultTextColor"
                                 android:text="@string/religion"
                                 android:textSize="16sp" />
 
@@ -469,11 +491,12 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textView14"
+                                android:id="@+id/genre_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/roboto"
+                                android:textColor="?attr/defaultTextColor"
                                 android:text="@string/genre"
                                 android:textSize="16sp" />
 
@@ -496,10 +519,12 @@
                         android:layout_marginTop="30dp">
 
                         <TextView
+                            android:id="@+id/other_services_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="58dp"
                             android:fontFamily="@font/roboto"
+                            android:textColor="?attr/defaultTextColor"
                             android:text="@string/other_services"
                             android:textSize="20sp" />
 
@@ -524,8 +549,10 @@
                                 android:fontFamily="@font/roboto"
                                 android:inputType="number"
                                 android:paddingStart="24dp"
+                                android:textColor="?attr/colorOnSecondary"
                                 android:textCursorDrawable="@drawable/cursor_color"
-                                tools:ignore="RtlSymmetry" />
+                                tools:ignore="LabelFor,RtlSymmetry"
+                                android:autofillHints="@string/todo" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -535,17 +562,18 @@
                                 android:layout_marginStart="12dp"
                                 android:layout_marginBottom="7dp"
                                 android:text="@string/taka_sign"
-                                android:textColor="@color/black"
+                                android:textColor="?attr/colorOnSecondary"
                                 android:textSize="18sp" />
 
                             <TextView
-                                android:id="@+id/textView15"
+                                android:id="@+id/current_bill_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentBottom="true"
                                 android:layout_marginStart="10dp"
                                 android:layout_marginBottom="35dp"
                                 android:fontFamily="@font/roboto"
+                                android:textColor="?attr/defaultTextColor"
                                 android:text="@string/current_bill"
                                 android:textSize="16sp" />
 
@@ -558,11 +586,12 @@
                             android:layout_marginTop="30dp">
 
                             <TextView
-                                android:id="@+id/textView16"
+                                android:id="@+id/water_bill_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/roboto"
+                                android:textColor="?attr/defaultTextColor"
                                 android:text="@string/water_bill"
                                 android:textSize="16sp" />
 
@@ -574,7 +603,7 @@
                                 android:layout_marginStart="12dp"
                                 android:layout_marginBottom="7dp"
                                 android:text="@string/taka_sign"
-                                android:textColor="@color/black"
+                                android:textColor="?attr/colorOnSecondary"
                                 android:textSize="18sp" />
 
                             <EditText
@@ -586,8 +615,10 @@
                                 android:fontFamily="@font/roboto"
                                 android:inputType="number"
                                 android:paddingStart="24dp"
+                                android:textColor="?attr/colorOnSecondary"
                                 android:textCursorDrawable="@drawable/cursor_color"
-                                tools:ignore="RtlSymmetry" />
+                                tools:ignore="LabelFor,RtlSymmetry"
+                                android:autofillHints="@string/todo" />
 
                         </RelativeLayout>
 
@@ -604,11 +635,12 @@
                             android:layout_marginTop="30dp">
 
                             <TextView
-                                android:id="@+id/textView17"
+                                android:id="@+id/gas_bill_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/roboto"
+                                android:textColor="?attr/defaultTextColor"
                                 android:text="@string/gas_bill"
                                 android:textSize="16sp" />
 
@@ -620,7 +652,7 @@
                                 android:layout_marginStart="12dp"
                                 android:layout_marginBottom="7dp"
                                 android:text="@string/taka_sign"
-                                android:textColor="@color/black"
+                                android:textColor="?attr/colorOnSecondary"
                                 android:textSize="18sp" />
 
                             <EditText
@@ -632,8 +664,10 @@
                                 android:fontFamily="@font/roboto"
                                 android:inputType="number"
                                 android:paddingStart="24dp"
+                                android:textColor="?attr/colorOnSecondary"
                                 android:textCursorDrawable="@drawable/cursor_color"
-                                tools:ignore="RtlSymmetry" />
+                                tools:ignore="LabelFor,RtlSymmetry"
+                                android:autofillHints="@string/todo" />
 
                         </RelativeLayout>
 
@@ -644,11 +678,12 @@
                             android:layout_marginTop="30dp">
 
                             <TextView
-                                android:id="@+id/textView18"
+                                android:id="@+id/other_charges_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/roboto"
+                                android:textColor="?attr/defaultTextColor"
                                 android:text="@string/service_charge"
                                 android:textSize="16sp" />
 
@@ -660,7 +695,7 @@
                                 android:layout_marginStart="12dp"
                                 android:layout_marginBottom="7dp"
                                 android:text="@string/taka_sign"
-                                android:textColor="@color/black"
+                                android:textColor="?attr/colorOnSecondary"
                                 android:textSize="18sp" />
 
                             <EditText
@@ -672,8 +707,10 @@
                                 android:fontFamily="@font/roboto"
                                 android:inputType="number"
                                 android:paddingStart="24dp"
+                                android:textColor="?attr/colorOnSecondary"
                                 android:textCursorDrawable="@drawable/cursor_color"
-                                tools:ignore="RtlSymmetry" />
+                                tools:ignore="LabelFor,RtlSymmetry"
+                                android:autofillHints="@string/todo" />
 
                         </RelativeLayout>
 
@@ -685,10 +722,12 @@
                         android:layout_marginTop="30dp">
 
                         <TextView
+                            android:id="@+id/other_facilities_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="58dp"
                             android:fontFamily="@font/roboto"
+                            android:textColor="?attr/defaultTextColor"
                             android:text="@string/other_facilities"
                             android:textSize="20sp" />
 
@@ -705,12 +744,13 @@
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:id="@+id/textView19"
+                                android:id="@+id/lift_box"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/roboto"
                                 android:gravity="start|center"
+                                android:textColor="?attr/defaultTextColor"
                                 android:text="@string/lift"
                                 android:textSize="18sp" />
 
@@ -727,14 +767,16 @@
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:id="@+id/textView20"
+                                android:id="@+id/generator_box"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/roboto"
                                 android:gravity="start|center"
                                 android:text="@string/generator"
-                                android:textSize="18sp" />
+                                android:textColor="?attr/defaultTextColor"
+                                android:textSize="18sp"
+                                tools:ignore="TooManyViews" />
 
                             <com.airbnb.lottie.LottieAnimationView
                                 android:id="@+id/generator"
@@ -749,13 +791,14 @@
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:id="@+id/textView21"
+                                android:id="@+id/parking_box"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/roboto"
                                 android:gravity="start|center"
                                 android:text="@string/parking"
+                                android:textColor="?attr/defaultTextColor"
                                 android:textSize="18sp" />
 
                             <com.airbnb.lottie.LottieAnimationView
@@ -771,13 +814,14 @@
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:id="@+id/textView22"
+                                android:id="@+id/security_box"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/roboto"
                                 android:gravity="start|center"
                                 android:text="@string/security"
+                                android:textColor="?attr/defaultTextColor"
                                 android:textSize="18sp" />
 
                             <com.airbnb.lottie.LottieAnimationView
@@ -793,12 +837,13 @@
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:id="@+id/textView23"
+                                android:id="@+id/gas_box"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/roboto"
                                 android:gravity="start|center"
+                                android:textColor="?attr/defaultTextColor"
                                 android:text="@string/gas"
                                 android:textSize="18sp"
                                 tools:ignore="TooManyViews" />
@@ -816,12 +861,13 @@
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:id="@+id/textView24"
+                                android:id="@+id/wifi_box"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/roboto"
                                 android:gravity="start|center"
+                                android:textColor="?attr/defaultTextColor"
                                 android:text="@string/wifi"
                                 android:textSize="18sp" />
 
@@ -843,11 +889,13 @@
                         android:paddingTop="30dp">
 
                         <TextView
+                            android:id="@+id/description_ad_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="50dp"
                             android:fontFamily="@font/roboto"
                             android:text="@string/description_of_your_ad"
+                            android:textColor="?attr/defaultTextColor"
                             android:textSize="16sp" />
 
                         <EditText
@@ -863,6 +911,7 @@
                             android:paddingStart="20dp"
                             android:paddingTop="10dp"
                             android:paddingEnd="20dp"
+                            android:textColor="?attr/colorOnSecondary"
                             android:paddingBottom="10dp"
                             android:textCursorDrawable="@drawable/cursor_color"
                             tools:ignore="LabelFor,RtlSymmetry" />
@@ -877,11 +926,13 @@
                         android:paddingTop="30dp">
 
                         <TextView
+                            android:id="@+id/add_photos_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="90dp"
                             android:fontFamily="@font/roboto"
                             android:text="@string/add_photos"
+                            android:textColor="?attr/defaultTextColor"
                             android:textSize="16sp" />
 
                         <com.google.android.material.imageview.ShapeableImageView
@@ -890,7 +941,7 @@
                             android:layout_height="200dp"
                             app:shapeAppearanceOverlay="@style/RoundedSquare"
                             app:srcCompat="@drawable/ic_add_image"
-                            app:strokeColor="@color/orange_base"
+                            app:strokeColor="?attr/bgTopColor"
                             app:strokeWidth="4dp" />
 
                         <com.google.android.material.imageview.ShapeableImageView
@@ -900,7 +951,7 @@
                             android:layout_marginTop="20dp"
                             app:shapeAppearanceOverlay="@style/RoundedSquare"
                             app:srcCompat="@drawable/ic_add_image"
-                            app:strokeColor="@color/orange_base"
+                            app:strokeColor="?attr/bgTopColor"
                             app:strokeWidth="4dp" />
 
                         <com.google.android.material.imageview.ShapeableImageView
@@ -910,7 +961,7 @@
                             android:layout_marginTop="20dp"
                             app:shapeAppearanceOverlay="@style/RoundedSquare"
                             app:srcCompat="@drawable/ic_add_image"
-                            app:strokeColor="@color/orange_base"
+                            app:strokeColor="?attr/bgTopColor"
                             app:strokeWidth="4dp" />
 
                         <com.google.android.material.imageview.ShapeableImageView
@@ -920,7 +971,7 @@
                             android:layout_marginTop="20dp"
                             app:shapeAppearanceOverlay="@style/RoundedSquare"
                             app:srcCompat="@drawable/ic_add_image"
-                            app:strokeColor="@color/orange_base"
+                            app:strokeColor="?attr/bgTopColor"
                             app:strokeWidth="4dp" />
 
                         <com.google.android.material.imageview.ShapeableImageView
@@ -930,8 +981,33 @@
                             android:layout_marginTop="20dp"
                             app:shapeAppearanceOverlay="@style/RoundedSquare"
                             app:srcCompat="@drawable/ic_add_image"
-                            app:strokeColor="@color/orange_base"
+                            app:strokeColor="?attr/bgTopColor"
                             app:strokeWidth="4dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/is_marker_added"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="30dp">
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/marker_added"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            app:lottie_fileName="tick.json" />
+
+                        <TextView
+                            android:id="@+id/marker_box"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/roboto"
+                            android:gravity="center"
+                            android:textColor="?attr/defaultTextColor"
+                            android:text="@string/marker_added"
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
@@ -947,11 +1023,13 @@
                             app:lottie_fileName="tick.json" />
 
                         <TextView
+                            android:id="@+id/terms_agree_box"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:fontFamily="@font/roboto"
                             android:gravity="center"
+                            android:textColor="?attr/defaultTextColor"
                             android:text="@string/accept_our_terms_and_agreements"
                             android:textSize="16sp" />
 
@@ -971,7 +1049,7 @@
                             android:clickable="true"
                             android:fontFamily="@font/roboto"
                             android:text="@string/create_ad"
-                            android:textColor="@color/white"
+                            android:textColor="?attr/titleColor"
                             android:textSize="16sp" />
 
                     </LinearLayout>

@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/bgColor"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -16,6 +17,7 @@
         android:paddingStart="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:textColor="?attr/colorOnSecondary"
         android:textCursorDrawable="@drawable/cursor_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,29 +25,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.411"
         app:layout_constraintWidth_percent=".8"
-        tools:ignore="RtlSymmetry,TextFields" />
+        tools:ignore="RtlSymmetry,TextFields"
+        android:autofillHints="@string/todo" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/keep_me_logged_in"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="40dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView6"
-        app:layout_constraintEnd_toStartOf="@+id/textView6"
+        app:layout_constraintBottom_toBottomOf="@+id/keep_me_logged_in_text"
+        app:layout_constraintEnd_toStartOf="@+id/keep_me_logged_in_text"
         app:layout_constraintHorizontal_bias="0.011"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView6"
+        app:layout_constraintTop_toTopOf="@+id/keep_me_logged_in_text"
         app:layout_constraintVertical_bias="0.473"
         app:lottie_fileName="tick.json" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/keep_me_logged_in_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="156dp"
         android:fontFamily="@font/roboto"
         android:text="@string/keep_me_logged_in"
         android:textSize="16sp"
+        android:textColor="?attr/defaultTextColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/phone_no"
         app:layout_constraintTop_toTopOf="parent"
@@ -59,12 +63,12 @@
         android:clickable="true"
         android:fontFamily="@font/roboto"
         android:text="@string/log_in"
-        android:textColor="@color/white"
+        android:textColor="?attr/bgColor"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/keep_me_logged_in_text"
         app:layout_constraintVertical_bias="0.242"
         app:layout_constraintWidth_percent=".8" />
 

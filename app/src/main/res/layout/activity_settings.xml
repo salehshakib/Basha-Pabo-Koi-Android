@@ -5,6 +5,7 @@
     android:id="@+id/drawer_ad"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/bgColor"
     android:fitsSystemWindows="true"
     tools:context=".SettingsActivity">
 
@@ -22,29 +23,29 @@
             android:id="@+id/switch_lang_state"
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:text="@string/lang"
-            android:gravity="center"
-            android:textColor="@color/orange_base"
-            android:fontFamily="@font/roboto"
+            android:layout_marginStart="220dp"
             android:layout_marginTop="316dp"
-            android:layout_marginStart="220dp" />
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="@string/lang"
+            android:textColor="?attr/textColor" />
 
         <TextView
             android:id="@+id/switch_mode_state"
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:text="@string/off"
-            android:gravity="center"
-            android:textColor="@color/orange_base"
-            android:fontFamily="@font/roboto"
+            android:layout_marginStart="220dp"
             android:layout_marginTop="366dp"
-            android:layout_marginStart="220dp" />
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="@string/off"
+            android:textColor="?attr/textColor" />
     </com.google.android.material.navigation.NavigationView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/orange_base">
+        android:background="?attr/bgTopColor">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/return_from_settings"
@@ -54,7 +55,8 @@
             android:contentDescription="@string/todo"
             android:rotation="180"
             android:src="@drawable/right"
-            app:backgroundTint="@color/white"
+            android:tint="?attr/textColor"
+            app:backgroundTint="?attr/fabColor"
             app:fabCustomSize="50dp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -64,11 +66,12 @@
             app:layout_constraintVertical_bias="0.551" />
 
         <TextView
+            android:id="@+id/settings_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
             android:text="@string/settings_title"
-            android:textColor="@color/white"
+            android:textColor="?attr/titleColor"
             android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +82,7 @@
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/white"
+            android:background="?attr/bgColor"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -101,45 +104,48 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        app:cardElevation="5dp"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginTop="10dp"
                         android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_marginBottom="10dp"
-                        android:layout_marginEnd="20dp">
+                        app:cardBackgroundColor="?attr/cardColor"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="5dp">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
                             <TextView
+                                android:id="@+id/language_settings_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentTop="true"
                                 android:layout_alignParentBottom="true"
                                 android:layout_marginStart="20dp"
+                                android:fontFamily="@font/roboto"
                                 android:gravity="center"
                                 android:text="@string/language"
-                                android:fontFamily="@font/roboto"
-                                android:textColor="@color/orange_base"
+                                android:textColor="?attr/textColor"
                                 android:textSize="18sp" />
 
                             <TextView
+                                android:id="@+id/eng"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_alignParentEnd="true"
                                 android:layout_alignParentBottom="true"
-                                android:gravity="center"
                                 android:layout_marginEnd="80dp"
+                                android:gravity="center"
                                 android:text="@string/eng"
-                                android:textColor="@color/orange_base"
+                                android:textColor="?attr/textColor"
                                 android:textSize="12sp" />
 
                             <TextView
@@ -147,10 +153,10 @@
                                 android:layout_height="match_parent"
                                 android:layout_alignParentEnd="true"
                                 android:layout_alignParentBottom="true"
-                                android:gravity="center"
                                 android:layout_marginEnd="10dp"
+                                android:gravity="center"
                                 android:text="@string/ban"
-                                android:textColor="@color/orange_base"
+                                android:textColor="?attr/textColor"
                                 android:textSize="12sp" />
 
                             <com.airbnb.lottie.LottieAnimationView
@@ -182,31 +188,34 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        app:cardElevation="5dp"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginTop="10dp"
                         android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_marginBottom="10dp"
-                        android:layout_marginEnd="20dp">
+                        app:cardBackgroundColor="?attr/cardColor"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="5dp">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
                             <TextView
+                                android:id="@+id/dark_mode_settings_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentTop="true"
                                 android:layout_alignParentBottom="true"
-                                android:gravity="center"
                                 android:layout_marginStart="20dp"
                                 android:fontFamily="@font/roboto"
+                                android:gravity="center"
                                 android:text="@string/dark_mode"
-                                android:textColor="@color/orange_base"
+                                android:textColor="?attr/textColor"
                                 android:textSize="18sp" />
 
                             <TextView
+                                android:id="@+id/off"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_alignParentEnd="true"
@@ -214,18 +223,19 @@
                                 android:layout_marginEnd="80dp"
                                 android:gravity="center"
                                 android:text="@string/off"
-                                android:textColor="@color/orange_base"
+                                android:textColor="?attr/textColor"
                                 android:textSize="12sp" />
 
                             <TextView
+                                android:id="@+id/on"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_alignParentEnd="true"
                                 android:layout_alignParentBottom="true"
-                                android:gravity="center"
                                 android:layout_marginEnd="10dp"
+                                android:gravity="center"
                                 android:text="@string/on"
-                                android:textColor="@color/orange_base"
+                                android:textColor="?attr/textColor"
                                 android:textSize="12sp" />
 
                             <com.airbnb.lottie.LottieAnimationView
@@ -262,28 +272,30 @@
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
-                            android:layout_marginTop="10dp"
                             android:layout_marginStart="20dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="10dp"
+                            app:cardBackgroundColor="?attr/cardColor"
                             app:cardCornerRadius="10dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:layout_marginTop="20dp">
+                                android:layout_marginTop="20dp"
+                                android:orientation="vertical">
 
 
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
+                                    android:contentDescription="@string/todo"
                                     android:src="@drawable/ic__bug"
-                                    app:tint="@color/orange_base"
-                                    android:contentDescription="@string/todo"/>
+                                    app:tint="?attr/iconColor" />
 
                                 <TextView
+                                    android:id="@+id/report_a_bug"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -291,10 +303,11 @@
                                     android:fontFamily="@font/roboto"
                                     android:gravity="center"
                                     android:text="@string/report_a_bug"
-                                    android:textColor="@color/orange_base"
+                                    android:textColor="?attr/textColor"
                                     android:textSize="20sp" />
 
                                 <TextView
+                                    android:id="@+id/bug_des"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -302,18 +315,18 @@
                                     android:fontFamily="@font/roboto_thin"
                                     android:gravity="center"
                                     android:text="@string/found_a_bug_click_here_to_report_it"
-                                    android:textColor="@color/orange_base"
+                                    android:textColor="?attr/textColor"
                                     android:textSize="20sp" />
 
                                 <Button
                                     android:id="@+id/report_bug_btn"
                                     android:layout_width="100dp"
                                     android:layout_height="40dp"
-                                    android:layout_marginTop="10dp"
                                     android:layout_gravity="center"
+                                    android:layout_marginTop="10dp"
+                                    android:background="@drawable/button_bg"
                                     android:text="@string/report"
-                                    android:textColor="@color/white"
-                                    android:background="@drawable/button_bg"/>
+                                    android:textColor="?attr/fabColor" />
 
                             </LinearLayout>
 
@@ -329,28 +342,30 @@
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
-                            android:layout_marginTop="10dp"
                             android:layout_marginStart="20dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="10dp"
+                            app:cardBackgroundColor="?attr/cardColor"
                             app:cardCornerRadius="10dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:layout_marginTop="20dp">
+                                android:layout_marginTop="20dp"
+                                android:orientation="vertical">
 
 
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
+                                    android:contentDescription="@string/todo"
                                     android:src="@drawable/ic_share_exp"
-                                    app:tint="@color/orange_base"
-                                    android:contentDescription="@string/todo" />
+                                    app:tint="?attr/iconColor" />
 
                                 <TextView
+                                    android:id="@+id/share_your_exp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -358,10 +373,11 @@
                                     android:fontFamily="@font/roboto"
                                     android:gravity="center"
                                     android:text="@string/share_your_experience"
-                                    android:textColor="@color/orange_base"
+                                    android:textColor="?attr/textColor"
                                     android:textSize="20sp" />
 
                                 <TextView
+                                    android:id="@+id/exp_des"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -369,18 +385,18 @@
                                     android:fontFamily="@font/roboto_thin"
                                     android:gravity="center"
                                     android:text="@string/share_your_using_experience_about_the_app"
-                                    android:textColor="@color/orange_base"
+                                    android:textColor="?attr/textColor"
                                     android:textSize="20sp" />
 
                                 <Button
                                     android:id="@+id/share_experience_btn"
                                     android:layout_width="100dp"
                                     android:layout_height="40dp"
-                                    android:layout_marginTop="10dp"
                                     android:layout_gravity="center"
+                                    android:layout_marginTop="10dp"
+                                    android:background="@drawable/button_bg"
                                     android:text="@string/share"
-                                    android:textColor="@color/white"
-                                    android:background="@drawable/button_bg"/>
+                                    android:textColor="?attr/fabColor" />
 
                             </LinearLayout>
 

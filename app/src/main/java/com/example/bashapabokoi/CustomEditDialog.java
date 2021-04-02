@@ -15,11 +15,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class CustomEditDialog extends Dialog implements View.OnClickListener {
 
@@ -43,6 +45,15 @@ public class CustomEditDialog extends Dialog implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+
+            getContext().setTheme(R.style.Theme_BashaPaboKoi_Dark);
+        } else{
+
+            getContext().setTheme(R.style.Theme_BashaPaboKoi);
+        }
+
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -102,7 +113,7 @@ public class CustomEditDialog extends Dialog implements View.OnClickListener {
 
         HashMap<String, Object> email = new HashMap<>();
         email.put("email", editContent.getText().toString());
-        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).updateChildren(email);
+        FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).updateChildren(email);
         Toast.makeText(context, "Email changed successfully!", Toast.LENGTH_SHORT).show();
 
         ProfileActivity.profileMail.setText(editContent.getText().toString());
@@ -112,9 +123,10 @@ public class CustomEditDialog extends Dialog implements View.OnClickListener {
 
         HashMap<String , Object> address = new HashMap<>();
         address.put("address", editContent.getText().toString());
-        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).updateChildren(address);
+        FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).updateChildren(address);
         Toast.makeText(context, "Address changed successfully!", Toast.LENGTH_SHORT).show();
 
         ProfileActivity.profileAddress.setText(editContent.getText().toString());
     }
+
 }

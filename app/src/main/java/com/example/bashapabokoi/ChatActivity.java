@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
@@ -54,12 +55,23 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+
+            setTheme(R.style.Theme_BashaPaboKoi_Dark);
+        } else{
+
+            setTheme(R.style.Theme_BashaPaboKoi);
+        }
+
         super.onCreate(savedInstanceState);
 
         apiService = Client.getClient().create(APIService.class);
 
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        binding.returnFromChat.setOnClickListener(v -> finish());
 
         messages = new ArrayList<>();
         adapter = new MessagesAdapters(this, messages);
@@ -264,8 +276,6 @@ public class ChatActivity extends AppCompatActivity {
         });
 
     }
-
-
 
     @Override
     public boolean onSupportNavigateUp() {

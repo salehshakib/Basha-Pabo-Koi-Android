@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10dp"
+    app:cardBackgroundColor="?attr/bgColor"
     app:cardCornerRadius="10dp"
     app:cardElevation="5dp">
 
@@ -20,7 +21,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/todo" />
 
         <View
             android:layout_width="match_parent"
@@ -79,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:fontFamily="@font/roboto_condensed_regular"
-            android:text="motijheel"
+            android:text="@string/motijheel"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView3"
@@ -96,7 +98,8 @@
             android:fontFamily="@font/roboto_condensed_regular"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:text="Flat"
+            android:textColor="#808080"
+            android:text="@string/flat"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +115,8 @@
             android:fontFamily="@font/roboto_condensed_regular"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:text="Small family"
+            android:textColor="#808080"
+            android:text="@string/small_family"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/flat_type_profile"
             app:layout_constraintStart_toEndOf="@+id/flat_type_profile"
@@ -143,7 +147,8 @@
                 android:id="@+id/profile_ad_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4.5/5"
+                android:text=""
+                android:textColor="#808080"
                 android:textSize="16sp"/>
 
         </LinearLayout>

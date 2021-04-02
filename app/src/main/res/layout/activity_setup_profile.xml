@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/corner"
+    android:background="?attr/bgColor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SetupProfileActivity">
@@ -28,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/profile_name_and_picture"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSecondary"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/pro_pic"
@@ -41,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
+        android:textColor="?attr/defaultTextColor"
         android:text="@string/tap_on_the_image_to_update_your_profile_picture"
         app:layout_constraintEnd_toEndOf="@+id/info"
         app:layout_constraintStart_toStartOf="@+id/info"
@@ -52,6 +54,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        app:cardBackgroundColor="?attr/cardColor"
         app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,18 +73,20 @@
                 android:background="@drawable/edit_text_bg"
                 android:hint="@string/enter_your_profile_name_here"
                 android:inputType="text"
+                android:textColor="?attr/colorOnSecondary"
                 android:paddingStart="20dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:textCursorDrawable="@drawable/cursor_color"
-                tools:ignore="RtlSymmetry,TextFields" />
+                tools:ignore="RtlSymmetry,TextFields"
+                android:autofillHints="@string/todo" />
 
             <Button
                 android:id="@+id/continueBtn3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/white"
+                android:textColor="?attr/bgColor"
                 android:background="@drawable/button_bg"
                 android:text="@string/continue_sign_up"
                 app:cornerRadius="0dp" />

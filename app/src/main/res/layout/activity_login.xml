@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/orange_base"
+    android:background="?attr/bgTopColor"
     tools:context=".LoginActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -86,8 +86,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:tabIndicatorColor="@color/orange_base"
-            app:tabTextColor="@color/orange_base" />
+            app:tabIndicatorColor="?attr/iconColor"
+            app:tabTextColor="?attr/iconColor" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -96,6 +96,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:src="@drawable/login_logo"
+        app:tint="?attr/fabColor"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,10 +105,11 @@
         android:contentDescription="@string/todo" />
 
     <TextView
+        android:id="@+id/welcome_log_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/welcome"
-        android:textColor="@color/white"
+        android:textColor="?attr/titleColor"
         android:textSize="20sp"
         android:fontFamily="@font/roboto"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
