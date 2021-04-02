@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +24,10 @@ import com.example.bashapabokoi.Adapters.CheckboxValueAdapter;
 import com.example.bashapabokoi.Adapters.DescriptionImageAdapter;
 import com.example.bashapabokoi.Models.CheckBoxValueShower;
 import com.example.bashapabokoi.Models.DescriptionImageShower;
+import com.example.bashapabokoi.Models.Ratings;
 import com.example.bashapabokoi.Models.User;
+import com.example.bashapabokoi.Notifications.Data;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -80,6 +85,9 @@ public class AdDescriptionActivity extends AppCompatActivity {
         final RoundedImageView ownerProPic = findViewById(R.id.pro_pic_description);
         final FloatingActionButton editAd = findViewById(R.id.edit_ad_btn);
         final FloatingActionButton addToWishList = findViewById(R.id.add_to_wish_list_btn);
+        final Button submitButton = findViewById(R.id.rating_submit_btn);
+
+        RatingBar ratingBar = findViewById(R.id.ad_rating_description);
 
 
         final ViewPager2 adImage = findViewById(R.id.description_image_shower);
@@ -406,6 +414,78 @@ public class AdDescriptionActivity extends AppCompatActivity {
             database.getReference().child("Users").child(Objects.requireNonNull(auth.getUid())).child("Wishlist").updateChildren(wishListObj);
 
         });
+
+
+        /*database.getReference().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot: snapshot.child("Ratings").getChildren()){
+                    if (dataSnapshot.child(previousIntentImage.getStringExtra("ownerKey")).exists()){
+                        Ratings ratings = snapshot.child("Ratings").child(previousIntentImage.getStringExtra("ownerKey")).getValue(Ratings.class);
+                        Log.d("dddd", String.valueOf(ratings.getRatingSum()));
+                    }
+                    else {
+                        /*Double ratingSum = Double.valueOf(ratingBar.getProgress()/2);
+                        Double totalPeopleRated = Double.valueOf(1);
+
+                        ratingObj.put("ratingSum", ratingSum);
+                        ratingObj.put("totalPeopleRated", totalPeopleRated);
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });*/
+
+        submitButton.setOnClickListener(v -> {
+
+            //Toast.makeText(AdDescriptionActivity.this, ratingBar.getProgress(), Toast.LENGTH_SHORT).show();
+
+            HashMap<String, Object> ratingObj = new HashMap<>();
+            Integer rating = ratingBar.getProgress();
+
+            ratingObj.put(auth.getUid(), rating);
+
+            database.getReference().child("All_ad").child(previousIntentImage.getStringExtra("ownerKey")).child("Ratings").updateChildren(ratingObj);
+
+
+            /*database.getReference().child("Ratings").child(previousIntentImage.getStringExtra("ownerKey")).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    Log.d("child", String.valueOf(snapshot.getChildrenCount()));
+                    for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+
+                        sum[0] += (Double) dataSnapshot.getValue();
+
+                    }
+                    sum[0] = sum[0] /(2 * snapshot.getChildrenCount());
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });*/
+
+
+
+
+
+
+
+
+        });
+
+
 
 
         RecyclerView checkBoxes = findViewById(R.id.checkbox_value_description);

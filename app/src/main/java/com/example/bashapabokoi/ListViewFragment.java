@@ -1,6 +1,7 @@
 package com.example.bashapabokoi;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.bashapabokoi.Adapters.AdsAdapter;
 import com.example.bashapabokoi.Models.CreateAd;
+import com.example.bashapabokoi.Models.Ratings;
+import com.example.bashapabokoi.Notifications.Data;
 import com.example.bashapabokoi.databinding.FragmentListadsBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -42,6 +45,9 @@ public class ListViewFragment extends Fragment {
         binding.recyclerView.setAdapter(adsAdapter);
 
 
+
+
+
         database.getReference().child("All_ad").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -52,12 +58,15 @@ public class ListViewFragment extends Fragment {
                         if(!Objects.equals(auth.getUid(), s)){
 
                             CreateAd showAds = ds.getValue(CreateAd.class);
+
                             allAds.add(showAds);
 
                             break;
                         }
                         break;
                     }
+
+
 
                 }
                 Collections.reverse(allAds);
@@ -69,6 +78,19 @@ public class ListViewFragment extends Fragment {
 
             }
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         return binding.getRoot();
     }

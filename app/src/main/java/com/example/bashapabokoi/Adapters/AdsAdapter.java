@@ -3,6 +3,7 @@ package com.example.bashapabokoi.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,10 @@ import com.example.bashapabokoi.AdDescriptionActivity;
 import com.example.bashapabokoi.Models.CreateAd;
 import com.example.bashapabokoi.R;
 import com.example.bashapabokoi.databinding.RowAdsBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -46,6 +51,40 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.AdsViewHolder>{
             holder.binding.genreListViewText.setText(ad.getGenre());
             holder.binding.flatTypeListViewText.setText(ad.getFlatType());
             holder.binding.religionListViewText.setText(ad.getReligion());
+
+            FirebaseDatabase.getInstance().getReference().child("All_ad").child(ad.getKey()).addValueEventListener(new ValueEventListener() {
+                Double d = 0.0;
+                String ratings;
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.child("Ratings").exists()){
+                        for (DataSnapshot dataSnapshot1 : snapshot.child("Ratings").getChildren() ){
+                            ratings = dataSnapshot1.getValue().toString();
+                            d = d + Double.parseDouble(ratings);
+                            d = d/(2*snapshot.child("Ratings").getChildrenCount());
+
+                            Log.d("ratings", ratings);
+
+
+
+
+                        }
+                        holder.binding.ratingBarTextListView.setText(d.toString());
+                        holder.binding.ratingBarValueListView.setProgress((int) (2*d));
+
+                    }
+                    else {
+                        holder.binding.ratingBarValueListView.setProgress(0);
+                        holder.binding.ratingBarTextListView.setText("Unrated");
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
             try{
 
