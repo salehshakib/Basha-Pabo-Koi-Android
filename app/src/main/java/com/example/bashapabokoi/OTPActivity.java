@@ -93,7 +93,7 @@ public class OTPActivity extends AppCompatActivity {
                 public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
 
                     dialog.dismiss();
-                    binding.otpTimer.setVisibility(View.VISIBLE);
+                    binding.otpTimer.setVisibility(View.INVISIBLE);
 
                     long time = TimeUnit.MINUTES.toMillis(1);
                     new CountDownTimer(time, 1000) {

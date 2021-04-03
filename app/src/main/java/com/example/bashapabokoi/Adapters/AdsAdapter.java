@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
@@ -71,8 +73,15 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.AdsViewHolder>{
 
 
                         }
+
+                        DecimalFormat df2 = new DecimalFormat("#.##");
+
                         d = d/(2*snapshot.child("Ratings").getChildrenCount());
-                        holder.binding.ratingBarTextListView.setText(d.toString());
+
+                        df2.setRoundingMode(RoundingMode.UP);
+
+
+                        holder.binding.ratingBarTextListView.setText(df2.format(d));
                         holder.binding.ratingBarValueListView.setProgress((int) (2*d));
 
                     }
