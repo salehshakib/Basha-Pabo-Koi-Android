@@ -180,7 +180,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                     if (dataSnapshot.child("latitude").exists() && dataSnapshot.child("longitude").exists()) {
 
-                        latLongs.add(new LatLng(Double.parseDouble(Objects.requireNonNull(dataSnapshot.child("latitude").getValue()).toString()), Double.parseDouble(Objects.requireNonNull(dataSnapshot.child("longitude").getValue()).toString())));
+
+                        if (!dataSnapshot.child("latitude").toString().matches("no_lat") && !dataSnapshot.child("longitude").toString().matches("no_long")) {
+
+                            try {
+
+                                latLongs.add(new LatLng(Double.parseDouble(Objects.requireNonNull(dataSnapshot.child("latitude").getValue()).toString()), Double.parseDouble(Objects.requireNonNull(dataSnapshot.child("longitude").getValue()).toString())));
+
+                            } catch (NumberFormatException ignored) {
+
+                            }
+
+                        }
                     }
 
                 }
@@ -338,7 +349,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                     if (dataSnapshot.child("latitude").exists() && dataSnapshot.child("longitude").exists()) {
 
-                        latLongs.add(new LatLng(Double.parseDouble(Objects.requireNonNull(dataSnapshot.child("latitude").getValue()).toString()), Double.parseDouble(Objects.requireNonNull(dataSnapshot.child("longitude").getValue()).toString())));
+                        if (!dataSnapshot.child("latitude").toString().matches("no_lat") && !dataSnapshot.child("longitude").toString().matches("no_long")) {
+
+                            try {
+
+                                latLongs.add(new LatLng(Double.parseDouble(Objects.requireNonNull(dataSnapshot.child("latitude").getValue()).toString()), Double.parseDouble(Objects.requireNonNull(dataSnapshot.child("longitude").getValue()).toString())));
+
+                            } catch (NumberFormatException ignored) {
+
+                            }
+
+                        }
                     }
 
                 }

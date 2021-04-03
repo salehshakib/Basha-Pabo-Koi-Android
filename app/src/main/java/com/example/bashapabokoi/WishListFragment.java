@@ -83,6 +83,7 @@ public class WishListFragment extends Fragment {
                         }
                     }
                 }
+
                 adsAdapter.notifyDataSetChanged();
 
 

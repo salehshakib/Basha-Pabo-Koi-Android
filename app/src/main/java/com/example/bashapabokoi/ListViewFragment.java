@@ -3,10 +3,12 @@ package com.example.bashapabokoi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,6 +41,12 @@ public class ListViewFragment extends Fragment {
     ArrayList<CreateAd> allAds;
     AdsAdapter adsAdapter;
 
+    Spinner thanaSpinner;
+    final String[] thana = new String[1];
+    String thana1 = "Search by location" ;
+
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,36 +67,21 @@ public class ListViewFragment extends Fragment {
         binding.recyclerView.setAdapter(adsAdapter);
 
 
-        database.getReference().child("All_ad").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot ds : snapshot.getChildren()){
+        binding.icMagnify.setOnClickListener(v -> {
+            //position[0] = binding.thana.getSelectedItemPosition();
+            thana[0] = (String) binding.thana.getItemAtPosition(binding.thana.getSelectedItemPosition());
+            thana1 = thana[0];
 
-                    String[] arrOfStr = Objects.requireNonNull(ds.getKey()).split("-");
-                    for (String s : arrOfStr){
-                        if(!Objects.equals(auth.getUid(), s)){
-
-                            CreateAd showAds = ds.getValue(CreateAd.class);
-
-                            allAds.add(showAds);
-
-                            break;
-                        }
-                        break;
-                    }
-
-
-
-                }
-                Collections.reverse(allAds);
-                adsAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            Log.d("position", thana[0]);
+            getFragmentManager().beginTransaction().detach(ListViewFragment.this).attach(ListViewFragment.this).commit();
         });
+
+
+
+
+
+
+
 
         Paper.init(Objects.requireNonNull(getContext()));
 
@@ -251,6 +244,75 @@ public class ListViewFragment extends Fragment {
         ArrayAdapter<String> thanaAdapterBn = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, thanaCategoriesBn);
         thanaAdapterBn.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.thana.setAdapter(thanaAdapterBn);
+
+
+
+        if (thana1.equals("Search by location")) {
+            database.getReference().child("All_ad").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    for(DataSnapshot ds : snapshot.getChildren()){
+                        String[] arrOfStr = Objects.requireNonNull(ds.getKey()).split("-");
+                        if (!auth.getUid().equals(arrOfStr[0])){
+                            CreateAd showAds = ds.getValue(CreateAd.class);
+                            allAds.add(showAds);
+
+                        }
+
+
+                    }
+                    Collections.reverse(allAds);
+                    adsAdapter.notifyDataSetChanged();
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        } else {
+            database.getReference().child("All_ad").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    for(DataSnapshot ds : snapshot.getChildren()){
+                        String[] arrOfStr = Objects.requireNonNull(ds.getKey()).split("-");
+
+                        if (!auth.getUid().equals(arrOfStr[0])){
+                            //Log.d("thana", ds.child("thana").getValue().toString() + " " + thanaCategoriesEn.get(binding.thana.getSelectedItemPosition()));
+                            String th = ds.child("thana").getValue().toString();
+                            if (th.equals(thanaCategoriesEn.get(binding.thana.getSelectedItemPosition())) || th.equals(thanaCategoriesBn.get(binding.thana.getSelectedItemPosition()))){
+                                CreateAd showAds = ds.getValue(CreateAd.class);
+                                allAds.add(showAds);
+
+                            }
+
+
+                        }
+
+
+
+
+
+
+
+                    }
+                    Collections.reverse(allAds);
+                    adsAdapter.notifyDataSetChanged();
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        }
+
 
         return binding.getRoot();
     }

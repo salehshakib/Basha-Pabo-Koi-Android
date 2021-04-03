@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_text_bg"
-        android:hint="@string/phone_number"
+        android:hint="+8801XXXXXXXXX"
         android:inputType="text"
         android:paddingStart="20dp"
         android:paddingTop="10dp"

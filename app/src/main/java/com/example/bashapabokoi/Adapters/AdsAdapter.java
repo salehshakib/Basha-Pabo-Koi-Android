@@ -61,7 +61,7 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.AdsViewHolder>{
                         for (DataSnapshot dataSnapshot1 : snapshot.child("Ratings").getChildren() ){
                             ratings = dataSnapshot1.getValue().toString();
                             d = d + Double.parseDouble(ratings);
-                            d = d/(2*snapshot.child("Ratings").getChildrenCount());
+
 
                             Log.d("ratings", ratings);
 
@@ -69,6 +69,7 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.AdsViewHolder>{
 
 
                         }
+                        d = d/(2*snapshot.child("Ratings").getChildrenCount());
                         holder.binding.ratingBarTextListView.setText(d.toString());
                         holder.binding.ratingBarValueListView.setProgress((int) (2*d));
 

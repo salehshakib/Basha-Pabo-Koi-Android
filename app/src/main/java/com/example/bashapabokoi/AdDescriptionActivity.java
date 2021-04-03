@@ -280,7 +280,7 @@ public class AdDescriptionActivity extends AppCompatActivity implements Navigati
 
                     }
                 });
-                Toast.makeText(AdDescriptionActivity.this, "ADD DELETED",Toast.LENGTH_LONG).show();
+                Toast.makeText(AdDescriptionActivity.this, "AD DELETED",Toast.LENGTH_LONG).show();
 
             });
 

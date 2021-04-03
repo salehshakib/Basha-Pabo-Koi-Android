@@ -293,6 +293,10 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
             String vacFrom = vacantText.getText().toString();
             String thana = thanaSpinner.getSelectedItem().toString();
+
+            //Log.d("position", String.valueOf(thanaSpinner.getSelectedItemPosition()));
+            //Log.d("position", thanaSpinner.getItemAtPosition(thanaSpinner.getSelectedItemPosition()).toString());
+
             String washroom = washSpinner.getSelectedItem().toString();
             String bedroom = bedSpinner.getSelectedItem().toString();
             String religion = religionSpinner.getSelectedItem().toString();
@@ -342,6 +346,11 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                     });
 
                     markerPlacementDialog.setNegativeButton(no, (dialog, which) -> {
+                        CreateAd newAd = new CreateAd(date.getTime(), auth.getUid()+randomKey, title, address, thana, vacFrom, flatType, washroom, veranda, bedroom, floor, religion, genre, currentBill, waterBill, gasBill, otherCharge, Boolean.toString(isLiftChecked), Boolean.toString(isGeneratorChecked), Boolean.toString(isParkingChecked), Boolean.toString(isSecurityChecked), Boolean.toString(isGasChecked), Boolean.toString(isWifiChecked), description, rent, image_url1,image_url2,image_url3,image_url4,image_url5, "no_long", "no_lat");
+
+                        database.getReference().child("All_ad").child(auth.getUid()+randomKey).setValue(newAd)
+                                .addOnSuccessListener(aVoid -> Toast.makeText(AdCreateActivity.this,"Ad created successfully!", Toast.LENGTH_SHORT).show());
+
 
                     });
 
@@ -1103,8 +1112,26 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
             String title = titleTextBox.getText().toString();
             String address = addressTextBox.getText().toString();
+            String currentBill = currentBillTextBox.getText().toString();
+            String waterBill = waterBillTextBox.getText().toString();
+            String gasBill = gasBillTextBox.getText().toString();
+            String otherCharge = otherChargeTextBox.getText().toString();
+            String description = descriptionTextBox.getText().toString();
             String rent = rentTextBox.getText().toString();
+
             String vacFrom = vacantText.getText().toString();
+            String thana = thanaSpinner.getSelectedItem().toString();
+
+            //Log.d("position", String.valueOf(thanaSpinner.getSelectedItemPosition()));
+            //Log.d("position", thanaSpinner.getItemAtPosition(thanaSpinner.getSelectedItemPosition()).toString());
+
+            String washroom = washSpinner.getSelectedItem().toString();
+            String bedroom = bedSpinner.getSelectedItem().toString();
+            String religion = religionSpinner.getSelectedItem().toString();
+            String flatType = flatTypeSpinner.getSelectedItem().toString();
+            String veranda = verandaSpinner.getSelectedItem().toString();
+            String floor = floorSpinner.getSelectedItem().toString();
+            String genre = genreSpinner.getSelectedItem().toString();
 
 
             if (isTermChecked) {
@@ -1154,6 +1181,10 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
                     });
 
                     markerPlacementDialog.setNegativeButton(no, (dialog, which) -> {
+                        CreateAd newAd = new CreateAd(date.getTime(), auth.getUid()+randomKey, title, address, thana, vacFrom, flatType, washroom, veranda, bedroom, floor, religion, genre, currentBill, waterBill, gasBill, otherCharge, Boolean.toString(isLiftChecked), Boolean.toString(isGeneratorChecked), Boolean.toString(isParkingChecked), Boolean.toString(isSecurityChecked), Boolean.toString(isGasChecked), Boolean.toString(isWifiChecked), description, rent, image_url1,image_url2,image_url3,image_url4,image_url5, "no_long", "no_lat");
+
+                        database.getReference().child("All_ad").child(auth.getUid()+randomKey).setValue(newAd)
+                                .addOnSuccessListener(aVoid -> Toast.makeText(AdCreateActivity.this,"Ad created successfully!", Toast.LENGTH_SHORT).show());
 
                     });
 

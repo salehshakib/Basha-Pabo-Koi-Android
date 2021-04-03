@@ -49,6 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_centerInParent="true"
+                android:layout_toRightOf="@id/ic_magnify"
                 android:fontFamily="@font/roboto"
                 android:textAlignment="center"
                 android:textSize="20sp" />
