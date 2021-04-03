@@ -1,6 +1,7 @@
 package com.example.bashapabokoi.Adapters;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -55,6 +56,7 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.AdsViewHolder>{
             FirebaseDatabase.getInstance().getReference().child("All_ad").child(ad.getKey()).addValueEventListener(new ValueEventListener() {
                 Double d = 0.0;
                 String ratings;
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.child("Ratings").exists()){

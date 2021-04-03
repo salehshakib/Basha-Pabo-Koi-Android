@@ -278,6 +278,9 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
         createButton = findViewById(R.id.but_ad_done);
 
+        drawerLayout = findViewById(R.id.drawer_ad);
+        navigationView = findViewById(R.id.nav_view_ad);
+
         updateView(Paper.book().read("language"));
 
         createButton.setOnClickListener(v -> {
@@ -293,9 +296,6 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
 
             String vacFrom = vacantText.getText().toString();
             String thana = thanaSpinner.getSelectedItem().toString();
-
-            //Log.d("position", String.valueOf(thanaSpinner.getSelectedItemPosition()));
-            //Log.d("position", thanaSpinner.getItemAtPosition(thanaSpinner.getSelectedItemPosition()).toString());
 
             String washroom = washSpinner.getSelectedItem().toString();
             String bedroom = bedSpinner.getSelectedItem().toString();
@@ -377,8 +377,6 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
             ((ViewGroup) markerLayout.getParent()).removeView(markerLayout);
         }
 
-        drawerLayout = findViewById(R.id.drawer_ad);
-        navigationView = findViewById(R.id.nav_view_ad);
         View header =  navigationView.getHeaderView(0);
         TextView headerProfileName = header.findViewById(R.id.profile_name_header);
         RoundedImageView headerProPic = header.findViewById(R.id.pro_pic_header);
@@ -1246,5 +1244,15 @@ public class AdCreateActivity extends AppCompatActivity implements NavigationVie
         addPicTitle.setText(resources.getString(R.string.add_photos));
         acceptTitle.setText(resources.getString(R.string.accept_our_terms_and_agreements));
         markerTitle.setText(resources.getString(R.string.marker_added));
+
+        if(language.matches("bn")){
+
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.main_menu_bn);
+        } else{
+
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.main_menu);
+        }
     }
 }

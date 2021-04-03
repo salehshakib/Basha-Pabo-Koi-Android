@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,7 +40,6 @@ public class ListViewFragment extends Fragment {
     ArrayList<CreateAd> allAds;
     AdsAdapter adsAdapter;
 
-    Spinner thanaSpinner;
     final String[] thana = new String[1];
     String thana1 = "Search by location" ;
 
@@ -239,11 +237,9 @@ public class ListViewFragment extends Fragment {
 
         ArrayAdapter<String> thanaAdapterEn = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, thanaCategoriesEn);
         thanaAdapterEn.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.thana.setAdapter(thanaAdapterEn);
 
         ArrayAdapter<String> thanaAdapterBn = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, thanaCategoriesBn);
         thanaAdapterBn.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.thana.setAdapter(thanaAdapterBn);
 
 
 
@@ -292,12 +288,6 @@ public class ListViewFragment extends Fragment {
 
 
                         }
-
-
-
-
-
-
 
                     }
                     Collections.reverse(allAds);

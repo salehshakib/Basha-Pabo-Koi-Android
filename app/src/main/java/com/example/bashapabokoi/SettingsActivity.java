@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -60,6 +61,8 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        super.onCreate(savedInstanceState);
+
         if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
 
             setTheme(R.style.Theme_BashaPaboKoi_Dark);
@@ -68,7 +71,6 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
             setTheme(R.style.Theme_BashaPaboKoi);
         }
 
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
         Paper.init(this);
@@ -100,6 +102,10 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
 
         reportButton = findViewById(R.id.report_bug_btn);
         submitButton = findViewById(R.id.share_experience_btn);
+
+        drawerLayout = findViewById(R.id.drawer_ad);
+        navigationView = findViewById(R.id.nav_view_settings);
+
 
         FloatingActionButton returnFromSettings = findViewById(R.id.return_from_settings);
 
@@ -144,10 +150,16 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
 
             langSwitch.setProgress(0.5f);
             langSwitchDark.setProgress(0.5f);
+
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.main_menu_bn);
+
+        } else{
+
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.main_menu);
         }
 
-        drawerLayout = findViewById(R.id.drawer_ad);
-        navigationView = findViewById(R.id.nav_view_settings);
         View header =  navigationView.getHeaderView(0);
         TextView headerProfileName = header.findViewById(R.id.profile_name_header);
         RoundedImageView headerProPic = header.findViewById(R.id.pro_pic_header);
@@ -199,6 +211,8 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
             langSwitch.playAnimation();
             langSwitchDark.playAnimation();
             updateView(Paper.book().read("language"));
+            startActivity(new Intent(SettingsActivity.this,SettingsActivity.class));
+            finish();
         });
 
         modeSwitch.setOnClickListener(v -> {
@@ -287,6 +301,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         reportButton.setText(resources.getString(R.string.report));
         submitButton.setText(resources.getString(R.string.submit));
         langState.setText(resources.getString(R.string.lang));
+
     }
 
     @SuppressLint("NonConstantResourceId")

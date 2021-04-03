@@ -282,5 +282,15 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         Resources resources = context.getResources();
 
         yourAdTitle.setText(resources.getString(R.string.your_ads));
+
+        if(language.matches("bn")){
+
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.main_menu_bn);
+        } else{
+
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.main_menu);
+        }
     }
 }

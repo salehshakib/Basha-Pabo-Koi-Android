@@ -32,10 +32,7 @@ import com.example.bashapabokoi.Adapters.DescriptionImageAdapter;
 import com.example.bashapabokoi.Helper.LocaleHelper;
 import com.example.bashapabokoi.Models.CheckBoxValueShower;
 import com.example.bashapabokoi.Models.DescriptionImageShower;
-import com.example.bashapabokoi.Models.Ratings;
 import com.example.bashapabokoi.Models.User;
-import com.example.bashapabokoi.Notifications.Data;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -189,8 +186,27 @@ public class AdDescriptionActivity extends AppCompatActivity implements Navigati
         submitButton.setText(resources.getString(R.string.submit));
         findOnMapTitle.setText(resources.getString(R.string.find_on_map));
 
+        if(language.matches("bn")){
+
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.main_menu_bn);
+        } else{
+
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.main_menu);
+        }
+
 
         Intent previousIntentImage = getIntent();
+
+        findOnMap.setOnClickListener(v -> {
+
+            Intent mapIntent = new Intent(AdDescriptionActivity.this, MapActivity.class);
+            mapIntent.putExtra("FROM_ACTIVITY", "AdDescriptionActivity");
+            mapIntent.putExtra("lat", previousIntentImage.getStringExtra("lat"));
+            mapIntent.putExtra("long", previousIntentImage.getStringExtra("long"));
+            startActivity(mapIntent);
+        });
 
         if(!previousIntentImage.getStringExtra("imageUri1").equals("no_image")){
 
@@ -238,8 +254,9 @@ public class AdDescriptionActivity extends AppCompatActivity implements Navigati
         DescriptionImageShower image3 = new DescriptionImageShower("https://t.auntmia.com/nthumbs/2014-01-26/2697314/2697314_19b.jpg");
         descriptionImageShowers.add(image3);*/
 
+        String[] ownerKey = previousIntentImage.getStringExtra("ownerKey").split("-");
 
-        if(previousIntentImage.getStringExtra("FROM_ACTIVITY").equals("ProfileActivity")){
+        if(previousIntentImage.getStringExtra("FROM_ACTIVITY").equals("ProfileActivity") || ownerKey[0].equals(FirebaseAuth.getInstance().getUid())){
 
             editAd.setEnabled(true);
             editAd.setAlpha(1f);
@@ -294,7 +311,6 @@ public class AdDescriptionActivity extends AppCompatActivity implements Navigati
                 intent.putExtra("imageUri3", previousIntentImage.getStringExtra("imageUri3"));
                 intent.putExtra("imageUri4", previousIntentImage.getStringExtra("imageUri4"));
                 intent.putExtra("imageUri5", previousIntentImage.getStringExtra("imageUri5"));
-
                 intent.putExtra("title", previousIntentImage.getStringExtra("title"));
                 intent.putExtra("address", previousIntentImage.getStringExtra("address"));
                 intent.putExtra("flatType", previousIntentImage.getStringExtra("flatType"));

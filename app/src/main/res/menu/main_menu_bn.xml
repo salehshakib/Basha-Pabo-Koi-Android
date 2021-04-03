@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_pro"
+            android:icon="@drawable/profile"
+            android:title="প্রোফাইল" />
+
+    </group>
+
+
+    <item android:title="পছন্দসই">
+
+        <menu>
+
+            <item
+                android:id="@+id/nav_lan"
+                android:icon="@drawable/lang"
+                android:title="ভাষা" />
+
+            <item
+                android:id="@+id/nav_mode"
+                android:icon="@drawable/light"
+                android:title="ডার্ক মুড" />
+
+        </menu>
+
+    </item>
+
+
+    <item android:title="তৈরি করুন">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/nav_ad"
+                    android:icon="@drawable/ad"
+                    android:title="বিজ্ঞাপন তৈরি করুন" />
+
+            </group>
+
+        </menu>
+
+    </item>
+
+
+    <item android:title="অন্যান্য">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/nav_settings"
+                    android:icon="@drawable/ic_settings"
+                    android:title="সেটিংস" />
+
+                <item
+                    android:id="@+id/nav_about"
+                    android:icon="@drawable/about_us"
+                    android:title="আমাদের সম্পর্কে" />
+
+                <item
+                    android:id="@+id/nav_rate"
+                    android:icon="@drawable/rate"
+                    android:title="অ্যাপটি রেট করুন" />
+
+            </group>
+
+        </menu>
+
+    </item>
+
+    <item android:title="বাহির">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/nav_out"
+                    android:icon="@drawable/logout"
+                    android:title="লগ আউট" />
+
+            </group>
+
+        </menu>
+
+    </item>
+
+</menu>

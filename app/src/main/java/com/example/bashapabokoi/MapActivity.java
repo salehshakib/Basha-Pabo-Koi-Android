@@ -24,12 +24,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,15 +42,9 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.CompositePageTransformer;
-import androidx.viewpager2.widget.MarginPageTransformer;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
-import com.example.bashapabokoi.Adapters.BottomSheetImageAdapter;
 import com.example.bashapabokoi.Helper.LocaleHelper;
-import com.example.bashapabokoi.Models.BottomSheetImageShower;
 import com.example.bashapabokoi.Models.CreateAd;
 import com.example.bashapabokoi.Models.User;
 import com.example.bashapabokoi.Notifications.Token;
@@ -76,7 +69,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -125,14 +117,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     BottomNavigationView bottomNavigationView;
-    View bottomSheetView;
-
-    BottomSheetDialog bottomSheetDialog;
 
     private TextView netInfo;
     private TextView langState, modeState;
 
     private static String[] ownerKey;
+
+    Menu navMenu;
 
     FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -156,21 +147,45 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             Paper.book().write("language", "en");
         }
+
         super.onPostResume();
 
-        updateView(Paper.book().read("language"));
+        //this is new // 26 march 2021
+        updateToken(FirebaseInstanceId.getInstance().getToken());
 
-        Context context = LocaleHelper.setLocale(this, language);
-        Resources resources = context.getResources();
+        langState = findViewById(R.id.switch_lang_state);
+        modeState = findViewById(R.id.switch_mode_state);
 
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+        navItemIndex = R.id.nav_home;
+        searchText = findViewById(R.id.input_search);
+        gps = findViewById(R.id.ic_gps);
 
-            modeState.setText(resources.getString(R.string.on));
+        netInfo = findViewById(R.id.con_notification);
+        netInfo.setAlpha(0f);
 
-        } else {
+        drawerLayout = findViewById(R.id.drawer);
+        navigationView = findViewById(R.id.nav_view);
+        navMenu = navigationView.getMenu();
+        View header = navigationView.getHeaderView(0);
+        TextView headerProfileName = header.findViewById(R.id.profile_name_header);
+        RoundedImageView headerProPic = header.findViewById(R.id.pro_pic_header);
 
-            modeState.setText(resources.getString(R.string.off));
-        }
+        FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                headerProfileName.setText(Objects.requireNonNull(snapshot.child("name").getValue()).toString());
+
+                User u = snapshot.getValue(User.class);
+                assert u != null;
+                Glide.with(getApplicationContext()).load(u.getProfileImage()).placeholder(R.drawable.user).into(headerProPic);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         FirebaseDatabase.getInstance().getReference().addValueEventListener(new ValueEventListener() {
             @Override
@@ -280,6 +295,30 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
 
         });
+
+        Context context = LocaleHelper.setLocale(this, language);
+        Resources resources = context.getResources();
+
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+
+            modeState.setText(resources.getString(R.string.on));
+
+        } else {
+
+            modeState.setText(resources.getString(R.string.off));
+        }
+
+        drawerLayout.addDrawerListener(drawerListener);
+
+        bottomNavigationView = findViewById(R.id.bottom_nav);
+        bottomNavigationView.getMenu().getItem(2).setChecked(true);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
+
+        navigationView.bringToFront();
+        navigationView.setNavigationItemSelectedListener(this);
+
+        updateView(Paper.book().read("language"));
+
     }
 
     @Override
@@ -293,8 +332,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             setTheme(R.style.Theme_BashaPaboKoi);
         }
 
-        super.onCreate(savedInstanceState);
-
         Paper.init(this);
 
         String language = Paper.book().read("language");
@@ -302,6 +339,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             Paper.book().write("language", "en");
         }
+
+        super.onCreate(savedInstanceState);
 
         //this is new // 26 march 2021
         updateToken(FirebaseInstanceId.getInstance().getToken());
@@ -320,6 +359,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.nav_view);
+        navMenu = navigationView.getMenu();
         View header = navigationView.getHeaderView(0);
         TextView headerProfileName = header.findViewById(R.id.profile_name_header);
         RoundedImageView headerProPic = header.findViewById(R.id.pro_pic_header);
@@ -622,7 +662,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         if (mLocationPermissionGranted) {
 
-            getDeviceLocation();
+            try {
+
+                Intent previousIntentData = getIntent();
+
+                if (previousIntentData.getStringExtra("FROM_ACTIVITY").matches("AdDescriptionActivity")) {
+
+                    LatLng latLng = new LatLng(Double.parseDouble(previousIntentData.getStringExtra("lat")), Double.parseDouble(previousIntentData.getStringExtra("long")));
+
+                    moveCamera(latLng, 40f);
+                }
+
+            } catch (NullPointerException ignored) {
+
+                getDeviceLocation();
+            }
+
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
@@ -672,7 +727,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             Address address = list.get(0);
 
-            moveCamera(new LatLng(address.getLatitude(), address.getLongitude()));
+            moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), defaultZoom);
         }
 
 
@@ -731,7 +786,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                         if (isDeviceLocationOn() && currentLocation != null) {
 
-                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), defaultZoom);
                         }
                     } else {
 
@@ -809,8 +864,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         return gpsEnabled;
     }
 
-    private void moveCamera(LatLng latLng) {
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, MapActivity.defaultZoom));
+    private void moveCamera(LatLng latLng, float defaultZoom) {
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, defaultZoom));
     }
 
     private void initMap() {
@@ -902,6 +957,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 startActivity(intentProfile);
                 break;
 
+            case R.id.nav_lan:
+
+
+                break;
+
             case R.id.nav_out:
 
                 FirebaseAuth.getInstance().signOut();
@@ -957,6 +1017,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         bottomNavigationView.getMenu().getItem(3).setTitle(resources.getString(R.string.wish_list));
         bottomNavigationView.getMenu().getItem(4).setTitle(resources.getString(R.string.chats));
 
+        if (language.matches("bn")) {
+
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.main_menu_bn);
+        } else {
+
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.main_menu);
+        }
     }
 
 }
