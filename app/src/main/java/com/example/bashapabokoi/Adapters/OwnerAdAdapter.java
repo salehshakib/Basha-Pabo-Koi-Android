@@ -3,6 +3,7 @@ package com.example.bashapabokoi.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,14 @@ import com.example.bashapabokoi.AdDescriptionActivity;
 import com.example.bashapabokoi.Models.CreateAd;
 import com.example.bashapabokoi.Models.OwnerAdShower;
 import com.example.bashapabokoi.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class OwnerAdAdapter extends RecyclerView.Adapter<OwnerAdAdapter.OwnerAdHolder>{
@@ -41,8 +48,9 @@ public class OwnerAdAdapter extends RecyclerView.Adapter<OwnerAdAdapter.OwnerAdH
 
     @Override
     public void onBindViewHolder(@NonNull OwnerAdHolder holder, int position) {
-        holder.setAdData(ownerAdShowers.get(position));
+
         CreateAd ad = ads.get(position);
+        holder.setAdData(ownerAdShowers.get(position), ad.getKey());
 
         holder.itemView.setOnClickListener(v -> {
 
@@ -111,14 +119,60 @@ public class OwnerAdAdapter extends RecyclerView.Adapter<OwnerAdAdapter.OwnerAdH
         }
 
         @SuppressLint("SetTextI18n")
-        void setAdData(OwnerAdShower ownerAdShower){
+        void setAdData(OwnerAdShower ownerAdShower, String key){
 
             Picasso.get().load(ownerAdShower.imageUri).placeholder(R.drawable.ic_image_default).into(adHolder);
             textRent.setText(ownerAdShower.rent);
             textLocation.setText(ownerAdShower.location);
             textFlatType.setText(ownerAdShower.flatType);
             textGenre.setText(ownerAdShower.genre);
-            textStarRating.setText(ownerAdShower.starRating + "/5");
+
+            FirebaseDatabase.getInstance().getReference().child("All_ad").child(key).addValueEventListener(new ValueEventListener() {
+                Double d = 0.0;
+                String ratings;
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.child("Ratings").exists()){
+                        for (DataSnapshot dataSnapshot1 : snapshot.child("Ratings").getChildren() ){
+                            ratings = dataSnapshot1.getValue().toString();
+                            d = d + Double.parseDouble(ratings);
+
+
+                            Log.d("ratings", ratings);
+
+
+
+
+                        }
+
+                        DecimalFormat df2 = new DecimalFormat("#.##");
+
+                        d = d/(2*snapshot.child("Ratings").getChildrenCount());
+
+                        df2.setRoundingMode(RoundingMode.UP);
+                        textStarRating.setText(df2.format(d) + "/5");
+
+
+                        /*holder.binding.ratingBarTextListView.setText(df2.format(d));
+                        holder.binding.ratingBarValueListView.setProgress((int) (2*d));*/
+
+                    }
+                    else {
+                        /*holder.binding.ratingBarValueListView.setProgress(0);
+                        holder.binding.ratingBarTextListView.setText("Unrated");*/
+                        textStarRating.setText("Unrated");
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
         }
     }
 }
