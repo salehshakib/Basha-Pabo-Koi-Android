@@ -155,34 +155,34 @@ public class OTPActivity extends AppCompatActivity {
                     long creationTimestamp = Objects.requireNonNull(u_s_e_r.getMetadata()).getCreationTimestamp();
                     long lastSignInTimestamp = u_s_e_r.getMetadata().getLastSignInTimestamp();
 
-                    if (creationTimestamp == lastSignInTimestamp) {
+                    //if (creationTimestamp + 60000 <= lastSignInTimestamp) {
 
                         if(previousActivity.equals("SignUpTabFragment")){
 
                             Intent intent = new Intent(OTPActivity.this, SetupProfileActivity.class);
                             startActivity(intent);
                         }
-                        else{
+                        /*else{
                             Toast.makeText(this, "No account found! Try signing in.", Toast.LENGTH_LONG).show();
 
                             Objects.requireNonNull(auth.getCurrentUser()).delete();
 
                         }
                     } else {
-                        //user is exists, just do login
-                        if(previousActivity.equals("LogInTabFragment")){
+                        //user is exists, just do login*/
+                        else if(previousActivity.equals("LogInTabFragment")){
 
                             Intent intent = new Intent(OTPActivity.this, MapActivity.class);
                             startActivity(intent);
 
                         }
-                        else{
+                        /*else{
                             Toast.makeText(this, "User already exists, try log in!", Toast.LENGTH_LONG).show();
 
                             auth.signOut();
                         }
 
-                    }
+                    }*/
 
                     Toast.makeText(OTPActivity.this, "Log in Successful!", Toast.LENGTH_SHORT).show();
 
