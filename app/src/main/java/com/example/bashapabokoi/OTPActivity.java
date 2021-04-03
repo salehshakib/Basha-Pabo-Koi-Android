@@ -68,7 +68,7 @@ public class OTPActivity extends AppCompatActivity {
         binding.otpTimer.setVisibility(View.INVISIBLE);
 
         dialog = new ProgressDialog(this);
-        dialog.setMessage("Loading hocce...");
+        dialog.setMessage("Please Wait");
         dialog.setCancelable(false);
         dialog.show();
 
