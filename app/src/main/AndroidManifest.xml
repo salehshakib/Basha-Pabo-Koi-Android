@@ -23,7 +23,8 @@
         android:roundIcon="@drawable/homescreen"
         android:supportsRtl="true"
         android:theme="@style/Theme.BashaPaboKoi">
-        <activity android:name=".ShareYourExperienceActivity"></activity>
+        <activity android:name=".AboutUsActivity"></activity>
+        <activity android:name=".ShareYourExperienceActivity" />
         <activity android:name=".ReportABugActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".AdDescriptionActivity" />

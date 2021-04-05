@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_ad"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".AboutUsActivity">
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view_about_us"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="?attr/titleColor"
+        app:headerLayout="@layout/header"
+        app:itemIconTint="@drawable/drawer_item_color"
+        app:itemTextColor="@drawable/drawer_item_color"
+        app:menu="@menu/main_menu">
+
+        <TextView
+            android:id="@+id/switch_lang_state"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:text="@string/lang"
+            android:gravity="center"
+            android:textColor="?attr/textColor"
+            android:fontFamily="@font/roboto"
+            android:layout_marginTop="316dp"
+            android:layout_marginStart="220dp" />
+
+        <TextView
+            android:id="@+id/switch_mode_state"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:text="@string/off"
+            android:gravity="center"
+            android:textColor="?attr/textColor"
+            android:fontFamily="@font/roboto"
+            android:layout_marginTop="366dp"
+            android:layout_marginStart="220dp" />
+    </com.google.android.material.navigation.NavigationView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/bgTopColor">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/return_from_about_us"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:contentDescription="@string/todo"
+            android:rotation="180"
+            android:src="@drawable/right"
+            app:backgroundTint="?attr/fabColor"
+            app:fabCustomSize="50dp"
+            android:tint="?attr/iconColor"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.045"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.551" />
+
+        <TextView
+            android:id="@+id/about_us_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="@string/about_us_title"
+            android:textColor="?attr/titleColor"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="?attr/bgColor"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ScrollViewCount">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/roboto_condensed_bold"
+                            android:text="BASHA PABO KOI?"
+                            android:textColor="?attr/textColor"
+                            android:textSize="30sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/textColor"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/roboto"
+                            android:text="All rights reserved, by Team CV's"
+                            android:layout_marginBottom="10dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginStart="5dp"
+                            android:text="Team members:"
+                            android:textColor="?attr/defaultTextColor"
+                            android:textSize="25sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <com.makeramen.roundedimageview.RoundedImageView
+                                android:layout_width="75dp"
+                                android:layout_height="75dp"
+                                android:background="@drawable/profile_image_bg"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/me"
+                                app:riv_oval="true" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textView6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/roboto_condensed_bold"
+                                android:text="Milhan Joardar Aumi"
+                                android:textColor="?attr/textColor"
+                                android:textSize="30sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto"
+                                android:text="Frontend developer, Team CV's"
+                                android:textColor="?attr/defaultTextColor"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:background="?attr/bgTopColor" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <com.makeramen.roundedimageview.RoundedImageView
+                                android:layout_width="75dp"
+                                android:layout_height="75dp"
+                                android:background="@drawable/profile_image_bg"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/saleh"
+                                app:riv_oval="true" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/roboto_condensed_bold"
+                                android:text="Saleh Shakib"
+                                android:textColor="?attr/textColor"
+                                android:textSize="30sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto"
+                                android:text="Backend developer, Team CV's"
+                                android:textColor="?attr/defaultTextColor"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:background="?attr/bgTopColor" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <com.makeramen.roundedimageview.RoundedImageView
+                                android:layout_width="75dp"
+                                android:layout_height="75dp"
+                                android:background="@drawable/profile_image_bg"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/rawna"
+                                app:riv_oval="true" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/roboto_condensed_bold"
+                                android:text="Salehin Bin Iqbal"
+                                android:textColor="?attr/textColor"
+                                android:textSize="30sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto"
+                                android:text="Full stack developer, Team CV's"
+                                android:textColor="?attr/defaultTextColor"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:background="?attr/bgTopColor" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>

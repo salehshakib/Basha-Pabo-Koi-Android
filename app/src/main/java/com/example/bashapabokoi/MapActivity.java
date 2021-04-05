@@ -989,6 +989,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(intentSettings);
                 break;
+
+            case R.id.nav_about:
+
+                Intent intentAboutUs = new Intent(MapActivity.this, AboutUsActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(intentAboutUs);
+                break;
         }
 
         return true;

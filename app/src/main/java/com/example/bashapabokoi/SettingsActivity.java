@@ -337,6 +337,13 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                 startActivity(intentAd);
                 break;
 
+            case R.id.nav_about:
+
+                Intent intentAboutUs = new Intent(SettingsActivity.this, AboutUsActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(intentAboutUs);
+                break;
+
         }
 
         return true;

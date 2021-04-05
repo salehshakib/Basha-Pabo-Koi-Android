@@ -186,6 +186,7 @@ public class AdDescriptionActivity extends AppCompatActivity implements Navigati
         submitButton.setText(resources.getString(R.string.submit));
         findOnMapTitle.setText(resources.getString(R.string.find_on_map));
 
+        assert language != null;
         if(language.matches("bn")){
 
             navigationView.getMenu().clear();
@@ -668,11 +669,26 @@ public class AdDescriptionActivity extends AppCompatActivity implements Navigati
                 startActivity(intentLogOut);
                 break;
 
+            case R.id.nav_ad:
+
+                Intent intentAd = new Intent(AdDescriptionActivity.this, AdCreateActivity.class);
+                intentAd.putExtra("FROM_ACTIVITY", "ProfileActivity");
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(intentAd);
+                break;
+
             case R.id.nav_settings:
 
                 Intent intentSettings = new Intent(AdDescriptionActivity.this, SettingsActivity.class);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(intentSettings);
+                break;
+
+            case R.id.nav_about:
+
+                Intent intentAboutUs = new Intent(AdDescriptionActivity.this, AboutUsActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(intentAboutUs);
                 break;
         }
 

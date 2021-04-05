@@ -271,6 +271,13 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                 drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(intentSettings);
                 break;
+
+            case R.id.nav_about:
+
+                Intent intentAboutUs = new Intent(ProfileActivity.this, AboutUsActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(intentAboutUs);
+                break;
         }
 
         return true;
