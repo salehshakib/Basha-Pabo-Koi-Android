@@ -7,7 +7,7 @@ An android app for home owners and home seekers where they can communicate with 
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40"/> 
  </a> 
  <a href="https://www.xml.com" target="_blank" rel="noreferrer"> 
-  <img src="https://user-images.githubusercontent.com/56752216/150679285-2c3caa90-7f3f-46ee-a8d2-1a13d96ede89.svg" alt="java" width="40" height="40"/> 
+  <img src="https://user-images.githubusercontent.com/56752216/150679285-2c3caa90-7f3f-46ee-a8d2-1a13d96ede89.svg" alt="xml" width="40" height="40"/> 
  </a> 
 </p>
 
