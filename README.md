@@ -1,5 +1,5 @@
 # Basha-Pabo-Koi
-An android app for home owners and home seekers where they can communicate with each other and can get rent easily.
+An android app for homeowners and home seekers where they can communicate with each other and can get rent easily.
 
 ## Programming Languages Used:
 <p align="left">
