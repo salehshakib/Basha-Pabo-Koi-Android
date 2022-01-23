@@ -21,7 +21,7 @@ An android app for home owners and home seekers where they can communicate with 
 ## IDE Used:
 <p align="left">
  <a href="https://developer.android.com/studio" target="_blank" rel="noreferrer">
-  <img src="https://user-images.githubusercontent.com/56752216/150679386-42405d17-39ea-4f98-a20d-f14e761e8fe0.svg" alt="visual studio 2010" width="125" height="63.5"/> 
+  <img src="https://user-images.githubusercontent.com/56752216/150679386-42405d17-39ea-4f98-a20d-f14e761e8fe0.svg" alt="android studio" width="40" height="40"/> 
  </a>
 </p>
 
